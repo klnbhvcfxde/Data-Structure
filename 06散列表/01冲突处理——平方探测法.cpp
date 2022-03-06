@@ -1,94 +1,102 @@
 #include<iostream>
 using namespace std;
 
-#define MAXTABLESIZE 100000   // ÔÊĞí¿ª±ÙµÄ×î´óÉ¢ÁĞ±í³¤¶È 
-typedef int Index;  // É¢ÁĞµØÖ·ÀàĞÍ
-typedef int ElementType;  // ¹Ø¼ü´ÊÀàĞÍÓÃÕûĞÍ
-typedef Index Position;  // Êı¾İËùÔÚÎ»ÖÃÓëÉ¢ÁĞµØÖ·ÊÇÍ¬Ò»ÀàĞÍ
+// ä¸€ä¸ªé—®é¢˜, çœŸçš„æ’å…¥æ•°æ®äº†å—, ä¸ºä»€ä¹ˆæ•°åˆ—èŠ‚ç‚¹ä¸Šæ”¾çš„æ˜¯key. è‡³å°‘æœ‰keyæœ‰valueå§. keyæ‰¾åˆ°pos, è¯»å–cells[pos]ä¸Šval, åº”è¯¥è¿™æ ·æ‰å¯¹å§
 
-// É¢ÁĞµ¥Ôª×´Ì¬ÀàĞÍ£¬·Ö±ğ¶ÔÓ¦£ºÓĞºÏ·¨ÔªËØ¡¢¿Õµ¥Ôª¡¢ÓĞÒÑÉ¾³ıÔªËØ
-typedef enum {Legitimate, Empty, Deleted} EntryType;  // ¶¨Òåµ¥Ôª×´Ì¬ÀàĞÍ 
+#define MAXTABLESIZE 100000   // å…è®¸å¼€è¾Ÿçš„æœ€å¤§æ•£åˆ—è¡¨é•¿åº¦ 
+typedef int Index;  // indexæ˜¯æ•£åˆ—è¡¨çš„ä¸‹æ ‡
+typedef int ElementType;  // å…³é”®è¯ç±»å‹ç”¨æ•´å‹
+typedef Index Position;  // æ•°æ®æ‰€åœ¨ä½ç½®ä¸æ•£åˆ—åœ°å€æ˜¯åŒä¸€ç±»å‹
 
-typedef struct HashEntry Cell;  // ¶¨ÒåÉ¢ÁĞ±íµ¥ÔªÀàĞÍ
-struct HashEntry {   //  ¹şÏ£±í´æÖµµ¥Ôª 
-	ElementType Data;  // ´æ·ÅÔªËØ
-	EntryType Info;  // µ¥Ôª×´Ì¬	
+// æ•£åˆ—å•å…ƒçŠ¶æ€ç±»å‹ï¼Œåˆ†åˆ«å¯¹åº”ï¼šæœ‰åˆæ³•å…ƒç´ ã€ç©ºå•å…ƒã€æœ‰å·²åˆ é™¤å…ƒç´ 
+typedef enum {Legitimate, Empty, Deleted} EntryType;  // å®šä¹‰å•å…ƒçŠ¶æ€ç±»å‹
+// å…¶å®æœ‰deleteå‡½æ•°åªæ˜¯æ²¡å»å†™. ä¼¼ä¹deleteä¹‹åinfoå˜æˆdeleted?
+// å¯æ˜¯findå‡½æ•°å¾ªç¯ç»“æŸæ¡ä»¶æ˜¯æ‰¾åˆ°(info==empty)æ‰å¯¹å§, åé¢insertè°ƒç”¨findä¹‹ååˆ ééç©ºéƒ½æ”¾ä¸Šä¸œè¥¿.
+// ä»¥infoä¸ºdeletedçš„poså‡ºfind, é‚£å°±æ˜¯æ²¡æ‰¾åˆ°, ä¸ç„¶whileæ¡ä»¶å°±å˜äº†
+// æ²¡æ‰¾åˆ°çš„legitimateä¸æ”¾ä¸œè¥¿, deletedå°±æ”¾äº†?
+
+typedef struct HashEntry Cell;  // å®šä¹‰æ•£åˆ—è¡¨å•å…ƒç±»å‹
+struct HashEntry {   //  å“ˆå¸Œè¡¨å­˜å€¼å•å…ƒ 
+	ElementType Data;  // å­˜æ”¾å…ƒç´ 
+	EntryType Info;  // å•å…ƒçŠ¶æ€	
 };
 
-typedef struct HashTbl *HashTable;  // É¢ÁĞ±íÀàĞÍ
-struct HashTbl {  // ¹şÏ£±í½á¹¹Ìå 
-	int TableSize;   // ±íµÄ×î´ó³¤¶È 
-	Cell *Cells;   // ´æ·ÅÉ¢ÁĞµ¥ÔªÊı¾İµÄÊı×é
+typedef struct HashTbl *HashTable;  // æ•£åˆ—è¡¨ç±»å‹
+struct HashTbl {  // å“ˆå¸Œè¡¨ç»“æ„ä½“ 
+	int TableSize;   // è¡¨çš„æœ€å¤§é•¿åº¦ 
+	Cell *Cells;   // å­˜æ”¾æ•£åˆ—å•å…ƒæ•°æ®çš„æ•°ç»„
 };
 
-int NextPrime(int N);  // ²éÕÒËØÊı 
-HashTable CreateTable(int TableSize); // ´´½¨¹şÏ£±í 
-Index Hash(int Key, int TableSize);   // ¹şÏ£º¯Êı 
+int NextPrime(int N);  // æŸ¥æ‰¾ç´ æ•° 
+HashTable CreateTable(int TableSize); // åˆ›å»ºå“ˆå¸Œè¡¨ 
+Index Hash(int Key, int TableSize);   // å“ˆå¸Œå‡½æ•° 
 
-// ²éÕÒËØÊı 
-int NextPrime(int N)  // ·µ»Ø´óÓÚNÇÒ²»³¬¹ıMAXTABLESIZEµÄ×îĞ¡ËØÊı
+// æŸ¥æ‰¾ç´ æ•° 
+int NextPrime(int N)  // è¿”å›å¤§äºNä¸”ä¸è¶…è¿‡MAXTABLESIZEçš„æœ€å°ç´ æ•°
 {
-	int p = (N % 2) ? N + 2 : N + 1;  // ´Ó´óÓÚ N µÄÏÂ¸öÆæÊı¿ªÊ¼
+	int p = (N % 2) ? N + 2 : N + 1;  // ä»å¤§äº N çš„ä¸‹ä¸ªå¥‡æ•°å¼€å§‹
 	int i;
 
 	while (p <= MAXTABLESIZE) 
 	{
 		for (i = (int)sqrt(p); i > 2; i--)
-			if (!(p%i))  // p ²»ÊÇËØÊı 
+			if (!(p%i))  // p ä¸æ˜¯ç´ æ•° 
 				break;
-		if (i == 2)  // forÕı³£½áÊø£¬ËµÃ÷pÊÇËØÊı
+		if (i == 2)  // foræ­£å¸¸ç»“æŸï¼Œè¯´æ˜pæ˜¯ç´ æ•°
 			break;
-		p += 2;  // ¼ÌĞøÊÔÌ½ÏÂ¸öÆæÊı 
+		p += 2;  // ç»§ç»­è¯•æ¢ä¸‹ä¸ªå¥‡æ•° 
 	}
 	return p;
 }
 
-// ´´½¨¹şÏ£±í 
-HashTable CreateTable(int TableSize) 
+// åˆ›å»ºå“ˆå¸Œè¡¨ 
+HashTable CreateTable(int TableSize)  // ä»–ç»™çš„tableSizeåœ¨ç®—å®Œæ¯”ä»–å¤§çš„ç´ æ•°ä½œä¸ºæ–°çš„sizeä¹‹åå°±ä¸ç”¨äº†
 {
 	HashTable H;
 	H = (HashTable)malloc(sizeof(struct HashTbl));
-	H->TableSize = NextPrime(TableSize);  // ±£Ö¤É¢ÁĞ±í×î´ó³¤¶ÈÊÇËØÊı 
-	H->Cells = (Cell *)malloc(sizeof(Cell)*H->TableSize);  // ³õÊ¼»¯µ¥ÔªÊı×é 
-	for (int i = 0; i < H->TableSize; i++)  // ³õÊ¼»¯µ¥ÔªÊı×é×´Ì¬Îª¡°¿Õµ¥Ôª¡±
+	H->TableSize = NextPrime(TableSize);  // ä¿è¯æ•£åˆ—è¡¨æœ€å¤§é•¿åº¦æ˜¯ç´ æ•° 
+	H->Cells = (Cell *)malloc(sizeof(Cell)*H->TableSize);  // åˆå§‹åŒ–å•å…ƒæ•°ç»„ 
+	for (int i = 0; i < H->TableSize; i++)  // åˆå§‹åŒ–å•å…ƒæ•°ç»„çŠ¶æ€ä¸ºâ€œç©ºå•å…ƒâ€
 		H->Cells[i].Info = Empty;
 	return H;
 }
 
-// Æ½·½Ì½²â²éÕÒ 
+// å¹³æ–¹æ¢æµ‹æŸ¥æ‰¾ 
 Position Find(HashTable H, ElementType Key) 
 {
 	Position CurrentPos, NewPos;
-	int CNum = 0;   // ¼ÇÂ¼³åÍ»´ÎÊı
-	CurrentPos = NewPos = Hash(Key, H->TableSize);  // ³õÊ¼É¢ÁĞÎ»ÖÃ
+	int CNum = 0;   // è®°å½•å†²çªæ¬¡æ•°
+	CurrentPos = NewPos = Hash(Key, H->TableSize);  // åˆå§‹æ•£åˆ—ä½ç½®
  
-	while (H->Cells[NewPos].Info != Empty && H->Cells[NewPos].Data != Key) // µ±¸ÃÎ»ÖÃµÄµ¥Ôª·Ç¿Õ£¬²¢ÇÒ²»ÊÇÒªÕÒµÄÔªËØÊ±£¬·¢Éú³åÍ»
+	while (H->Cells[NewPos].Info != Empty && H->Cells[NewPos].Data != Key) // å½“è¯¥ä½ç½®çš„å•å…ƒéç©ºï¼Œå¹¶ä¸”ä¸æ˜¯è¦æ‰¾çš„å…ƒç´ æ—¶ï¼Œå‘ç”Ÿå†²çª
 	{
-		// Í³¼Æ1´Î³åÍ»£¬²¢ÅĞ¶ÏÆæÅ¼´Î
-		if (++CNum % 2) { // ³åÍ»ÆæÊı´Î·¢Éú 
-			NewPos = CurrentPos + (CNum + 1) / 2 * (CNum + 1) / 2;  // ÔöÁ¿Îª+[(CNum+1)/2]^2
-			while (H->TableSize <= NewPos)  // Èç¹ûÔ½½ç£¬Ò»Ö±¼õÖ±µ½ÔÙ´Î½øÈë±ß½ç
+		// ç»Ÿè®¡1æ¬¡å†²çªï¼Œå¹¶åˆ¤æ–­å¥‡å¶æ¬¡
+		if (++CNum % 2) { // å†²çªå¥‡æ•°æ¬¡å‘ç”Ÿ 
+			NewPos = CurrentPos + (CNum + 1) / 2 * (CNum + 1) / 2;  // å¢é‡ä¸º+[(CNum+1)/2]^2
+			while (H->TableSize <= NewPos)  // å¦‚æœè¶Šç•Œï¼Œä¸€ç›´å‡ç›´åˆ°å†æ¬¡è¿›å…¥è¾¹ç•Œ
 			{
-				NewPos -= H->TableSize;  // µ÷ÕûÎªºÏ·¨µØÖ·
+				NewPos -= H->TableSize;  // è°ƒæ•´ä¸ºåˆæ³•åœ°å€
 			}
 		}
-		else   // ³åÍ»Å¼Êı´Î·¢Éú
+		else   // å†²çªå¶æ•°æ¬¡å‘ç”Ÿ
 		{  
-			NewPos = CurrentPos - CNum / 2 * CNum / 2;  // ÔöÁ¿Îª-(CNum/2)^2 
-			while (NewPos < 0)  // Èç¹ûÔ½½ç£¬Ò»Ö±¼ÓÖ±µ½ÔÙ´Î½øÈë±ß½ç
+			NewPos = CurrentPos - CNum / 2 * CNum / 2;  // å¢é‡ä¸º-(CNum/2)^2 
+			while (NewPos < 0)  // å¦‚æœè¶Šç•Œï¼Œä¸€ç›´åŠ ç›´åˆ°å†æ¬¡è¿›å…¥è¾¹ç•Œ
 			{
-				NewPos += H->TableSize;  // µ÷ÕûÎªºÏ·¨µØÖ·
+				NewPos += H->TableSize;  // è°ƒæ•´ä¸ºåˆæ³•åœ°å€
 			}
 		}
 	}
-	return NewPos;  // ´ËÊ±NewPos»òÕßÊÇKeyµÄÎ»ÖÃ£¬»òÕßÊÇÒ»¸ö¿Õµ¥ÔªµÄÎ»ÖÃ£¨±íÊ¾ÕÒ²»µ½£©
+	return NewPos;  // æ­¤æ—¶NewPosæˆ–è€…æ˜¯Keyçš„ä½ç½®ï¼Œæˆ–è€…æ˜¯ä¸€ä¸ªç©ºå•å…ƒçš„ä½ç½®ï¼ˆè¡¨ç¤ºæ‰¾ä¸åˆ°ï¼‰
 }
 
-// ²åÈë
+// æ’å…¥
 bool Insert(HashTable H, ElementType Key, int i) 
 {
-	Position Pos = Find(H, Key);  // ÏÈ¼ì²éKeyÊÇ·ñÒÑ¾­´æÔÚ
-	if (H->Cells[Pos].Info != Legitimate)  // Èç¹ûÕâ¸öµ¥ÔªÃ»ÓĞ±»Õ¼£¬ËµÃ÷Key¿ÉÒÔ²åÈëÔÚ´Ë 
+    // è¿™iåšç”šä¹ˆ...
+    // Position Pos = i; // çœ‹åˆ°ä¸€ä¸ªç‰ˆæœ¬è¿™ä¹ˆå†™, ä¹Ÿä¸çŸ¥é“åœ¨åšä»€ä¹ˆ
+	Position Pos = Find(H, Key);  // å…ˆæ£€æŸ¥Keyæ˜¯å¦å·²ç»å­˜åœ¨
+	if (H->Cells[Pos].Info != Legitimate)  // å¦‚æœè¿™ä¸ªå•å…ƒæ²¡æœ‰è¢«å ï¼Œè¯´æ˜Keyå¯ä»¥æ’å…¥åœ¨æ­¤ 
 	{
 		H->Cells[Pos].Info = Legitimate;
 		H->Cells[Pos].Data = Key;
@@ -96,15 +104,15 @@ bool Insert(HashTable H, ElementType Key, int i)
 	}
 	else 
 	{
-		cout << "¼üÖµÒÑ´æÔÚ" << endl;
+		cout << "é”®å€¼å·²å­˜åœ¨" << endl;
 		return false;
 	}
 }
 
-// ³ıÁôÓàÊı·¨¹şÏ£º¯Êı 
+// é™¤ç•™ä½™æ•°æ³•å“ˆå¸Œå‡½æ•° 
 Index Hash(int Key, int TableSize) 
 {
-	return Key % TableSize;
+	return Key % TableSize; // é™¤ä¸€ä¸ªç´ æ•°æ¯”è¾ƒä¸å®¹æ˜“ç›¸ç­‰
 }
 
 int main() 
