@@ -67,7 +67,7 @@ Position Find(HashTable H, ElementType Key)
 	Position CurrentPos, NewPos;
 	int CNum = 0;   // 记录冲突次数
 	CurrentPos = NewPos = Hash(Key, H->TableSize);  // 初始散列位置
- 
+
 	while (H->Cells[NewPos].Info != Empty && H->Cells[NewPos].Data != Key) // 当该位置的单元非空，并且不是要找的元素时，发生冲突
 	{
         // +1^2, -1^2, +2^2, -2^2这么跑

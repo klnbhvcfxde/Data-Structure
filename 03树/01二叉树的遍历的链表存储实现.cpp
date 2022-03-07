@@ -6,17 +6,17 @@ using namespace std;
 
 typedef struct TreeNode *BinTree;
 struct TreeNode {
-	int Data;  // ´æÖµ 
-	BinTree Left;    // ×ó¶ù×Ó½áµã 
-	BinTree Right;   // ÓÒ¶ù×Ó½áµã 
+	int Data;  // å­˜å€¼ 
+	BinTree Left;    // å·¦å„¿å­ç»“ç‚¹ 
+	BinTree Right;   // å³å„¿å­ç»“ç‚¹ 
 };
-BinTree CreatBinTree();   // ´´½¨Ò»¸ö¶ş²æÊ÷
-void  PreOrderTraversal_Recursion(BinTree BT);  // ÏÈĞòµİ¹é±éÀú
-void PreOrderTraversal(BinTree BT);   // ÏÈĞò±éÀú£¬¸ù×óÓÒ
-void InOrderTraversal_Recursion(BinTree BT);  // ÖĞĞòµİ¹é±éÀú
-void InOrderTraversal(BinTree BT);    // ÖĞĞò±éÀú£¬×ó¸ùÓÒ
-void PostOrderTraversal_Recursion(BinTree BT);  // ºóĞòµİ¹é±éÀú
-void PostOrderTraversal(BinTree BT);  // ºóĞò±éÀú£¬×óÓÒ¸ù 
+BinTree CreatBinTree();   // åˆ›å»ºä¸€ä¸ªäºŒå‰æ ‘
+void  PreOrderTraversal_Recursion(BinTree BT);  // å…ˆåºé€’å½’éå†
+void PreOrderTraversal(BinTree BT);   // å…ˆåºéå†ï¼Œæ ¹å·¦å³
+void InOrderTraversal_Recursion(BinTree BT);  // ä¸­åºé€’å½’éå†
+void InOrderTraversal(BinTree BT);    // ä¸­åºéå†ï¼Œå·¦æ ¹å³
+void PostOrderTraversal_Recursion(BinTree BT);  // ååºé€’å½’éå†
+void PostOrderTraversal(BinTree BT);  // ååºéå†ï¼Œå·¦å³æ ¹ 
 
 typedef struct SNode *Stack;
 struct SNode {
@@ -25,13 +25,13 @@ struct SNode {
 };
 
 
-Stack CreateStack();  // ³õÊ¼»¯Á´Õ» 
-int IsEmpty(Stack S);  // ÅĞ¶ÏÁ´Õ»ÊÇ·ñÎª¿Õ 
-void Push(Stack S, BinTree item);  // ÈëÕ» 
-BinTree Pop(Stack S);  // ³öÕ»
+Stack CreateStack();  // åˆå§‹åŒ–é“¾æ ˆ 
+int IsEmpty(Stack S);  // åˆ¤æ–­é“¾æ ˆæ˜¯å¦ä¸ºç©º 
+void Push(Stack S, BinTree item);  // å…¥æ ˆ 
+BinTree Pop(Stack S);  // å‡ºæ ˆ
 
 
-// ³õÊ¼»¯ 
+// åˆå§‹åŒ– 
 Stack CreateStack() 
 {
 	Stack S;
@@ -40,39 +40,39 @@ Stack CreateStack()
 	return S;
 }
 
-// ÅĞ¶ÏÊÇ·ñÎª¿Õ 
+// åˆ¤æ–­æ˜¯å¦ä¸ºç©º 
 int IsEmpty(Stack S) 
 {
 	return (S->Next == NULL);
 }
 
-// ÈëÕ»
+// å…¥æ ˆ
 void Push(Stack S, BinTree item) 
 {
 	Stack tmp;
 	tmp = (Stack)malloc(sizeof(struct SNode));
 	tmp->Data = item;
-	// Á´Õ»Õ»¶¥ÔªËØÊÇÁ´±íÍ·½áµã£¬ĞÂÈëÕ»µÄÁ´±íÔÚÕ»¶¥ÔªËØºóÃæ 
+	// é“¾æ ˆæ ˆé¡¶å…ƒç´ æ˜¯é“¾è¡¨å¤´ç»“ç‚¹ï¼Œæ–°å…¥æ ˆçš„é“¾è¡¨åœ¨æ ˆé¡¶å…ƒç´ åé¢ 
 	tmp->Next = S->Next;
 	S->Next = tmp;
 }
 
-// ³öÕ»
+// å‡ºæ ˆ
 BinTree Pop(Stack S) 
 {
 	Stack First;
 	BinTree TopVal;
 	if (IsEmpty(S)) 
 	{
-		cout << "¶ÑÕ»¿Õ" << endl;
+		cout << "å †æ ˆç©º" << endl;
 		return 0;
 	}
 	else 
 	{
-		First = S->Next;   // ³öÕ»µÚÒ»¸öÔªËØÔÚÕ»¶¥ÔªËØºóÃæ 
-		S->Next = First->Next;  //°ÑµÚÒ»¸öÔªËØ´ÓÁ´Õ»É¾³ı 
-		TopVal = First->Data;   // È¡³ö±»É¾³ı½áµãµÄÖµ 
-		free(First);  // ÊÍ·Å¿Õ¼ä 
+		First = S->Next;   // å‡ºæ ˆç¬¬ä¸€ä¸ªå…ƒç´ åœ¨æ ˆé¡¶å…ƒç´ åé¢ 
+		S->Next = First->Next;  //æŠŠç¬¬ä¸€ä¸ªå…ƒç´ ä»é“¾æ ˆåˆ é™¤ 
+		TopVal = First->Data;   // å–å‡ºè¢«åˆ é™¤ç»“ç‚¹çš„å€¼ 
+		free(First);  // é‡Šæ”¾ç©ºé—´ 
 		return TopVal;
 	}
 }
@@ -87,7 +87,7 @@ BinTree Insert(int Data)
 	return BT;
 }
 
-// ³õÊ¼»¯¶ş²æÊ÷ 
+// åˆå§‹åŒ–äºŒå‰æ ‘ 
 BinTree CreatBinTree() 
 {
 	BinTree BT;
@@ -95,81 +95,81 @@ BinTree CreatBinTree()
 	return BT;
 }
 
-// ÏÈĞòµİ¹é
+// å…ˆåºé€’å½’
 void  PreOrderTraversal_Recursion(BinTree BT)
 {
 	if(BT){
-		cout << BT->Data;  // ´òÓ¡¸ù
-		PreOrderTraversal_Recursion(BT->Left);  // ½øÈë×ó×ÓÊ÷
-		PreOrderTraversal_Recursion(BT->Right);  // ½øÈëÓÒ×ÓÊ÷
+		cout << BT->Data;  // æ‰“å°æ ¹
+		PreOrderTraversal_Recursion(BT->Left);  // è¿›å…¥å·¦å­æ ‘
+		PreOrderTraversal_Recursion(BT->Right);  // è¿›å…¥å³å­æ ‘
 	}
 } 
 
-// ÏÈĞò·Çµİ¹é 
+// å…ˆåºéé€’å½’ 
 void PreOrderTraversal(BinTree BT) 
 {
 	BinTree T = BT;
-	Stack S = CreateStack();  // ´´½¨²¢³õÊ¼»¯¶ÑÕ» S
-	while (T || !IsEmpty(S)) {  // µ±Ê÷²»Îª¿Õ»ò¶ÑÕ»²»¿Õ 
+	Stack S = CreateStack();  // åˆ›å»ºå¹¶åˆå§‹åŒ–å †æ ˆ S
+	while (T || !IsEmpty(S)) {  // å½“æ ‘ä¸ä¸ºç©ºæˆ–å †æ ˆä¸ç©º 
 		while (T) {
-			Push(S, T);    // Ñ¹Õ»£¬µÚÒ»´ÎÓöµ½¸Ã½áµã 
-			cout << T->Data;  // ·ÃÎÊ½áµã
-			T = T->Left;   // ±éÀú×ó×ÓÊ÷ 
+			Push(S, T);    // å‹æ ˆï¼Œç¬¬ä¸€æ¬¡é‡åˆ°è¯¥ç»“ç‚¹ 
+			cout << T->Data;  // è®¿é—®ç»“ç‚¹
+			T = T->Left;   // éå†å·¦å­æ ‘ 
 		}
-		if (!IsEmpty(S)) {  // µ±¶ÑÕ»²»¿Õ 
-			T = Pop(S);    // ³öÕ»£¬µÚ¶ş´ÎÓöµ½¸Ã½áµã 
-			T = T->Right;  // ·ÃÎÊÓÒ½áµã 
+		if (!IsEmpty(S)) {  // å½“å †æ ˆä¸ç©º 
+			T = Pop(S);    // å‡ºæ ˆï¼Œç¬¬äºŒæ¬¡é‡åˆ°è¯¥ç»“ç‚¹ 
+			T = T->Right;  // è®¿é—®å³ç»“ç‚¹ 
 		}
 	}
 }
 
-// ÖĞĞòµİ¹é 
+// ä¸­åºé€’å½’ 
 void InOrderTraversal_Recursion(BinTree BT)
 {
 	if(BT){
-		InOrderTraversal_Recursion(BT->Left);  // ½øÈë×ó×ÓÊ÷
-		cout << BT->Data;  // ´òÓ¡¸ù
-		InOrderTraversal_Recursion(BT->Right);  // ½øÈëÓÒ×ÓÊ÷
+		InOrderTraversal_Recursion(BT->Left);  // è¿›å…¥å·¦å­æ ‘
+		cout << BT->Data;  // æ‰“å°æ ¹
+		InOrderTraversal_Recursion(BT->Right);  // è¿›å…¥å³å­æ ‘
 	}
 } 
 
-// ÖĞĞò·Çµİ¹é
+// ä¸­åºéé€’å½’
 void InOrderTraversal(BinTree BT) 
 {
 	BinTree T = BT;
-	Stack S = CreateStack();  // ´´½¨²¢³õÊ¼»¯¶ÑÕ» S
-	while (T || !IsEmpty(S)) {  // µ±Ê÷²»Îª¿Õ»ò¶ÑÕ»²»¿Õ 
+	Stack S = CreateStack();  // åˆ›å»ºå¹¶åˆå§‹åŒ–å †æ ˆ S
+	while (T || !IsEmpty(S)) {  // å½“æ ‘ä¸ä¸ºç©ºæˆ–å †æ ˆä¸ç©º 
 		while (T) {
-			Push(S, T);    // Ñ¹Õ»
-			T = T->Left;   // ±éÀú×ó×ÓÊ÷ 
+			Push(S, T);    // å‹æ ˆ
+			T = T->Left;   // éå†å·¦å­æ ‘ 
 		}
-		if (!IsEmpty(S)) {  // µ±¶ÑÕ»²»¿Õ 
-			T = Pop(S);    // ³öÕ»
-			cout << T->Data;  // ·ÃÎÊ½áµã
-			T = T->Right;  // ·ÃÎÊÓÒ½áµã 
+		if (!IsEmpty(S)) {  // å½“å †æ ˆä¸ç©º 
+			T = Pop(S);    // å‡ºæ ˆ
+			cout << T->Data;  // è®¿é—®ç»“ç‚¹
+			T = T->Right;  // è®¿é—®å³ç»“ç‚¹ 
 		}
 	}
 }
 
-// ºóĞòµİ¹é
+// ååºé€’å½’
 void PostOrderTraversal_Recursion(BinTree BT)
 {
 	if(BT)
 	{
-		PostOrderTraversal_Recursion(BT->Left);  // ½øÈë×ó×ÓÊ÷
-		PostOrderTraversal_Recursion(BT->Right);  // ½øÈëÓÒ×ÓÊ÷
-		cout << BT->Data;  // ´òÓ¡¸ù
+		PostOrderTraversal_Recursion(BT->Left);  // è¿›å…¥å·¦å­æ ‘
+		PostOrderTraversal_Recursion(BT->Right);  // è¿›å…¥å³å­æ ‘
+		cout << BT->Data;  // æ‰“å°æ ¹
 	}
 } 
 
-// ºóĞò±éÀú 
+// ååºéå† 
 void PostOrderTraversal(BinTree BT) 
 {
 	BinTree T = BT;
-	Stack S = CreateStack();  // ´´½¨²¢³õÊ¼»¯¶ÑÕ» S
+	Stack S = CreateStack();  // åˆ›å»ºå¹¶åˆå§‹åŒ–å †æ ˆ S
 	vector<BinTree> v;
 	Push(S, T);
-	while (!IsEmpty(S)) {  // µ±Ê÷²»Îª¿Õ»ò¶ÑÕ»²»¿Õ 
+	while (!IsEmpty(S)) {  // å½“æ ‘ä¸ä¸ºç©ºæˆ–å †æ ˆä¸ç©º 
 		T = Pop(S);
 		v.push_back(T);
 		if (T->Left)
@@ -177,22 +177,22 @@ void PostOrderTraversal(BinTree BT)
 		if (T->Right)
 			Push(S, T->Right);
 	}
-	reverse(v.begin(), v.end());  // Äæ×ª 
+	reverse(v.begin(), v.end());  // é€†è½¬ 
 	for (int i = 0; i < v.size(); i++)
 	    cout << v[i]->Data;
 }
 
-// ²ã´Î±éÀú
+// å±‚æ¬¡éå†
 void LevelOrderTraversal(BinTree BT) 
 {
 	queue<BinTree> q;
 	BinTree T;
 	if (!BT)
 		return;
-	q.push(BT);  // BT Èë¶Ó 
+	q.push(BT);  // BT å…¥é˜Ÿ 
 	while (!q.empty()) {
-		T = q.front();  // ·ÃÎÊ¶ÓÊ×ÔªËØ 
-		q.pop();  // ³ö¶Ó
+		T = q.front();  // è®¿é—®é˜Ÿé¦–å…ƒç´  
+		q.pop();  // å‡ºé˜Ÿ
 		cout << T->Data;
 		if (T->Left)
 			q.push(T->Left);
@@ -200,27 +200,27 @@ void LevelOrderTraversal(BinTree BT)
 			q.push(T->Right);
 	}
 }
-// Êä³öÒ¶×Ó½áµã
+// è¾“å‡ºå¶å­ç»“ç‚¹
 void  FindLeaves(BinTree BT) 
 {
 	if (BT) 
 	{
 		if (!BT->Left && !BT->Right)
-			cout << BT->Data;  // ´òÓ¡Ò¶×Ó½áµã
-		FindLeaves(BT->Left);  // ½øÈë×ó×ÓÊ÷ 
-		FindLeaves(BT->Right);  // ½øÈëÓÒ×ÓÊ÷ 
+			cout << BT->Data;  // æ‰“å°å¶å­ç»“ç‚¹
+		FindLeaves(BT->Left);  // è¿›å…¥å·¦å­æ ‘ 
+		FindLeaves(BT->Right);  // è¿›å…¥å³å­æ ‘ 
 	}
 }
 
-// ÇóÊ÷¸ß¶È
+// æ±‚æ ‘é«˜åº¦
 int  GetHeight(BinTree BT) 
 {
 	int HL, HR, MaxH;
 	if (BT) {
-		HL = GetHeight(BT->Left);  // Çó×ó×ÓÊ÷¸ß¶È 
-		HR = GetHeight(BT->Right);  // ÇóÓÒ×ÓÊ÷¸ß¶È 
+		HL = GetHeight(BT->Left);  // æ±‚å·¦å­æ ‘é«˜åº¦ 
+		HR = GetHeight(BT->Right);  // æ±‚å³å­æ ‘é«˜åº¦ 
 		MaxH = (HL > HR) ? HL : HR;
-		return MaxH + 1;  // µ±Ç°½áµã¸ß¶ÈÎª×óÓÒ×ÓÊ÷×î´óµÄ¸ß¶È+1 
+		return MaxH + 1;  // å½“å‰ç»“ç‚¹é«˜åº¦ä¸ºå·¦å³å­æ ‘æœ€å¤§çš„é«˜åº¦+1 
 	}
 	else
 		return 0;
@@ -239,28 +239,28 @@ int main()
 	BT->Right->Right = Insert(9);
 	BT->Right->Left->Right = Insert(8);
 
-	cout << "ÏÈĞòµİ¹é±éÀú£º";
+	cout << "å…ˆåºé€’å½’éå†ï¼š";
 	PreOrderTraversal_Recursion(BT);
-	cout << "\nÏÈĞò·Çµİ¹é±éÀú£º";
+	cout << "\nå…ˆåºéé€’å½’éå†ï¼š";
 	PreOrderTraversal(BT);
 
-	cout << "\nÖĞĞòµİ¹é±éÀú£º";
+	cout << "\nä¸­åºé€’å½’éå†ï¼š";
 	InOrderTraversal_Recursion(BT);
-	cout << "\nÖĞĞò·Çµİ¹é±éÀú£º";
+	cout << "\nä¸­åºéé€’å½’éå†ï¼š";
 	InOrderTraversal(BT);
 
-	cout << "\nºóĞòµİ¹é±éÀú£º";
+	cout << "\nååºé€’å½’éå†ï¼š";
 	PostOrderTraversal_Recursion(BT);
-	cout << "\nºóĞò·Çµİ¹é±éÀú£º";
+	cout << "\nååºéé€’å½’éå†ï¼š";
 	PostOrderTraversal(BT);
 
-	cout << "\n²ã´Î±éÀú£º";
+	cout << "\nå±‚æ¬¡éå†ï¼š";
 	LevelOrderTraversal(BT);
 
-	cout << "\nÊä³öÒ¶×Ó½áµã£º";
+	cout << "\nè¾“å‡ºå¶å­ç»“ç‚¹ï¼š";
 	FindLeaves(BT);
 
-	cout << "\nÊä³öÊ÷µÄ¸ß¶È£º" << GetHeight(BT) << endl;
+	cout << "\nè¾“å‡ºæ ‘çš„é«˜åº¦ï¼š" << GetHeight(BT) << endl;
 
 	system("pause");
 
