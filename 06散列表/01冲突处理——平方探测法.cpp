@@ -70,7 +70,8 @@ Position Find(HashTable H, ElementType Key)
  
 	while (H->Cells[NewPos].Info != Empty && H->Cells[NewPos].Data != Key) // 当该位置的单元非空，并且不是要找的元素时，发生冲突
 	{
-		// 统计1次冲突，并判断奇偶次
+        // +1^2, -1^2, +2^2, -2^2这么跑
+    	// 统计1次冲突，并判断奇偶次
 		if (++CNum % 2) { // 冲突奇数次发生 
 			NewPos = CurrentPos + (CNum + 1) / 2 * (CNum + 1) / 2;  // 增量为+[(CNum+1)/2]^2
 			while (H->TableSize <= NewPos)  // 如果越界，一直减直到再次进入边界
