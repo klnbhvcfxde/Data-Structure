@@ -1,14 +1,14 @@
 #include<iostream>
 using namespace std;
-#include<vector> 
+#include<vector>
 #include<queue>
 #include<algorithm>
 
 typedef struct TreeNode *BinTree;
 struct TreeNode {
-	int Data;  // 存值 
-	BinTree Left;    // 左儿子结点 
-	BinTree Right;   // 右儿子结点 
+	int Data;  // 存值
+	BinTree Left;    // 左儿子结点
+	BinTree Right;   // 右儿子结点
 };
 BinTree CreatBinTree();   // 创建一个二叉树
 void  PreOrderTraversal_Recursion(BinTree BT);  // 先序递归遍历
@@ -16,7 +16,7 @@ void PreOrderTraversal(BinTree BT);   // 先序遍历，根左右
 void InOrderTraversal_Recursion(BinTree BT);  // 中序递归遍历
 void InOrderTraversal(BinTree BT);    // 中序遍历，左根右
 void PostOrderTraversal_Recursion(BinTree BT);  // 后序递归遍历
-void PostOrderTraversal(BinTree BT);  // 后序遍历，左右根 
+void PostOrderTraversal(BinTree BT);  // 后序遍历，左右根
 
 typedef struct SNode *Stack;
 struct SNode {
@@ -25,14 +25,14 @@ struct SNode {
 };
 
 
-Stack CreateStack();  // 初始化链栈 
-int IsEmpty(Stack S);  // 判断链栈是否为空 
-void Push(Stack S, BinTree item);  // 入栈 
+Stack CreateStack();  // 初始化链栈
+int IsEmpty(Stack S);  // 判断链栈是否为空
+void Push(Stack S, BinTree item);  // 入栈
 BinTree Pop(Stack S);  // 出栈
 
 
-// 初始化 
-Stack CreateStack() 
+// 初始化
+Stack CreateStack()
 {
 	Stack S;
 	S = (Stack)malloc(sizeof(struct SNode));
@@ -40,44 +40,44 @@ Stack CreateStack()
 	return S;
 }
 
-// 判断是否为空 
-int IsEmpty(Stack S) 
+// 判断是否为空
+int IsEmpty(Stack S)
 {
 	return (S->Next == NULL);
 }
 
 // 入栈
-void Push(Stack S, BinTree item) 
+void Push(Stack S, BinTree item)
 {
 	Stack tmp;
 	tmp = (Stack)malloc(sizeof(struct SNode));
 	tmp->Data = item;
-	// 链栈栈顶元素是链表头结点，新入栈的链表在栈顶元素后面 
+	// 链栈栈顶元素是链表头结点，新入栈的链表在栈顶元素后面
 	tmp->Next = S->Next;
 	S->Next = tmp;
 }
 
 // 出栈
-BinTree Pop(Stack S) 
+BinTree Pop(Stack S)
 {
 	Stack First;
 	BinTree TopVal;
-	if (IsEmpty(S)) 
+	if (IsEmpty(S))
 	{
 		cout << "堆栈空" << endl;
 		return 0;
 	}
-	else 
+	else
 	{
-		First = S->Next;   // 出栈第一个元素在栈顶元素后面 
-		S->Next = First->Next;  //把第一个元素从链栈删除 
-		TopVal = First->Data;   // 取出被删除结点的值 
-		free(First);  // 释放空间 
+		First = S->Next;   // 出栈第一个元素在栈顶元素后面
+		S->Next = First->Next;  //把第一个元素从链栈删除
+		TopVal = First->Data;   // 取出被删除结点的值
+		free(First);  // 释放空间
 		return TopVal;
 	}
 }
 
-BinTree Insert(int Data) 
+BinTree Insert(int Data)
 {
 	BinTree BT;
 	BT = (BinTree)malloc(sizeof(struct TreeNode));
@@ -87,8 +87,8 @@ BinTree Insert(int Data)
 	return BT;
 }
 
-// 初始化二叉树 
-BinTree CreatBinTree() 
+// 初始化二叉树
+BinTree CreatBinTree()
 {
 	BinTree BT;
 	BT = (BinTree)malloc(sizeof(struct TreeNode));
@@ -103,27 +103,27 @@ void  PreOrderTraversal_Recursion(BinTree BT)
 		PreOrderTraversal_Recursion(BT->Left);  // 进入左子树
 		PreOrderTraversal_Recursion(BT->Right);  // 进入右子树
 	}
-} 
+}
 
-// 先序非递归 
-void PreOrderTraversal(BinTree BT) 
+// 先序非递归
+void PreOrderTraversal(BinTree BT)
 {
 	BinTree T = BT;
 	Stack S = CreateStack();  // 创建并初始化堆栈 S
-	while (T || !IsEmpty(S)) {  // 当树不为空或堆栈不空 
+	while (T || !IsEmpty(S)) {  // 当树不为空或堆栈不空
 		while (T) {
-			Push(S, T);    // 压栈，第一次遇到该结点 
+			Push(S, T);    // 压栈，第一次遇到该结点
 			cout << T->Data;  // 访问结点
-			T = T->Left;   // 遍历左子树 
+			T = T->Left;   // 遍历左子树
 		}
-		if (!IsEmpty(S)) {  // 当堆栈不空 
-			T = Pop(S);    // 出栈，第二次遇到该结点 
-			T = T->Right;  // 访问右结点 
+		if (!IsEmpty(S)) {  // 当堆栈不空
+			T = Pop(S);    // 出栈，第二次遇到该结点
+			T = T->Right;  // 访问右结点
 		}
 	}
 }
 
-// 中序递归 
+// 中序递归
 void InOrderTraversal_Recursion(BinTree BT)
 {
 	if(BT){
@@ -131,22 +131,22 @@ void InOrderTraversal_Recursion(BinTree BT)
 		cout << BT->Data;  // 打印根
 		InOrderTraversal_Recursion(BT->Right);  // 进入右子树
 	}
-} 
+}
 
 // 中序非递归
-void InOrderTraversal(BinTree BT) 
+void InOrderTraversal(BinTree BT)
 {
 	BinTree T = BT;
 	Stack S = CreateStack();  // 创建并初始化堆栈 S
-	while (T || !IsEmpty(S)) {  // 当树不为空或堆栈不空 
+	while (T || !IsEmpty(S)) {  // 当树不为空或堆栈不空
 		while (T) {
 			Push(S, T);    // 压栈
-			T = T->Left;   // 遍历左子树 
+			T = T->Left;   // 遍历左子树
 		}
-		if (!IsEmpty(S)) {  // 当堆栈不空 
+		if (!IsEmpty(S)) {  // 当堆栈不空
 			T = Pop(S);    // 出栈
 			cout << T->Data;  // 访问结点
-			T = T->Right;  // 访问右结点 
+			T = T->Right;  // 访问右结点
 		}
 	}
 }
@@ -160,16 +160,16 @@ void PostOrderTraversal_Recursion(BinTree BT)
 		PostOrderTraversal_Recursion(BT->Right);  // 进入右子树
 		cout << BT->Data;  // 打印根
 	}
-} 
+}
 
-// 后序遍历 
-void PostOrderTraversal(BinTree BT) 
+// 后序遍历
+void PostOrderTraversal(BinTree BT)
 {
 	BinTree T = BT;
 	Stack S = CreateStack();  // 创建并初始化堆栈 S
 	vector<BinTree> v;
 	Push(S, T);
-	while (!IsEmpty(S)) {  // 当树不为空或堆栈不空 
+	while (!IsEmpty(S)) {  // 当树不为空或堆栈不空
 		T = Pop(S);
 		v.push_back(T);
 		if (T->Left)
@@ -177,21 +177,21 @@ void PostOrderTraversal(BinTree BT)
 		if (T->Right)
 			Push(S, T->Right);
 	}
-	reverse(v.begin(), v.end());  // 逆转 
+	reverse(v.begin(), v.end());  // 逆转
 	for (int i = 0; i < v.size(); i++)
 	    cout << v[i]->Data;
 }
 
 // 层次遍历
-void LevelOrderTraversal(BinTree BT) 
+void LevelOrderTraversal(BinTree BT)
 {
 	queue<BinTree> q;
 	BinTree T;
 	if (!BT)
 		return;
-	q.push(BT);  // BT 入队 
+	q.push(BT);  // BT 入队
 	while (!q.empty()) {
-		T = q.front();  // 访问队首元素 
+		T = q.front();  // 访问队首元素
 		q.pop();  // 出队
 		cout << T->Data;
 		if (T->Left)
@@ -201,31 +201,31 @@ void LevelOrderTraversal(BinTree BT)
 	}
 }
 // 输出叶子结点
-void  FindLeaves(BinTree BT) 
+void  FindLeaves(BinTree BT)
 {
-	if (BT) 
+	if (BT)
 	{
 		if (!BT->Left && !BT->Right)
 			cout << BT->Data;  // 打印叶子结点
-		FindLeaves(BT->Left);  // 进入左子树 
-		FindLeaves(BT->Right);  // 进入右子树 
+		FindLeaves(BT->Left);  // 进入左子树
+		FindLeaves(BT->Right);  // 进入右子树
 	}
 }
 
 // 求树高度
-int  GetHeight(BinTree BT) 
+int  GetHeight(BinTree BT)
 {
 	int HL, HR, MaxH;
 	if (BT) {
-		HL = GetHeight(BT->Left);  // 求左子树高度 
-		HR = GetHeight(BT->Right);  // 求右子树高度 
+		HL = GetHeight(BT->Left);  // 求左子树高度
+		HR = GetHeight(BT->Right);  // 求右子树高度
 		MaxH = (HL > HR) ? HL : HR;
-		return MaxH + 1;  // 当前结点高度为左右子树最大的高度+1 
+		return MaxH + 1;  // 当前结点高度为左右子树最大的高度+1
 	}
 	else
 		return 0;
 }
-int main() 
+int main()
 {
 	BinTree BT;
 	BT = CreatBinTree();
@@ -238,7 +238,15 @@ int main()
 	BT->Right->Left = Insert(7);
 	BT->Right->Right = Insert(9);
 	BT->Right->Left->Right = Insert(8);
-
+/*
+     1
+    / \
+   2   3
+  /\  / \
+ 4  6 7  9
+   /   \
+  5     8
+*/
 	cout << "先序递归遍历：";
 	PreOrderTraversal_Recursion(BT);
 	cout << "\n先序非递归遍历：";
