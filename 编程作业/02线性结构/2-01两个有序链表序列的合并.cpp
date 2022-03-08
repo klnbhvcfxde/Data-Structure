@@ -22,7 +22,6 @@ int main()
 	Print(L);
 	Print(L1);
 	Print(L2);
-	system("pause");
 	return 0;
 }
 

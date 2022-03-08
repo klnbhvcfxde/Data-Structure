@@ -79,6 +79,5 @@ int main()
 	BuildGraph();
 	TopSort();
 	cout << endl;
-	system("pause");
 	return 0;
 }

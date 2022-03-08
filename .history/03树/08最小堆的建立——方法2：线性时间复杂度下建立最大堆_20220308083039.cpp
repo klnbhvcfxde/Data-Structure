@@ -70,6 +70,5 @@ int main()
 		cin >> H->data[++H->size];
 	BuildHeap(H);
 	Traversal(H);
-	system("pause");
 	return 0;
 }

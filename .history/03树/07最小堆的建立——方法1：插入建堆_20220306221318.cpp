@@ -1,16 +1,16 @@
 #include<iostream>
 using namespace std;
-const int MaxData = 100000;  // ÉÚ±øÖµ
-const int MaxSize = 1005;   // ×î´ó¸öÊý 
+const int MaxData = 100000;  // ï¿½Ú±ï¿½Öµ
+const int MaxSize = 1005;   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 using namespace std;
 typedef struct HeapStruct *MaxHeap;
 struct HeapStruct {
-	int *data;   // ´æÖµµÄÊý×é 
-	int size;   // µ±Ç°ÔªËØ¸öÊý 
-	int capacity;  // ×î´óÈÝÁ¿ 
+	int *data;   // ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+	int size;   // ï¿½ï¿½Ç°Ôªï¿½Ø¸ï¿½ï¿½ï¿½ 
+	int capacity;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 };
 
-// ³õÊ¼»¯¶Ñ
+// ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½
 MaxHeap Create_T() 
 {
 	MaxHeap H;
@@ -22,33 +22,33 @@ MaxHeap Create_T()
 	return H;
 }
 
-// ÅÐ¶ÏÊÇ·ñÒÑ¾­Âú 
+// ï¿½Ð¶ï¿½ï¿½Ç·ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ 
 bool IsFull(MaxHeap H)
 {
 	return (H->size == H->capacity);
 }
 
-// ÅÐ¶ÏÊÇ·ñÎª¿Õ
+// ï¿½Ð¶ï¿½ï¿½Ç·ï¿½Îªï¿½ï¿½
 bool IsEmpty(MaxHeap H)
 {
 	return !H->size;
 }
 
-// ²åÈë
+// ï¿½ï¿½ï¿½ï¿½
 void Insert(MaxHeap H, int x) 
 {
 	if (IsFull(H)) 
 	{
-		cout << "×î´ó¶ÑÒÑÂú£¬ÎÞ·¨²åÈë£¡" << endl;
+		cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ·ï¿½ï¿½ï¿½ï¿½ë£¡" << endl;
 		return;
 	}
-	int i = ++H->size;  // Ö¸ÏòÊý×é×îºóÒ»¸ö 
+	int i = ++H->size;  // Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ 
 	for (; H->data[i / 2] < x; i /= 2)
 		H->data[i] = H->data[i / 2];
 	H->data[i] = x;
 }
 
-// ±éÀú 
+// ï¿½ï¿½ï¿½ï¿½ 
 void Traversal(MaxHeap H) 
 {
 	for (int i = 1; i <= H->size; i++)
@@ -69,6 +69,5 @@ int main()
 		Insert(H, t);
 	}
 	Traversal(H);
-	system("pause");
 	return 0;
 }

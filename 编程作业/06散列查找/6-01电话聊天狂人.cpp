@@ -144,6 +144,5 @@ int main()
 		Insert(H, key);
 	}
 	ScanAndOutput(H);
-	system("pause");
 	return 0;
 }

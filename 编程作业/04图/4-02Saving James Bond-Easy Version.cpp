@@ -138,6 +138,5 @@ int main()
 {
 	Init();
 	ListCompoents();
-	system("pause");
 	return 0;
 }

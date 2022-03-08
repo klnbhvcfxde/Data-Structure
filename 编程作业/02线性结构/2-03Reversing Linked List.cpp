@@ -85,6 +85,5 @@ int main()
 		Head = reverList(list, K, Head, num);
 	printList(list, Head);
 
-	system("pause");
 	return 0;
 }

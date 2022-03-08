@@ -134,6 +134,5 @@ int main()
 	PrintPath(path, v1, v2);
 	cout << "最短路径对应的权值为：" << Weight[v1][v2] << endl;
 
-	system("pause");
 	return 0;
 }

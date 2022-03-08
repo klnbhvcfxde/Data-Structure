@@ -129,6 +129,5 @@ int main()
 	}
 	for (int i = 0; i < H->TableSize; i++)
 		cout << i << " " << H->Cells[i].Data << endl;
-	system("pause");
 	return 0;
 }

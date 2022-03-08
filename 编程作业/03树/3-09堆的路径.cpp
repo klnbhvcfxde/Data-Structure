@@ -60,6 +60,5 @@ int main()
 		cin >> t;
 		Print(H, t);
 	}
-	system("pause");
 	return 0;
 }

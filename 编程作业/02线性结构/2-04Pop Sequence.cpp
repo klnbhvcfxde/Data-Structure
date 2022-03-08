@@ -30,6 +30,5 @@ int main()
 		else
 			cout << "NO" << endl;
 	}
-	system("pause");
 	return 0;
 }

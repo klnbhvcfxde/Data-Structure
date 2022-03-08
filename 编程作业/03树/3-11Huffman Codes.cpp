@@ -233,6 +233,5 @@ int main()
 	cin >> m;
 	for (int i = 0; i < m; i++)
 		judge(n, codeLen);
-	system("pause");
 	return 0;
 }

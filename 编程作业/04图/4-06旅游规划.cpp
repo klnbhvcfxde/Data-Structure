@@ -100,6 +100,5 @@ int main()
 	BuildGraph();
 	Dijkstra();
 	cout << dist[D] << " " << cost[D] << endl;
-	system("pause");
 	return 0;
 }

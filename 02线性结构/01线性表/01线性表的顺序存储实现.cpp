@@ -127,6 +127,5 @@ int main()
 		cout << L->Data[i] << " ";
 	cout << endl;
 
-	system("pause");
 	return 0;
 }

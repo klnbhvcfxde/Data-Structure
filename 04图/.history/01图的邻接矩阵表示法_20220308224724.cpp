@@ -100,6 +100,5 @@ int main()
 	MGraph Graph;
 	Graph = BuildGraph();
 	Print(Graph);
-	system("pause");
 	return 0;
 }

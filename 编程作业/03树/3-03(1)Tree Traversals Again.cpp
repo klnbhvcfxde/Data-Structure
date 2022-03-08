@@ -74,6 +74,5 @@ int main()
 	}
 	Tree tree = BuildTree(n, PreOrder, InOrder);
 	PostOrder(tree);
-	system("pause");
 	return 0;
 }

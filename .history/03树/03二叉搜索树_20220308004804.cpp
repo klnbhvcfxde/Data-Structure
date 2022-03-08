@@ -168,7 +168,6 @@ int main() {
 	InOrderTraversal(BST);
 	cout << endl;
 
-	system("pause");
 
 	return 0;
 }

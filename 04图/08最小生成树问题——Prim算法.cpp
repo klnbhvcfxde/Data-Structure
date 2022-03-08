@@ -100,6 +100,5 @@ int main()
 	BuildGraph();
 	Prim(1);
 	Print();
-	system("pause");
 	return 0;
 }

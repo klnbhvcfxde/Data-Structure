@@ -31,6 +31,5 @@ int main()
 	{
 		cout << " " << LevelOrder[i];
 	}
-	system("pause");
 	return 0;
 }

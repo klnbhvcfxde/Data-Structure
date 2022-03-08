@@ -144,6 +144,5 @@ int main()
 		FreeTree(T);
 		cin >> N;
 	}
-	system("pause");
 	return 0;
 }

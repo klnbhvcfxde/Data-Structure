@@ -60,6 +60,5 @@ int main()
 		else
 			cout << " " << post[i];
 	}
-	system("pause");
 	return 0;
 }

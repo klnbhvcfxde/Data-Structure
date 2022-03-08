@@ -88,6 +88,5 @@ int main()
 {
 	BuildGraph();
 	ListComponents();
-	system("pause");
 	return 0;
 }

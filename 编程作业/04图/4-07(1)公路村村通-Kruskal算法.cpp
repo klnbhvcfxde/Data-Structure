@@ -95,6 +95,5 @@ int main()
 		cout << sum << endl;
 	else
 		cout << -1 << endl;
-	system("pause");
 	return 0;
 }

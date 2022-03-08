@@ -83,7 +83,6 @@ int main() {
 	cout << "出队" << DeleteQ(Q) << endl;
 	cout << DeleteQ(Q) << endl;
 
-	system("pause");
 
 	return 0;
 }

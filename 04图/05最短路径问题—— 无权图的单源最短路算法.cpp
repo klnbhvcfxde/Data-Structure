@@ -194,6 +194,5 @@ int main()
 		dist[i] = path[i] = -1;
 	}
 	Unweighted(Graph, 3);
-	system("pause");
 	return 0;
 }

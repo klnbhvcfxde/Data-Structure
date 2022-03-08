@@ -73,7 +73,6 @@ int main() {
 
 	cout << Pop(S) << "出栈" << endl;
 
-	system("pause");
 
 	return 0;
 }

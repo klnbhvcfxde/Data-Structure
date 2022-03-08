@@ -49,7 +49,6 @@ int main()
 	cout << "The run time of f2 is: " << (double)(endTime - startTime) / CLOCKS_PER_SEC / 1e7 << "s" << endl;
 	cout << "f2(1.1) = " << f2(a, 9, 1.1) << endl;
 
-	system("pause");
 
 	return 0;
 }

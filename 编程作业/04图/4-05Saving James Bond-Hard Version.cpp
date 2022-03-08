@@ -136,6 +136,5 @@ int main()
 		return 0;
 	}
 	BFS();
-	system("pause");
 	return 0;
 }

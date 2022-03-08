@@ -165,6 +165,5 @@ int main()
 	{
 		cout << "点 " << i << " 到源点 1 的最短距离是：" << dist[i] << "  上一步结点是：" << path[i] << endl;
 	}
-	system("pause");
 	return 0;
 }

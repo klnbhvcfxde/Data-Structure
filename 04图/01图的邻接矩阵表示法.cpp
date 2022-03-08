@@ -20,6 +20,7 @@ typedef struct GNode *PtrToGNode;
 struct GNode {
 	int Nv;   // 顶点数
 	int Ne;   // 边数
+    // 图里的二维数组居然是固定大小的...
 	WeightType G[MaxVertexNum][MaxVertexNum];  //邻接矩阵
 	DataType Data[MaxVertexNum]; // 存顶点的数据
 	/* 注意：很多情况下，顶点无数据，此时Data[]可以不用出现 */
@@ -47,6 +48,7 @@ MGraph CreateGraph(int VertexNum)
 // 插入边
 void Insert(MGraph Graph, Edge E)
 {
+    //不用graph->ne++吗
 	// 插入边 <V1,V2>
 	Graph->G[E->V1][E->V2] = E->Weight;
 
@@ -100,6 +102,5 @@ int main()
 	MGraph Graph;
 	Graph = BuildGraph();
 	Print(Graph);
-	system("pause");
 	return 0;
 }

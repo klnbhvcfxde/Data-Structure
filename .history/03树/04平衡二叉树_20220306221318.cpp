@@ -2,70 +2,70 @@
 using namespace std;
 typedef struct AVLNode *AVLTree;
 struct AVLNode {
-	int data;     // ´æÖµ 
-	AVLTree left;  // ×ó×ÓÊ÷ 
-	AVLTree right;  // ÓÒ×ÓÊ÷ 
-	int height;  // Ê÷¸ß 
+	int data;     // ï¿½ï¿½Öµ 
+	AVLTree left;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+	AVLTree right;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+	int height;  // ï¿½ï¿½ï¿½ï¿½ 
 };
 
-// ·µ»Ø×î´óÖµ 
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ 
 int Max(int a, int b) 
 {
 	return a > b ? a : b;
 }
 
-// ·µ»ØÊ÷¸ß£¬¿ÕÊ÷·µ»Ø-1 
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-1 
 int getHeight(AVLTree A) 
 {
 	return A == NULL ? -1 : A->height;
 }
 
-// LLÐý×ª
-// °ÑBµÄÓÒ×ÓÊ÷ÌÚ³öÀ´¹Ò¸øAµÄ×ó×ÓÊ÷£¬ÔÙ½«A¹Òµ½BµÄÓÒ×ÓÊ÷ÉÏÈ¥ 
+// LLï¿½ï¿½×ª
+// ï¿½ï¿½Bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú³ï¿½ï¿½ï¿½ï¿½Ò¸ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù½ï¿½Aï¿½Òµï¿½Bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¥ 
 AVLTree LLRotation(AVLTree A) 
 {
-	// ´ËÊ±¸ù½ÚµãÊÇA 
-	AVLTree B = A->left;  // BÎªAµÄ×ó×ÓÊ÷  
-	A->left = B->right;   // BµÄÓÒ×ÓÊ÷¹ÒÔÚ A µÄ×ó×ÓÊ÷ÉÏ 
-	B->right = A;     //  A ¹ÒÔÚBµÄÓÒ×ÓÊ÷ÉÏ 
+	// ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½A 
+	AVLTree B = A->left;  // BÎªAï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  
+	A->left = B->right;   // Bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ A ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+	B->right = A;     //  A ï¿½ï¿½ï¿½ï¿½Bï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 	A->height = Max(getHeight(A->left), getHeight(A->right)) + 1;
 	B->height = Max(getHeight(B->left), A->height) + 1;
-	return B;  // ´ËÊ±BÎª¸ù½áµã 
+	return B;  // ï¿½ï¿½Ê±BÎªï¿½ï¿½ï¿½ï¿½ï¿½ 
 }
 
-// RRÐý×ª
+// RRï¿½ï¿½×ª
 AVLTree RRRotation(AVLTree A) 
 {
-	// ´ËÊ±¸ù½ÚµãÊÇA 
+	// ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½A 
 	AVLTree B = A->right;
 	A->right = B->left;
 	B->left = A;
 	A->height = Max(getHeight(A->left), getHeight(A->right)) + 1;
 	B->height = Max(getHeight(B->left), A->height) + 1;
-	return B;  // ´ËÊ±BÎª¸ù½áµã 
+	return B;  // ï¿½ï¿½Ê±BÎªï¿½ï¿½ï¿½ï¿½ï¿½ 
 }
 
-// LRÐý×ª 
+// LRï¿½ï¿½×ª 
 AVLTree LRRotation(AVLTree A) 
 {
-	// ÏÈRRÐý×ª
+	// ï¿½ï¿½RRï¿½ï¿½×ª
 	A->left = RRRotation(A->left);
-	// ÔÙLLÐý×ª 
+	// ï¿½ï¿½LLï¿½ï¿½×ª 
 	return LLRotation(A);
 }
 
-// RLÐý×ª
+// RLï¿½ï¿½×ª
 AVLTree RLRotation(AVLTree A) 
 {
-	// ÏÈ LL µ¥Ðý
+	// ï¿½ï¿½ LL ï¿½ï¿½ï¿½ï¿½
 	A->right = LLRotation(A->right);
-	// ÔÙ RR µ¥Ðý 
+	// ï¿½ï¿½ RR ï¿½ï¿½ï¿½ï¿½ 
 	return RRRotation(A);
 }
 
 AVLTree Insert(AVLTree T, int x) 
 {
-	if (!T)  // Èç¹û¸Ã½áµãÎª¿Õ£¬³õÊ¼»¯½áµã
+	if (!T)  // ï¿½ï¿½ï¿½ï¿½Ã½ï¿½ï¿½Îªï¿½Õ£ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½
 	{  
 		T = (AVLTree)malloc(sizeof(struct AVLNode));
 		T->data = x;
@@ -73,32 +73,32 @@ AVLTree Insert(AVLTree T, int x)
 		T->right = NULL;
 		T->height = 0;
 	}
-	else   // ·ñÔò²»Îª¿Õ
+	else   // ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½
 	{ 
-		if (x < T->data)  // ×ó×ÓÊ÷
+		if (x < T->data)  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		{  
 			T->left = Insert(T->left, x);
-			if (getHeight(T->left) - getHeight(T->right) == 2)   // Èç¹û×ó×ÓÊ÷ºÍÓÒ×ÓÊ÷¸ß¶È²îÎª 2 
+			if (getHeight(T->left) - getHeight(T->right) == 2)   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¶È²ï¿½Îª 2 
 			{
-				if (x < T->left->data)  // LLÐý×ª 
+				if (x < T->left->data)  // LLï¿½ï¿½×ª 
 					T = LLRotation(T);
-				else if (x > T->left->data)  // LRÐý×ª
+				else if (x > T->left->data)  // LRï¿½ï¿½×ª
 					T = LRRotation(T);
 			}
 		}
-		else if (x > T->data)   // ÓÒ×ÓÊ÷
+		else if (x > T->data)   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		{
 			T->right = Insert(T->right, x);
 			if (getHeight(T->right) - getHeight(T->left) == 2) 
 			{
-				if (x < T->right->data)  // RLÐý×ª 
+				if (x < T->right->data)  // RLï¿½ï¿½×ª 
 					T = RLRotation(T);
-				else if (x > T->right->data)  // RRÐý×ª
+				else if (x > T->right->data)  // RRï¿½ï¿½×ª
 					T = RRRotation(T);
 			}
 		}
 	}
-	//¸üÐÂÊ÷¸ß 
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 	T->height = Max(getHeight(T->left), getHeight(T->right)) + 1;
 	return T;
 }
@@ -117,7 +117,6 @@ int main()
 	}
 	cout << T->data << endl;
 
-	system("pause");
 
 	return 0;
 }

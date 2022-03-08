@@ -38,7 +38,6 @@ int main()
 	}
 	MaxSubseqSum(a, n);
 
-	system("pause");
 
 	return 0;
 }

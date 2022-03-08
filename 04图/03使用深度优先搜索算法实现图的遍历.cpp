@@ -134,6 +134,5 @@ int main()
 	for (int i = 0; i < MaxVertexNum; i++)
 	    Visited[i] = false;
 	DFS(Graph, 0, Visit);
-	system("pause");
 	return 0;
 }

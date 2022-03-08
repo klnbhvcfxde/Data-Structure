@@ -69,6 +69,5 @@ int main()
 		Insert(H, t);
 	}
 	Traversal(H);
-	system("pause");
 	return 0;
 }

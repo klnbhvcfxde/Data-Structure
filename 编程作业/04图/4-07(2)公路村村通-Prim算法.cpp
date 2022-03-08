@@ -7,8 +7,8 @@ using namespace std;
 int G[MaxSize][MaxSize];
 int parent[MaxSize];
 int dist[MaxSize];
-int N;  // ¶¥µã 
-int M;  // ±ß
+int N;  // ï¿½ï¿½ï¿½ï¿½ 
+int M;  // ï¿½ï¿½
 int sum;
 vector<int>MST;
 
@@ -34,7 +34,7 @@ void BuildGraph()
 	}
 }
 
-void Init(int x)       //³õÊ¼»¯µÚÒ»¸öµãºÍµ½ÖÜÎ§µãµÄ¾àÀë
+void Init(int x)       //ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½Î§ï¿½ï¿½Ä¾ï¿½ï¿½ï¿½
 {
 	dist[x] = 0;
 	MST.push_back(x);
@@ -48,7 +48,7 @@ void Init(int x)       //³õÊ¼»¯µÚÒ»¸öµãºÍµ½ÖÜÎ§µãµÄ¾àÀë
 	}
 }
 
-int FindMin()      //ÕÒµãÖÜÎ§Â·¾¶×î¶ÌµÄµã
+int FindMin()      //ï¿½Òµï¿½ï¿½ï¿½Î§Â·ï¿½ï¿½ï¿½ï¿½ÌµÄµï¿½
 {
 	int min = Inf;
 	int xb = -1;
@@ -69,7 +69,7 @@ void Prim(int s)
 	while (1) 
 	{
 		int v = FindMin();
-		if (v == -1)       //²»´æÔÚÕâÑùµÄµã
+		if (v == -1)       //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½
 			break;
 		sum += dist[v];
 		dist[v] = 0;
@@ -93,6 +93,5 @@ int main()
 		cout << sum << endl;
 	else
 		cout << -1 << endl;
-	system("pause");
 	return 0;
 }

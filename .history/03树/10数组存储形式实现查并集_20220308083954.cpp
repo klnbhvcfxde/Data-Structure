@@ -48,6 +48,5 @@ int main()
 	Union(S, 8, 6);
 	cout << Find(S, 6) << endl;
 	cout << Find(S, 8) << endl;
-	system("pause");
 	return 0;
 }

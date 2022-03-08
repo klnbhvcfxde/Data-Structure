@@ -123,7 +123,6 @@ int main()
 	cout << "P1+P2：";
 	PrintPoly(res);
 
-	system("pause");
 
 	return 0;
 }

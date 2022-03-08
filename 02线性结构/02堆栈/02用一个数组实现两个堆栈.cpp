@@ -90,7 +90,6 @@ int main() {
 
 	cout << Pop(S,2) << "出栈2" << endl;
 
-	system("pause");
 
 	return 0;
 }

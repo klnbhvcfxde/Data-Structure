@@ -91,6 +91,5 @@ int main()
 		case 'S':check_network(s, n); break;
 		}
 	} while (in != 'S');
-	system("pause");
 	return 0;
 }

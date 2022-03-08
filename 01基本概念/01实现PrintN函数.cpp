@@ -23,7 +23,6 @@ int main()
 	PrintN_Iteration(10000);
 	//PrintN_Recursion(10000);
 
-	system("pause");
 
 	return 0;
 }

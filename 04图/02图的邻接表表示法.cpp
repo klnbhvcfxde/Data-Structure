@@ -130,6 +130,5 @@ int main()
 	LGraph Graph;
 	Graph = BuildGraph();
 	Print(Graph);
-	system("pause");
 	return 0;
 }

@@ -143,6 +143,5 @@ int main()
 {
 	MGraph G = BuildGraph();
 	FindAnimal(G);
-	system("pause");
 	return 0;
 }

@@ -62,90 +62,89 @@ int main()
 	InorderTraversal(BST); 
 	cout << endl;
 
-	system("pause");
 	return 0;
 }
 
-// ╡Иур╣щ╧Ий╣ож 
+// О©╫О©╫О©╫р╣щ╧О©╫й╣О©╫О©╫ 
 BinTree Find(BinTree BST, ElementType X)
 {
-	if (!BST)  // хГ╧Ш╦Ы╫А╣Цн╙©уё╛╥╣╩ь NULL 
+	if (!BST)  // О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫н╙О©╫уёО©╫О©╫О©╫О©╫О©╫ NULL 
 		return NULL;
-	if (X < BST->Data) // ╠х╦Ы╫А╣Цп║ё╛х╔вСвсйВ╡Иур 
+	if (X < BST->Data) // О©╫х╦О©╫О©╫О©╫О©╫п║О©╫О©╫х╔О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ 
 		return Find(BST->Left, X);
-	else if (BST->Data < X)  // ╠х╦Ы╫А╣Ц╢Сё╛х╔срвсйВ╡Иур 
+	else if (BST->Data < X)  // О©╫х╦О©╫О©╫О©╫О©╫О©╫х╔О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ 
 		return Find(BST->Right, X);
-	else if (BST->Data == X) // ур╣╫ак 
+	else if (BST->Data == X) // О©╫р╣О©╫О©╫О©╫ 
 		return BST;
 }
 
-// ╡ИурвНп║ж╣╣д╣щ╧Ий╣ож
+// О©╫О©╫О©╫О©╫О©╫О©╫п║ж╣О©╫д╣щ╧О©╫й╣О©╫О©╫
 BinTree FindMin(BinTree BST)
 {
-	if (!BST)    // хГ╧Шн╙©уакё╛╥╣╩ь NULL 
+	if (!BST)    // О©╫О©╫О©╫н╙О©╫О©╫О©╫кёО©╫О©╫О©╫О©╫О©╫ NULL 
 		return NULL;
-	else if (BST->Left)   // ╩╧╢ФтзвСвсйВё╛яьвС╥жж╖╪лпЬ╡Иур 
+	else if (BST->Left)   // О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ж╖О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ 
 		return FindMin(BST->Left);
-	else  // ур╣╫ак 
+	else  // О©╫р╣О©╫О©╫О©╫ 
 		return BST;
 }
 
-// ╡ИурвН╢Сж╣╣д╥г╣щ╧Ий╣ож
+// О©╫О©╫О©╫О©╫О©╫О©╫О©╫ж╣О©╫д╥г╣щ╧О©╫й╣О©╫О©╫
 BinTree FindMax(BinTree BST)
 {
-	if (BST)  // хГ╧Ш╡╩©у 
-		while (BST->Right)   // ж╩р╙срвсйВ╩╧╢Фтз 
+	if (BST)  // О©╫О©╫О©╫О©╫О©╫О©╫О©╫ 
+		while (BST->Right)   // ж╩р╙О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ 
 			BST = BST->Right;
 	return BST;
 }
 
-// ╡ЕхК
+// О©╫О©╫О©╫О©╫
 BinTree Insert(BinTree BST, ElementType X)
 {
-	if (!BST)  // хГ╧Шн╙©уё╛ЁУй╪╩╞╦ц╫А╣Ц
+	if (!BST)  // О©╫О©╫О©╫н╙О©╫уёО©╫О©╫О©╫й╪О©╫О©╫О©╫ц╫О©╫О©╫
 	{
 		BST = (BinTree)malloc(sizeof(struct TNode));
 		BST->Data = X;
 		BST->Left = NULL;
 		BST->Right = NULL;
 	}
-	else  // ╡╩н╙©у
+	else  // О©╫О©╫н╙О©╫О©╫
 	{
-		if (X < BST->Data)  // хГ╧Шп║ё╛╧ртзвС╠ъ 
+		if (X < BST->Data)  // О©╫О©╫О©╫п║О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ 
 			BST->Left = Insert(BST->Left, X);
-		else if (BST->Data < X)  // хГ╧Ш╢Сё╛╧ртзср╠ъ 
+		else if (BST->Data < X)  // О©╫О©╫О©╫О©╫Сё╛╧О©╫О©╫О©╫О©╫р╠О©╫ 
 			BST->Right = Insert(BST->Right, X);
-		// хГ╧ШоЮ╣хё╛й╡ц╢╤╪╡╩сцвЖ 
+		// О©╫О©╫О©╫О©╫О©╫хёО©╫й╡ц╢О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ 
 	}
 	return BST;
 }
 
-// и╬ЁЩ
+// и╬О©╫О©╫
 BinTree Delete(BinTree BST, ElementType X)
 {
 	BinTree tmp;
 	if (!BST)
 		cout << "Not Found" << endl;
-	else if (X < BST->Data)   // X ╠х╣╠г╟╫А╣Цж╣п║ё╛тзвСвсйВ╪лпЬ╡Иури╬ЁЩ 
+	else if (X < BST->Data)   // X О©╫х╣О©╫г╟О©╫О©╫О©╫ж╣п║О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫и╬О©╫О©╫ 
 		BST->Left = Delete(BST->Left, X);
-	else if (BST->Data < X)   // X ╠х╣╠г╟╫А╣Цж╣╢Сё╛тзсрвсйВ╪лпЬ╡Иури╬ЁЩ 
+	else if (BST->Data < X)   // X О©╫х╣О©╫г╟О©╫О©╫О©╫ж╣О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫и╬О©╫О©╫ 
 		BST->Right = Delete(BST->Right, X);
-	else  //  ур╣╫╠╩и╬ЁЩ╫А╣Ц
+	else  //  О©╫р╣О©╫О©╫О©╫и╬О©╫О©╫О©╫О©╫О©╫
 	{
-		if (BST->Left && BST->Right)  // ╠╩и╬ЁЩ╫А╣Цспа╘╨╒вс╫А╣Ц
+		if (BST->Left && BST->Right)  // О©╫О©╫и╬О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫с╫О©╫О©╫
 		{
-			tmp = FindMin(BST->Right);   // ур╣╫срвсйВжпж╣вНп║╣д
-			BST->Data = tmp->Data;     // сцур╣╫╣дж╣╦╡╦г╣╠г╟╫А╣Ц 
-			BST->Right = Delete(BST->Right, tmp->Data);   // ╟яг╟цФур╣╫╣дсрвсйВвНп║ж╣╫А╣Ци╬ЁЩ 
+			tmp = FindMin(BST->Right);   // О©╫р╣О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ж╣О©╫О©╫п║О©╫О©╫
+			BST->Data = tmp->Data;     // О©╫О©╫О©╫р╣О©╫О©╫О©╫ж╣О©╫О©╫О©╫г╣О©╫г╟О©╫О©╫О©╫ 
+			BST->Right = Delete(BST->Right, tmp->Data);   // О©╫О©╫г╟О©╫О©╫О©╫р╣О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫п║ж╣О©╫О©╫О©╫и╬О©╫О©╫ 
 		}
-		else  // ╠╩и╬ЁЩ╫А╣Цж╩спр╩╦Ж╨╒вс╫А╣Ц╩Рц╩сп╨╒вс╫А╣Ц
+		else  // О©╫О©╫и╬О©╫О©╫О©╫О©╫О©╫ж╩О©╫О©╫р╩О©╫О©╫О©╫О©╫О©╫с╫О©╫О©╫О©╫ц╩О©╫п╨О©╫О©╫с╫О©╫О©╫
 		{
 			tmp = BST;
-			if (!BST->Left && !BST->Right)  // ц╩сп╨╒вс╫А╣Ц 
+			if (!BST->Left && !BST->Right)  // ц╩О©╫п╨О©╫О©╫с╫О©╫О©╫ 
 				BST = NULL;
-			else if (BST->Left && !BST->Right)  // ж╩спвС╨╒вс╫А╣Ц 
+			else if (BST->Left && !BST->Right)  // ж╩О©╫О©╫О©╫О©╫О©╫с╫О©╫О©╫ 
 				BST = BST->Left;
-			else if (!BST->Left && BST->Right)  // ж╩спср╨╒вс╫А╣Ц 
+			else if (!BST->Left && BST->Right)  // ж╩О©╫О©╫О©╫р╨О©╫О©╫с╫О©╫О©╫ 
 				BST = BST->Right;
 			free(tmp);
 		}
@@ -153,24 +152,24 @@ BinTree Delete(BinTree BST, ElementType X)
 	return BST;
 }
 
-// охпР╠ИюЗ 
+// О©╫О©╫О©╫О©╫О©╫О©╫О©╫ 
 void PreorderTraversal(BinTree BT)
 {
 	if (BT)
 	{
-		cout << BT->Data << " ";  // ╢Рс║╦Ы 
-		PreorderTraversal(BT->Left);  // ╫ЬхКвСвсйВ 
-		PreorderTraversal(BT->Right);  // ╫ЬхКсрвсйВ 
+		cout << BT->Data << " ";  // О©╫О©╫с║О©╫О©╫ 
+		PreorderTraversal(BT->Left);  // О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ 
+		PreorderTraversal(BT->Right);  // О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ 
 	}
 }
 
-// жппР╠ИюЗ 
+// О©╫О©╫О©╫О©╫О©╫О©╫О©╫ 
 void InorderTraversal(BinTree BT)
 {
 	if (BT)
 	{
-		InorderTraversal(BT->Left);  // ╫ЬхКвСвсйВ 
-		cout << BT->Data << " ";  // ╢Рс║╦Ы 
-		InorderTraversal(BT->Right);  // ╫ЬхКсрвсйВ 
+		InorderTraversal(BT->Left);  // О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ 
+		cout << BT->Data << " ";  // О©╫О©╫с║О©╫О©╫ 
+		InorderTraversal(BT->Right);  // О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ 
 	}
 }

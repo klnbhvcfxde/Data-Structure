@@ -105,6 +105,5 @@ int main()
 {
 	Tree root = BuildTree(T);
 	PrintLeava(root);
-	system("pause");
 	return 0;
 }

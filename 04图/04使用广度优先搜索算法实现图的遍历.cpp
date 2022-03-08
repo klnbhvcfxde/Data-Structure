@@ -199,6 +199,5 @@ int main()
 	for (int i = 0; i < MaxVertexNum; i++)
 	    Visited[i] = false;
 	BFS(Graph, 0, Visit);
-	system("pause");
 	return 0;
 }

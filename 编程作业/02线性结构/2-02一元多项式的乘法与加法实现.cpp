@@ -192,6 +192,5 @@ int main()
 	P = getAdd(P1, P2);
 	print(P);
 
-	system("pause");
 	return 0;
 }

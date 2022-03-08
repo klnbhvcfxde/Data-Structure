@@ -109,6 +109,5 @@ int main()
 			cout << pos;
 	}
 	cout << endl;
-	system("pause");
 	return 0;
 }

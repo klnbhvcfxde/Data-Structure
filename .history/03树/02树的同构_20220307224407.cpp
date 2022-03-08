@@ -128,7 +128,6 @@ int main() {
 	else
 		cout << "否" << endl;
 
-	system("pause");
 
 	return 0;
 }

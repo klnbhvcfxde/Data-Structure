@@ -163,6 +163,5 @@ int main()
 	Huff = Huffman(H);
 	PreOrderTraversal(Huff);
 	cout << endl;
-	system("pause");
 	return 0;
 }

@@ -74,7 +74,6 @@ int main()
 	cout << "L2：";
 	Print(L2);
 
-	system("pause");
 
 	return 0;
 }

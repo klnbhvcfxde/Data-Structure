@@ -262,7 +262,6 @@ int main()
 
 	cout << "\n输出树的高度：" << GetHeight(BT) << endl;
 
-	system("pause");
 
 	return 0;
 }

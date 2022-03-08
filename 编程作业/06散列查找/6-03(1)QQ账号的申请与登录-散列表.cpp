@@ -6,8 +6,8 @@ using namespace std;
 typedef struct Node Cell;
 struct Node {
 	bool exist;
-	string acc;   // ÕËºÅ
-	string pas;  // ÃÜÂë 
+	string acc;   // ï¿½Ëºï¿½
+	string pas;  // ï¿½ï¿½ï¿½ï¿½ 
 };
 
 typedef struct HashTBL *HashTable;
@@ -16,7 +16,7 @@ struct HashTBL {
 	Cell *users;
 };
 
-// ³ýÁôÓàÊý·¨¹þÏ£º¯Êý 
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï£ï¿½ï¿½ï¿½ï¿½ 
 int Hash(int key, int p) 
 {
 	return key % p;
@@ -31,14 +31,14 @@ int NextPrime(int N)
 		for (i = (int)sqrt(p); i > 2; i--)
 			if (!(p%i))
 				break;
-		if (i == 2 && p % 4 == 3) // ±£Ö¤Æ½·½Ì½²â¶¼ÄÜÕÒµ½ 
+		if (i == 2 && p % 4 == 3) // ï¿½ï¿½Ö¤Æ½ï¿½ï¿½Ì½ï¿½â¶¼ï¿½ï¿½ï¿½Òµï¿½ 
 			break;
 		p += 2;
 	}
 	return p;
 }
 
-// ³õÊ¼»¯ 
+// ï¿½ï¿½Ê¼ï¿½ï¿½ 
 HashTable Create(int TableSize) 
 {
 	HashTable H;
@@ -75,25 +75,25 @@ void Insert(HashTable H, string key, string pas, char flag)
 {
 	int pos;
 	pos = Find(H, key);
-	if (H->users[pos].exist)   // ÒÑ¾­´æÔÚ 
+	if (H->users[pos].exist)   // ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ 
 	{
-		if (flag == 'L')   // µÇÂ½ 
+		if (flag == 'L')   // ï¿½ï¿½Â½ 
 		{ 
-			if (pas == H->users[pos].pas)   // ÃÜÂëÕýÈ·£¬µÇÂ½³É¹¦ 
+			if (pas == H->users[pos].pas)   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½Â½ï¿½É¹ï¿½ 
 				cout << "Login: OK" << endl;
-			else   // ÃÜÂë´íÎó£¬µÇÂ½Ê§°Ü 
+			else   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó£¬µï¿½Â½Ê§ï¿½ï¿½ 
 				cout << "ERROR: Wrong PW" << endl;
 		}
-		else if (flag == 'N')   // ×¢²áÊ§°Ü 
+		else if (flag == 'N')   // ×¢ï¿½ï¿½Ê§ï¿½ï¿½ 
 		{
 			cout << "ERROR: Exist" << endl;
 		}
 	}
-	else   // ²»´æÔÚ 
+	else   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 	{
-		if (flag == 'L')   // µÇÂ½Ê§°Ü 
+		if (flag == 'L')   // ï¿½ï¿½Â½Ê§ï¿½ï¿½ 
 			cout << "ERROR: Not Exist" << endl;
-		else if (flag == 'N')  // ×¢²á³É¹¦ 
+		else if (flag == 'N')  // ×¢ï¿½ï¿½É¹ï¿½ 
 		{
 			cout << "New: OK" << endl;
 			H->users[pos].exist = true;
@@ -117,6 +117,5 @@ int main()
 		cin >> command >> account >> password;
 		Insert(H, account, password, command);
 	}
-	system("pause");
 	return 0;
 }

@@ -8,101 +8,101 @@ struct TreeNode {
 	BinTree Right;
 };
 
-// ²éÕÒµÝ¹éÊµÏÖ 
+// ï¿½ï¿½ï¿½ÒµÝ¹ï¿½Êµï¿½ï¿½ 
 BinTree Find(ElementType X, BinTree BST) 
 {
-	if (!BST)  // Èç¹û¸ù½áµãÎª¿Õ£¬·µ»Ø NULL 
+	if (!BST)  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½Õ£ï¿½ï¿½ï¿½ï¿½ï¿½ NULL 
 		return NULL;
-	if (X < BST->Data) // ±È¸ù½áµãÐ¡£¬È¥×ó×ÓÊ÷²éÕÒ 
+	if (X < BST->Data) // ï¿½È¸ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½È¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 		return Find(X, BST->Left);
-	else if (BST->Data < X)  // ±È¸ù½áµã´ó£¬È¥ÓÒ×ÓÊ÷²éÕÒ 
+	else if (BST->Data < X)  // ï¿½È¸ï¿½ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 		return Find(X, BST->Right);
-	else if (BST->Data == X) // ÕÒµ½ÁË 
+	else if (BST->Data == X) // ï¿½Òµï¿½ï¿½ï¿½ 
 		return BST;
 }
 
-// ²éÕÒ·ÇµÝ¹éÊµÏÖ
+// ï¿½ï¿½ï¿½Ò·ÇµÝ¹ï¿½Êµï¿½ï¿½
 BinTree IterFind(ElementType X, BinTree BST) 
 {
 	while (BST) 
 	{
 		if (X < BST->Data)
 			BST = BST->Left;
-		else if (BST->Data < X)  // ±È¸ù½áµã´ó£¬È¥ÓÒ×ÓÊ÷²éÕÒ 
+		else if (BST->Data < X)  // ï¿½È¸ï¿½ï¿½ï¿½ï¿½ï¿½È¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 			BST = BST->Right;
-		else if (BST->Data == X) // ÕÒµ½ÁË 
+		else if (BST->Data == X) // ï¿½Òµï¿½ï¿½ï¿½ 
 			return BST;
 	}
 	return NULL;
 }
 
-// ²éÕÒ×îÐ¡ÖµµÄµÝ¹éÊµÏÖ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡Öµï¿½ÄµÝ¹ï¿½Êµï¿½ï¿½
 BinTree FindMin(BinTree BST) 
 {
-	if (!BST)    // Èç¹ûÎª¿ÕÁË£¬·µ»Ø NULL 
+	if (!BST)    // ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½Ë£ï¿½ï¿½ï¿½ï¿½ï¿½ NULL 
 		return NULL;
-	else if (BST->Left)   // »¹´æÔÚ×ó×ÓÊ÷£¬ÑØ×ó·ÖÖ§¼ÌÐø²éÕÒ 
+	else if (BST->Left)   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 		return FindMin(BST->Left);
-	else  // ÕÒµ½ÁË 
+	else  // ï¿½Òµï¿½ï¿½ï¿½ 
 		return BST;
 }
 
-// ²éÕÒ×î´óÖµµÄ·ÇµÝ¹éÊµÏÖ
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½Ä·ÇµÝ¹ï¿½Êµï¿½ï¿½
 BinTree FindMax(BinTree BST) 
 {
-	if (BST)  // Èç¹û²»¿Õ 
-		while (BST->Right)   // Ö»ÒªÓÒ×ÓÊ÷»¹´æÔÚ 
+	if (BST)  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+		while (BST->Right)   // Ö»Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 			BST = BST->Right;
 	return BST;
 }
 
-// ²åÈë
+// ï¿½ï¿½ï¿½ï¿½
 BinTree Insert(ElementType X, BinTree BST) 
 {
-	if (!BST)  // Èç¹ûÎª¿Õ£¬³õÊ¼»¯¸Ã½áµã
+	if (!BST)  // ï¿½ï¿½ï¿½Îªï¿½Õ£ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½Ã½ï¿½ï¿½
 	{ 
 		BST = (BinTree)malloc(sizeof(struct TreeNode));
 		BST->Data = X;
 		BST->Left = NULL;
 		BST->Right = NULL;
 	}
-	else  // ²»Îª¿Õ
+	else  // ï¿½ï¿½Îªï¿½ï¿½
 	{ 
-		if (X < BST->Data)  // Èç¹ûÐ¡£¬¹ÒÔÚ×ó±ß 
+		if (X < BST->Data)  // ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 			BST->Left = Insert(X, BST->Left);
-		else if (BST->Data < X)  // Èç¹û´ó£¬¹ÒÔÚÓÒ±ß 
+		else if (BST->Data < X)  // ï¿½ï¿½ï¿½ï¿½ó£¬¹ï¿½ï¿½ï¿½ï¿½Ò±ï¿½ 
 			BST->Right = Insert(X, BST->Right);
-		// Èç¹ûÏàµÈ£¬Ê²Ã´¶¼²»ÓÃ×ö 
+		// ï¿½ï¿½ï¿½ï¿½ï¿½È£ï¿½Ê²Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 	}
 	return BST;
 }
 
-// É¾³ý
+// É¾ï¿½ï¿½
 BinTree Delete(ElementType X, BinTree BST) 
 {
 	BinTree tmp;
 	if (!BST)
-		cout << "ÒªÉ¾³ýµÄÔªËØÎ´ÕÒµ½";
-	else if (X < BST->Data)   // X ±Èµ±Ç°½áµãÖµÐ¡£¬ÔÚ×ó×ÓÊ÷¼ÌÐø²éÕÒÉ¾³ý 
+		cout << "ÒªÉ¾ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½Î´ï¿½Òµï¿½";
+	else if (X < BST->Data)   // X ï¿½Èµï¿½Ç°ï¿½ï¿½ï¿½ÖµÐ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ 
 		BST->Left = Delete(X, BST->Left);
-	else if (BST->Data < X)   // X ±Èµ±Ç°½áµãÖµ´ó£¬ÔÚÓÒ×ÓÊ÷¼ÌÐø²éÕÒÉ¾³ý 
+	else if (BST->Data < X)   // X ï¿½Èµï¿½Ç°ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½ 
 		BST->Right = Delete(X, BST->Right);
-	else  //  ÕÒµ½±»É¾³ý½áµã
+	else  //  ï¿½Òµï¿½ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½ï¿½
 	{ 
-		if (BST->Left && BST->Right)  // ±»É¾³ý½áµãÓÐÁ©º¢×Ó½áµã
+		if (BST->Left && BST->Right)  // ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó½ï¿½ï¿½
 		{ 
-			tmp = FindMin(BST->Right);   // ÕÒµ½ÓÒ×ÓÊ÷ÖÐÖµ×îÐ¡µÄ
-			BST->Data = tmp->Data;     // ÓÃÕÒµ½µÄÖµ¸²¸Çµ±Ç°½áµã 
-			BST->Right = Delete(tmp->Data, BST->Right);   // °ÑÇ°ÃæÕÒµ½µÄÓÒ×ÓÊ÷×îÐ¡Öµ½áµãÉ¾³ý 
+			tmp = FindMin(BST->Right);   // ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Ð¡ï¿½ï¿½
+			BST->Data = tmp->Data;     // ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½Çµï¿½Ç°ï¿½ï¿½ï¿½ 
+			BST->Right = Delete(tmp->Data, BST->Right);   // ï¿½ï¿½Ç°ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡Öµï¿½ï¿½ï¿½É¾ï¿½ï¿½ 
 		}
-		else  // ±»É¾³ý½áµãÖ»ÓÐÒ»¸öº¢×Ó½áµã»òÃ»ÓÐº¢×Ó½áµã
+		else  // ï¿½ï¿½É¾ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Ó½ï¿½ï¿½ï¿½Ã»ï¿½Ðºï¿½ï¿½Ó½ï¿½ï¿½
 		{ 
 			tmp = BST;
-			if (!BST->Left && !BST->Right)  // Ã»ÓÐº¢×Ó½áµã 
+			if (!BST->Left && !BST->Right)  // Ã»ï¿½Ðºï¿½ï¿½Ó½ï¿½ï¿½ 
 				BST = NULL;
-			else if (BST->Left && !BST->Right)  // Ö»ÓÐ×óº¢×Ó½áµã 
+			else if (BST->Left && !BST->Right)  // Ö»ï¿½ï¿½ï¿½ï¿½ï¿½Ó½ï¿½ï¿½ 
 				BST = BST->Left;
-			else if (!BST->Left && BST->Right)  // Ö»ÓÐÓÒº¢×Ó½áµã 
+			else if (!BST->Left && BST->Right)  // Ö»ï¿½ï¿½ï¿½Òºï¿½ï¿½Ó½ï¿½ï¿½ 
 				BST = BST->Right;
 			free(tmp);
 		}
@@ -110,14 +110,14 @@ BinTree Delete(ElementType X, BinTree BST)
 	return BST;
 }
 
-// ÖÐÐò±éÀú 
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 void  InOrderTraversal(BinTree BT) 
 {
 	if (BT) 
 	{
-		InOrderTraversal(BT->Left);  // ½øÈë×ó×ÓÊ÷ 
-		cout << BT->Data;  // ´òÓ¡¸ù 
-		InOrderTraversal(BT->Right);  // ½øÈëÓÒ×ÓÊ÷ 
+		InOrderTraversal(BT->Left);  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
+		cout << BT->Data;  // ï¿½ï¿½Ó¡ï¿½ï¿½ 
+		InOrderTraversal(BT->Right);  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 	}
 }
 
@@ -143,16 +143,16 @@ int main() {
 			 2      9
 	*/
 
-	cout << "ÖÐÐò±éÀúµÄ½á¹ûÊÇ£º";
+	cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½ï¿½ï¿½ï¿½Ç£ï¿½";
 	InOrderTraversal(BST);
 	cout << endl;
 
-	cout << "²éÕÒ×îÐ¡ÖµÊÇ£º" << FindMin(BST)->Data << endl;
-	cout << "²éÕÒ×î´óÖµÊÇ£º" << FindMax(BST)->Data << endl;
-	cout << "²éÕÒÖµÎª3µÄ½áµã×ó×ÓÊ÷½áµãÖµÎª£º" << Find(3, BST)->Left->Data << endl;
-	cout << "²éÕÒÖµÎª7µÄ½áµãÓÒ×ÓÊ÷½áµãÖµÎª£º" << IterFind(7, BST)->Right->Data << endl;
+	cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡Öµï¿½Ç£ï¿½" << FindMin(BST)->Data << endl;
+	cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½Ç£ï¿½" << FindMax(BST)->Data << endl;
+	cout << "ï¿½ï¿½ï¿½ï¿½ÖµÎª3ï¿½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÖµÎªï¿½ï¿½" << Find(3, BST)->Left->Data << endl;
+	cout << "ï¿½ï¿½ï¿½ï¿½ÖµÎª7ï¿½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÖµÎªï¿½ï¿½" << IterFind(7, BST)->Right->Data << endl;
 
-	cout << "É¾³ýÖµÎª5µÄ½áµã" << endl;
+	cout << "É¾ï¿½ï¿½ÖµÎª5ï¿½Ä½ï¿½ï¿½" << endl;
 	Delete(5, BST);
 	/*
 				6
@@ -164,11 +164,10 @@ int main() {
 			 2      9
 	*/
 
-	cout << "ÖÐÐò±éÀúµÄ½á¹ûÊÇ£º";
+	cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½ï¿½ï¿½ï¿½Ç£ï¿½";
 	InOrderTraversal(BST);
 	cout << endl;
 
-	system("pause");
 
 	return 0;
 }

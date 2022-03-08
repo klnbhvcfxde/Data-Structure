@@ -133,6 +133,5 @@ int main()
 	}
 	Print(H);
 	DestroyTable(H);
-	system("pause");
 	return 0;
 }

@@ -36,7 +36,6 @@ int main()
 		cout << a[i] << "  ";
 	}
 	cout << endl;
-	system("pause");
 
 	return 0;
 }

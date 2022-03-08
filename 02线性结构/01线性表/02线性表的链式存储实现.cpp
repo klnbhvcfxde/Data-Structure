@@ -167,7 +167,6 @@ int main()
 	cout << "删除链表中下标为3的元素" << endl;
 	Print(L);
 
-	system("pause");
 
 	return 0;
 }

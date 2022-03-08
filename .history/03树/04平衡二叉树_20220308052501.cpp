@@ -117,7 +117,6 @@ int main()
 	}
 	cout << T->data << endl;
 
-	system("pause");
 
 	return 0;
 }

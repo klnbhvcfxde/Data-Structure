@@ -111,6 +111,5 @@ int main()
 	BuildGraph();
 	Kruskal();
 	Print();
-	system("pause");
 	return 0;
 }
