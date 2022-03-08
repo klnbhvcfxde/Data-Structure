@@ -6,7 +6,7 @@ int A[] = { 1,3,5,8 };  // 预先定义好一组权值
 int A_length = 4;  // 定义其长度 
 typedef struct HeapStruct *MinHeap;
 typedef struct TreeNode *HuffmanTree;
-struct HeapStruct {  // 存放哈夫曼树的堆 
+struct HeapStruct {  // 存放哈夫曼树的堆. 堆里能存树节点
 	HuffmanTree *data;   // 存值的数组  
 	int size;   // 堆的当前大小  
 	int capacity; // 最大容量	
