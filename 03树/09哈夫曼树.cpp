@@ -2,32 +2,32 @@
 using namespace std;
 #define MaxSize 1000
 #define MinData -1000 
-int A[] = { 1,3,5,8 };  // Ô¤ÏÈ¶¨ÒåºÃÒ»×éÈ¨Öµ 
-int A_length = 4;  // ¶¨ÒåÆä³¤¶È 
+int A[] = { 1,3,5,8 };  // é¢„å…ˆå®šä¹‰å¥½ä¸€ç»„æƒå€¼ 
+int A_length = 4;  // å®šä¹‰å…¶é•¿åº¦ 
 typedef struct HeapStruct *MinHeap;
 typedef struct TreeNode *HuffmanTree;
-struct HeapStruct {  // ´æ·Å¹ş·òÂüÊ÷µÄ¶Ñ 
-	HuffmanTree *data;   // ´æÖµµÄÊı×é  
-	int size;   // ¶ÑµÄµ±Ç°´óĞ¡  
-	int capacity; // ×î´óÈİÁ¿	
+struct HeapStruct {  // å­˜æ”¾å“ˆå¤«æ›¼æ ‘çš„å † 
+	HuffmanTree *data;   // å­˜å€¼çš„æ•°ç»„  
+	int size;   // å †çš„å½“å‰å¤§å°  
+	int capacity; // æœ€å¤§å®¹é‡	
 };
-struct TreeNode { // ¹ş·òÂüÊ÷ 
-	int weight;  //È¨Öµ
-	HuffmanTree Left;  // ×ó×ÓÊ÷ 
-	HuffmanTree right; // ÓÒ×ÓÊ÷ 
+struct TreeNode { // å“ˆå¤«æ›¼æ ‘ 
+	int weight;  //æƒå€¼
+	HuffmanTree Left;  // å·¦å­æ ‘ 
+	HuffmanTree right; // å³å­æ ‘ 
 };
 
-MinHeap Create_H(); // ³õÊ¼»¯¶Ñ
-HuffmanTree Create_T(); // ³õÊ¼»¯¹ş·òÂüÊ÷ 
-void sort(MinHeap H, int i); // µ÷Õû×Ó×îĞ¡¶Ñ 
-void adjust(MinHeap H); // µ÷Õû×îĞ¡¶Ñ 
-void BuildMinHeap(MinHeap H);  // ½¨¶Ñ 
-HuffmanTree Delete(MinHeap H); // É¾³ı×îĞ¡¶ÑÔªËØ 
-void Insert(MinHeap H, HuffmanTree Huff);  // ²åÈë×îĞ¡¶ÑÔªËØ 
-void PreOrderTraversal(HuffmanTree Huff); // ÏÈĞò±éÀú 
-HuffmanTree Huffman(MinHeap H); // ¹ş·òÂüÊ÷µÄ¹¹½¨ 
+MinHeap Create_H(); // åˆå§‹åŒ–å †
+HuffmanTree Create_T(); // åˆå§‹åŒ–å“ˆå¤«æ›¼æ ‘ 
+void sort(MinHeap H, int i); // è°ƒæ•´å­æœ€å°å † 
+void adjust(MinHeap H); // è°ƒæ•´æœ€å°å † 
+void BuildMinHeap(MinHeap H);  // å»ºå † 
+HuffmanTree Delete(MinHeap H); // åˆ é™¤æœ€å°å †å…ƒç´  
+void Insert(MinHeap H, HuffmanTree Huff);  // æ’å…¥æœ€å°å †å…ƒç´  
+void PreOrderTraversal(HuffmanTree Huff); // å…ˆåºéå† 
+HuffmanTree Huffman(MinHeap H); // å“ˆå¤«æ›¼æ ‘çš„æ„å»º 
 
-// ³õÊ¼»¯¶Ñ
+// åˆå§‹åŒ–å †
 MinHeap Create_H() 
 {
 	MinHeap H;
@@ -36,14 +36,14 @@ MinHeap Create_H()
 	H->data = (HuffmanTree *)malloc(sizeof(struct TreeNode) * (MaxSize + 1));
 	H->capacity = MaxSize;
 	H->size = 0;
-	// ¸ø¶ÑÖÃÉÚ±ø 
-	Huff = Create_T();  // ³õÊ¼»¯¹ş·òÂüÊ÷ 
+	// ç»™å †ç½®å“¨å…µ 
+	Huff = Create_T();  // åˆå§‹åŒ–å“ˆå¤«æ›¼æ ‘ 
 	Huff->weight = MinData;
 	H->data[0] = Huff;
 	return H;
 }
 
-// ³õÊ¼»¯¹ş·òÂüÊ÷ 
+// åˆå§‹åŒ–å“ˆå¤«æ›¼æ ‘ 
 HuffmanTree Create_T() 
 {
 	HuffmanTree Huff;
@@ -54,11 +54,11 @@ HuffmanTree Create_T()
 	return Huff;
 }
 
-// µ÷Õû×Ó×îĞ¡¶Ñ 
+// è°ƒæ•´å­æœ€å°å † 
 void sort(MinHeap H, int i) 
 {
 	int Parent, Child;
-	int temp = H->data[i]->weight; // È¡³öµ±Ç°"¸ù½áµã"Öµ
+	int temp = H->data[i]->weight; // å–å‡ºå½“å‰"æ ¹ç»“ç‚¹"å€¼
 	for (Parent = i; Parent * 2 <= H->size; Parent = Child) 
 	{
 		Child = 2 * Parent;
@@ -72,17 +72,17 @@ void sort(MinHeap H, int i)
 	H->data[Parent]->weight = temp;
 }
 
-// µ÷Õû×îĞ¡¶Ñ 
+// è°ƒæ•´æœ€å°å † 
 void adjust(MinHeap H) 
 {
 	for (int i = H->size / 2; i > 0; i--)
-		sort(H, i);// Ã¿¸ö"×Ó×îĞ¡¶Ñ"µ÷Õû 
+		sort(H, i);// æ¯ä¸ª"å­æœ€å°å †"è°ƒæ•´ 
 }
 
-// ½¨¶Ñ 
+// å»ºå † 
 void BuildMinHeap(MinHeap H) 
 {
-	// ½«È¨Öµ¶ÁÈë¶ÑÖĞ
+	// å°†æƒå€¼è¯»å…¥å †ä¸­
 	HuffmanTree Huff;
 	for (int i = 0; i < A_length; i++) 
 	{
@@ -90,16 +90,16 @@ void BuildMinHeap(MinHeap H)
 		Huff->weight = A[i];
 		H->data[++H->size] = Huff;
 	}
-	// µ÷Õû¶Ñ 
+	// è°ƒæ•´å † 
 	adjust(H);
 }
 
-// É¾³ı×îĞ¡¶ÑÔªËØ
+// åˆ é™¤æœ€å°å †å…ƒç´ 
 HuffmanTree Delete(MinHeap H) 
 {
 	int Parent, Child;
-	HuffmanTree T = H->data[1];  // È¡³ö¸ù½áµãµÄ¹ş·òÂüÊ÷ 
-	HuffmanTree temp = H->data[H->size--]; // È¡³ö×îºóÒ»¸ö½áµã¹ş·òÂüÊ÷µÄÈ¨Öµ 
+	HuffmanTree T = H->data[1];  // å–å‡ºæ ¹ç»“ç‚¹çš„å“ˆå¤«æ›¼æ ‘ 
+	HuffmanTree temp = H->data[H->size--]; // å–å‡ºæœ€åä¸€ä¸ªç»“ç‚¹å“ˆå¤«æ›¼æ ‘çš„æƒå€¼ 
 	for (Parent = 1; Parent * 2 <= H->size; Parent = Child) 
 	{
 		Child = 2 * Parent;
@@ -111,21 +111,21 @@ HuffmanTree Delete(MinHeap H)
 			H->data[Parent] = H->data[Child];
 	}
 	H->data[Parent] = temp;
-	// ¹¹ÔìÒ»¸ö HuffmanTree ½áµã£¬¸½ÉÏ¸Õ²ÅÈ¡³öÀ´µÄÈ¨Öµ£¬·µ»Ø¸Ã½áµã 
+	// æ„é€ ä¸€ä¸ª HuffmanTree ç»“ç‚¹ï¼Œé™„ä¸Šåˆšæ‰å–å‡ºæ¥çš„æƒå€¼ï¼Œè¿”å›è¯¥ç»“ç‚¹ 
 	return T;
 }
 
-// ²åÈëÒ»¸ö¹ş·òÂüÊ÷
+// æ’å…¥ä¸€ä¸ªå“ˆå¤«æ›¼æ ‘
 void Insert(MinHeap H, HuffmanTree Huff) 
 {
-	int weight = Huff->weight; // È¡³öÈ¨Öµ
+	int weight = Huff->weight; // å–å‡ºæƒå€¼
 	int i = ++H->size;
 	for (; H->data[i / 2]->weight > weight; i /= 2)
 		H->data[i] = H->data[i / 2];
 	H->data[i] = Huff;
 }
 
-//ÏÈĞò±éÀú 
+//å…ˆåºéå† 
 void PreOrderTraversal(HuffmanTree Huff) 
 {
 	if (Huff) 
@@ -136,20 +136,20 @@ void PreOrderTraversal(HuffmanTree Huff)
 	}
 }
 
-// ¹ş·òÂüÊ÷µÄ¹¹Ôì 
+// å“ˆå¤«æ›¼æ ‘çš„æ„é€  
 HuffmanTree Huffman(MinHeap H) 
 {
 	HuffmanTree T;
-	BuildMinHeap(H); // ½¨¶Ñ 
+	BuildMinHeap(H); // å»ºå † 
 	int times = H->size;
-	// ×ö times-1 ´ÎºÏ²¢ 
+	// åš times-1 æ¬¡åˆå¹¶ 
 	for (int i = 1; i < times; i++) 
 	{
 		T = (HuffmanTree)malloc(sizeof(struct TreeNode));
-		T->Left = Delete(H);   // ´Ó¶ÑÖĞÉ¾³ıÒ»¸ö½áµã£¬×÷ÎªĞÂTµÄ×ó×Ó½áµã 
-		T->right = Delete(H);  // ´Ó¶ÑÖĞÉ¾³ıÒ»¸ö½áµã£¬×÷ÎªĞÂTµÄÓÒ×Ó½áµã 
-		T->weight = T->Left->weight + T->right->weight; // ÖØĞÂ¼ÆËãÈ¨Öµ 
-		Insert(H, T);  // ÔÙ¼Ó½ø¶ÑÖĞ 
+		T->Left = Delete(H);   // ä»å †ä¸­åˆ é™¤ä¸€ä¸ªç»“ç‚¹ï¼Œä½œä¸ºæ–°Tçš„å·¦å­ç»“ç‚¹ 
+		T->right = Delete(H);  // ä»å †ä¸­åˆ é™¤ä¸€ä¸ªç»“ç‚¹ï¼Œä½œä¸ºæ–°Tçš„å³å­ç»“ç‚¹ 
+		T->weight = T->Left->weight + T->right->weight; // é‡æ–°è®¡ç®—æƒå€¼ 
+		Insert(H, T);  // å†åŠ è¿›å †ä¸­ 
 	}
 	T = Delete(H);
 	return T;

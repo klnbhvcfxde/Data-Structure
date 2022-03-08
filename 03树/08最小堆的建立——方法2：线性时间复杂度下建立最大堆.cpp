@@ -1,16 +1,16 @@
 #include<iostream>
 using namespace std;
-const int MaxData = 100000;  // ÉÚ±øÖµ
-const int MaxSize = 1005;   // ×î´ó¸öÊı 
+const int MaxData = 100000;  // å“¨å…µå€¼
+const int MaxSize = 1005;   // æœ€å¤§ä¸ªæ•° 
 using namespace std;
 typedef struct HeapStruct *MaxHeap;
 struct HeapStruct {
-	int *data;   // ´æÖµµÄÊı×é 
-	int size;   // µ±Ç°ÔªËØ¸öÊı 
-	int capacity;  // ×î´óÈİÁ¿ 
+	int *data;   // å­˜å€¼çš„æ•°ç»„ 
+	int size;   // å½“å‰å…ƒç´ ä¸ªæ•° 
+	int capacity;  // æœ€å¤§å®¹é‡ 
 };
 
-// ³õÊ¼»¯¶Ñ
+// åˆå§‹åŒ–å †
 MaxHeap Create_T() 
 {
 	MaxHeap H;
@@ -22,16 +22,16 @@ MaxHeap Create_T()
 	return H;
 }
 
-// ÅÅĞò£¬ÀàËÆ¶ÑµÄ"É¾³ı²Ù×÷" 
-void sort(MaxHeap H, int i)  //ÏÂÂË£º½«HÖĞÒÔH->Data[p]Îª¸ùµÄ×Ó¶Ñµ÷ÕûÎª×î´ó¶Ñ
+// æ’åºï¼Œç±»ä¼¼å †çš„"åˆ é™¤æ“ä½œ" 
+void sort(MaxHeap H, int i)  //ä¸‹æ»¤ï¼šå°†Hä¸­ä»¥H->Data[p]ä¸ºæ ¹çš„å­å †è°ƒæ•´ä¸ºæœ€å¤§å †
 {
 	int Child, Parent;
-	int temp = H->data[i];  // ÄÃµ½µ±Ç°"¸ù½áµãµÄÖµ" 
+	int temp = H->data[i];  // æ‹¿åˆ°å½“å‰"æ ¹ç»“ç‚¹çš„å€¼" 
 	for (Parent = i; Parent * 2 <= H->size; Parent = Child) 
 	{
 		Child = 2 * Parent;
 		if ((Child != H->size) && (H->data[Child] < H->data[Child + 1]))
-			Child++;  //ChildÖ¸Ïò×óÓÒ×Ó½áµãµÄ½Ï´óÕß
+			Child++;  //ChildæŒ‡å‘å·¦å³å­ç»“ç‚¹çš„è¾ƒå¤§è€…
 		if (temp >= H->data[Child])
 			break;
 		else
@@ -40,17 +40,17 @@ void sort(MaxHeap H, int i)  //ÏÂÂË£º½«HÖĞÒÔH->Data[p]Îª¸ùµÄ×Ó¶Ñµ÷ÕûÎª×î´ó¶Ñ
 	H->data[Parent] = temp;
 }
 
-// ½¨×î´ó¶Ñ(µ÷ÕûH->Data[]ÖĞµÄÔªËØ£¬Ê¹Âú×ã×î´ó¶ÑµÄÓĞĞòĞÔ)
+// å»ºæœ€å¤§å †(è°ƒæ•´H->Data[]ä¸­çš„å…ƒç´ ï¼Œä½¿æ»¡è¶³æœ€å¤§å †çš„æœ‰åºæ€§)
 void BuildHeap(MaxHeap H) 
 {
-	for (int i = H->size / 2; i > 0; i--)  //´Ó×îºóÒ»¸ö½áµãµÄ¸¸½Úµã¿ªÊ¼£¬µ½¸ù½áµã1
+	for (int i = H->size / 2; i > 0; i--)  //ä»æœ€åä¸€ä¸ªç»“ç‚¹çš„çˆ¶èŠ‚ç‚¹å¼€å§‹ï¼Œåˆ°æ ¹ç»“ç‚¹1
 	{
-		// ÒÔÃ¿¸öÓĞº¢×Ó½áµãµÄ½áµã×÷Îª¸ù½áµã£¬¶ÔÆä×ÓÊ÷½øĞĞ¶ÑÅÅĞò 
+		// ä»¥æ¯ä¸ªæœ‰å­©å­ç»“ç‚¹çš„ç»“ç‚¹ä½œä¸ºæ ¹ç»“ç‚¹ï¼Œå¯¹å…¶å­æ ‘è¿›è¡Œå †æ’åº 
 		sort(H, i);
 	}
 }
 
-// ±éÀú 
+// éå† 
 void Traversal(MaxHeap H) 
 {
 	for (int i = 1; i <= H->size; i++) 

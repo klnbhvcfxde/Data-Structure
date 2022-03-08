@@ -5,95 +5,96 @@ using namespace std;
 typedef int ElementType;
 typedef struct HeapStruct*MaxHeap;
 struct HeapStruct {
-	ElementType *Elements;  //´æ´¢¶ÑÔªËØµÄÊı×é
-	int Size;  //¶ÑµÄµ±Ç°ÔªËØ¸öÊı
-	int Capacity;  //¶ÑµÄ×î´óÈİÁ¿
+	ElementType *Elements;  //å­˜å‚¨å †å…ƒç´ çš„æ•°ç»„
+	int Size;  //å †çš„å½“å‰å…ƒç´ ä¸ªæ•°
+	int Capacity;  //å †çš„æœ€å¤§å®¹é‡
 };
 
-MaxHeap Create_T(int MaxSize);  // ½¨¶Ñ 
-bool IsFull(MaxHeap H);    // ÅĞ¶Ï¶ÑÊÇ·ñÂú
-bool Insert(MaxHeap H, ElementType item);   // ²åÈëÔªËØ
-bool IsEmpty(MaxHeap H);    //  ÅĞ¶Ï¶ÑÊÇ·ñÎª¿Õ
-ElementType DeleteMax(MaxHeap H);  // É¾³ı²¢·µ»Ø¶ÑÖĞ×î´óÔªËØ
-void LevelOrderTraversal(MaxHeap H);  // ²ãĞò±éÀú 
+MaxHeap Create_T(int MaxSize);  // å»ºå †
+bool IsFull(MaxHeap H);    // åˆ¤æ–­å †æ˜¯å¦æ»¡
+bool Insert(MaxHeap H, ElementType item);   // æ’å…¥å…ƒç´ 
+bool IsEmpty(MaxHeap H);    //  åˆ¤æ–­å †æ˜¯å¦ä¸ºç©º
+ElementType DeleteMax(MaxHeap H);  // åˆ é™¤å¹¶è¿”å›å †ä¸­æœ€å¤§å…ƒç´ 
+void LevelOrderTraversal(MaxHeap H);  // å±‚åºéå†
 
-// ½¨¶Ñ (´´½¨ÈİÁ¿ÎªMaxSizeµÄ¿ÕµÄ×î´ó¶Ñ)
-MaxHeap Create_T(int MaxSize) 
+// å»ºå † (åˆ›å»ºå®¹é‡ä¸ºMaxSizeçš„ç©ºçš„æœ€å¤§å †)
+MaxHeap Create_T(int MaxSize)
 {
 	MaxHeap H = (MaxHeap)malloc(sizeof(struct HeapStruct));
-	// Elements[0] ×÷ÎªÉÚ±ø£¬¶ÑÔªËØ´Ó  Elements[1] ¿ªÊ¼´æ·Å 
+	// Elements[0] ä½œä¸ºå“¨å…µï¼Œå †å…ƒç´ ä»  Elements[1] å¼€å§‹å­˜æ”¾
 	H->Elements = (ElementType *)malloc((MaxSize + 1) * sizeof(ElementType));
 	H->Size = 0;
 	H->Capacity = MaxSize;
-	H->Elements[0] = MaxData;  // "ÉÚ±ø"´óÓÚ¶ÑÖĞËùÓĞ¿ÉÄÜµÄÖµ 
+	H->Elements[0] = MaxData;  // "å“¨å…µ"å¤§äºå †ä¸­æ‰€æœ‰å¯èƒ½çš„å€¼
 	return H;
 }
 
-// ²åÈë£¬´ÓÍêÈ«¶ş²æÊ÷µÄ×îºóÒ»¸öÎ»ÖÃ²åÈë 
-bool Insert(MaxHeap H, ElementType item) 
+// æ’å…¥ï¼Œä»å®Œå…¨äºŒå‰æ ‘çš„æœ€åä¸€ä¸ªä½ç½®æ’å…¥
+bool Insert(MaxHeap H, ElementType item)
 {
-	if (IsFull(H)) 
+	if (IsFull(H))
 	{
-		cout << "×î´ó¶ÑÒÑÂú£¬ÎŞ·¨²åÈë£¡" << endl;
+		cout << "æœ€å¤§å †å·²æ»¡ï¼Œæ— æ³•æ’å…¥ï¼" << endl;
 		return false;
 	}
-	int i = ++H->Size;  //iÖ¸Ïò²åÈëºó¶ÑÖĞµÄ×îºóÒ»¸öÔªËØµÄÎ»ÖÃ
-	for (; H->Elements[i / 2] < item; i /= 2)  // ÏòÉÏÕÒ±Èitem´óµÄ½áµã(H->Elements[0]ÊÇÉÚ±øÔªËØ£¬²»Ğ¡ÓÚ¶ÑÖĞµÄ×î´óÔªËØ£¬¿ØÖÆË³»·½áÊø)
-		H->Elements[i] = H->Elements[i / 2];  //  ÏòÏÂ¸³Öµ 
-	H->Elements[i] = item;  //item²åÈë 
+	int i = ++H->Size;  //iæŒ‡å‘æ’å…¥åå †ä¸­çš„æœ€åä¸€ä¸ªå…ƒç´ çš„ä½ç½®
+	for (; H->Elements[i / 2] < item; i /= 2)  // å‘ä¸Šæ‰¾æ¯”itemå¤§çš„ç»“ç‚¹(H->Elements[0]æ˜¯å“¨å…µå…ƒç´ ï¼Œä¸å°äºå †ä¸­çš„æœ€å¤§å…ƒç´ ï¼Œæ§åˆ¶é¡ºç¯ç»“æŸ)
+		H->Elements[i] = H->Elements[i / 2];  //  å‘ä¸‹èµ‹å€¼
+	H->Elements[i] = item;  //itemæ’å…¥
 	return true;
 }
 
-ElementType DeleteMax(MaxHeap H)  //´Ó×î´ó¶ÑHÖĞÈ¡³ö¼üÖµÎª×î´óµÄÔªËØ£¬²¢É¾³ıÒ»¸ö½áµã
+ElementType DeleteMax(MaxHeap H)  //ä»æœ€å¤§å †Hä¸­å–å‡ºé”®å€¼ä¸ºæœ€å¤§çš„å…ƒç´ ï¼Œå¹¶åˆ é™¤ä¸€ä¸ªç»“ç‚¹
 {
 	int Parent, Child;
 	ElementType MaxItem, temp;
 	if (IsEmpty(H))
 	{
-		cout << "×î´ó¶ÑÒÑÎª¿Õ" << endl;
+		cout << "æœ€å¤§å †å·²ä¸ºç©º" << endl;
 		return ERROR;
 	}
-	MaxItem = H->Elements[1];  //È¡³ö¸ù½áµã×î´óÖµ
-	temp = H->Elements[H->Size--];  //ÄÃµ½ÍêÈ«¶ş²æÊ÷×îºóÒ»¸öÔªËØ,ÓÃ×î´ó¶ÑÖĞ×îºóÒ»¸öÔªËØ´Ó¸ù½áµã¿ªÊ¼ÏòÉÏ¹ıÂËÏÂ²ã½áµã
-	for (Parent = 1; Parent * 2 <= H->Size; Parent = Child)   //Parent=1ÏÈ½«×î´ó¶ÑÖĞ×îºóÒ»¸öÔªËØ·Åµ½1µÄÎ»ÖÃ£»ÅĞ±ğÌõ¼ş£ºParent*2<=H->sizeÅĞ±ğÊÇ·ñÓĞ×ó¶ù×Ó
+	MaxItem = H->Elements[1];  //å–å‡ºæ ¹ç»“ç‚¹æœ€å¤§å€¼
+	temp = H->Elements[H->Size--];  //æ‹¿åˆ°å®Œå…¨äºŒå‰æ ‘æœ€åä¸€ä¸ªå…ƒç´ ,ç”¨æœ€å¤§å †ä¸­æœ€åä¸€ä¸ªå…ƒç´ ä»æ ¹ç»“ç‚¹å¼€å§‹å‘ä¸Šè¿‡æ»¤ä¸‹å±‚ç»“ç‚¹
+    //amazing!
+	for (Parent = 1; Parent * 2 <= H->Size; Parent = Child)   //Parent=1å…ˆå°†æœ€å¤§å †ä¸­æœ€åä¸€ä¸ªå…ƒç´ æ”¾åˆ°1çš„ä½ç½®ï¼›åˆ¤åˆ«æ¡ä»¶ï¼šParent*2<=H->sizeåˆ¤åˆ«æ˜¯å¦æœ‰å·¦å„¿å­
 	{
 		Child = Parent * 2;
-		if ((Child != H->Size) && (H->Elements[Child] < H->Elements[Child + 1]))  //Child!=H->Size±íÊ¾Child²»Îªµ±Ç°×îºóÒ»¸ö½áµã£¬¼´ParentÓĞÓÒº¢×Ó½áµã
-			Child++;  //ChildÖ¸Ïò×óÓÒ×Ó½áµãµÄ½Ï´óÕß
-		//¸øtempÕÒ¸öºÏÊÊµÄÎ»ÖÃ  
-		if (temp >= H->Elements[Child])  //Èç¹ûµ±Ç°×óÓÒº¢×Ó½áµã±Ètemp¶¼Ğ¡£¬ËµÃ÷tempÎ»ÖÃÒÑ¾­ºÏÊÊ
+		if ((Child != H->Size) && (H->Elements[Child] < H->Elements[Child + 1]))  //Child!=H->Sizeè¡¨ç¤ºChildä¸ä¸ºå½“å‰æœ€åä¸€ä¸ªç»“ç‚¹ï¼Œå³Parentæœ‰å³å­©å­ç»“ç‚¹
+			Child++;  //ChildæŒ‡å‘å·¦å³å­ç»“ç‚¹çš„è¾ƒå¤§è€…
+		//ç»™tempæ‰¾ä¸ªåˆé€‚çš„ä½ç½®
+		if (temp >= H->Elements[Child])  //å¦‚æœå½“å‰å·¦å³å­©å­ç»“ç‚¹æ¯”tempéƒ½å°ï¼Œè¯´æ˜tempä½ç½®å·²ç»åˆé€‚
 			break;
-		else  //ÒÆ¶¯tempÔªËØµ½ÏÂÒ»²ã
+		else  //ç§»åŠ¨tempä½ç½®åˆ°ä¸‹ä¸€å±‚
 			H->Elements[Parent] = H->Elements[Child];
 	}
-	H->Elements[Parent] = temp;  //ÔÚºÏÊÊµÄÎ»ÖÃ°Ñtemp·Å½øÈ¥
+	H->Elements[Parent] = temp;  //åœ¨åˆé€‚çš„ä½ç½®æŠŠtempæ”¾è¿›å»
 	return MaxItem;
 }
 
-// ÅĞ¶ÏÊÇ·ñÒÑ¾­Âú 
-bool IsFull(MaxHeap H) 
+// åˆ¤æ–­æ˜¯å¦å·²ç»æ»¡
+bool IsFull(MaxHeap H)
 {
 	return (H->Size == H->Capacity);
 }
 
-// ÅĞ¶ÏÊÇ·ñÎª¿Õ
-bool IsEmpty(MaxHeap H) 
+// åˆ¤æ–­æ˜¯å¦ä¸ºç©º
+bool IsEmpty(MaxHeap H)
 {
 	return !H->Size;
 }
 
-// ²ãĞò±éÀú
-void LevelOrderTraversal(MaxHeap H) 
+// å±‚åºéå†
+void LevelOrderTraversal(MaxHeap H)
 {
-	cout << "²ãĞò±éÀúµÄ½á¹ûÊÇ£º";
-	for (int i = 1; i <= H->Size; i++) 
+	cout << "å±‚åºéå†çš„ç»“æœæ˜¯ï¼š";
+	for (int i = 1; i <= H->Size; i++)
 	{
 		cout << H->Elements[i]<<" ";
 	}
 	cout << endl;
 }
 
-int main() 
+int main()
 {
 	MaxHeap H;
 	int MaxSize = 100;

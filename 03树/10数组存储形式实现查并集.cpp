@@ -3,37 +3,37 @@ using namespace std;
 #define MaxSize 1000
 typedef int ElementType;
 typedef struct {
-	ElementType Data; // ´æÖµ
-	int Parent;  // Ö¸Ïò¸¸½áµã 
+	ElementType Data; // å­˜å€¼
+	int Parent;  // æŒ‡å‘çˆ¶ç»“ç‚¹ 
 }SetType;
 
-// ²éÕÒ 
+// æŸ¥æ‰¾ 
 int Find(SetType S[], ElementType X) 
 {
 	int i;
-	for (i = 0; i < MaxSize && S[i].Data != X; i++);  // ÕÒµ½Êı×éÖĞ¸ÃÖµ¶ÔÓ¦µÄÏÂ±ê 
-	if (MaxSize <= i) // Èç¹ûÃ»ÓĞÕÒµ½£¬·µ»Ø -1 
+	for (i = 0; i < MaxSize && S[i].Data != X; i++);  // æ‰¾åˆ°æ•°ç»„ä¸­è¯¥å€¼å¯¹åº”çš„ä¸‹æ ‡ 
+	if (MaxSize <= i) // å¦‚æœæ²¡æœ‰æ‰¾åˆ°ï¼Œè¿”å› -1 
 		return -1;
-	for (; S[i].Parent >= 0; i = S[i].Parent); 	// ÕÒµ½¸Ã½áµãµÄ¸ù½áµã 
-	return i; // ·µ»Ø¸ù½áµãÔÚÊı×éSÖĞµÄÏÂ±ê 
+	for (; S[i].Parent >= 0; i = S[i].Parent); 	// æ‰¾åˆ°è¯¥ç»“ç‚¹çš„æ ¹ç»“ç‚¹ 
+	return i; // è¿”å›æ ¹ç»“ç‚¹åœ¨æ•°ç»„Sä¸­çš„ä¸‹æ ‡ 
 }
 
-// ²¢ 
+// å¹¶ 
 void Union(SetType S[], ElementType X1, ElementType X2) 
 {
-	int root1 = Find(S, X1);  // ÕÒµ½ X1 µÄ¸ù½áµãÏÂ±ê 
-	int root2 = Find(S, X2);  // ÕÒµ½ X2 µÄ¸ù½áµãÏÂ±ê 
-	// Èç¹û¸ù½áµãµÄÏÂ±ê²»Í¬£¬ËµÃ÷²»ÊÇÒ»¸ö¼¯ºÏ
+	int root1 = Find(S, X1);  // æ‰¾åˆ° X1 çš„æ ¹ç»“ç‚¹ä¸‹æ ‡ 
+	int root2 = Find(S, X2);  // æ‰¾åˆ° X2 çš„æ ¹ç»“ç‚¹ä¸‹æ ‡ 
+	// å¦‚æœæ ¹ç»“ç‚¹çš„ä¸‹æ ‡ä¸åŒï¼Œè¯´æ˜ä¸æ˜¯ä¸€ä¸ªé›†åˆ
 	if (root1 != root2) 
 	{
-		S[root1].Parent = root2;   // °ÑX1¹Òµ½X2µÄ¼¯ºÏ 
+		S[root1].Parent = root2;   // æŠŠX1æŒ‚åˆ°X2çš„é›†åˆ 
 	}
 }
 
 int main() 
 {
 	SetType S[MaxSize];
-	// ³õÊ¼»¯Êı×é£¬¸¸½áµãÈ«²¿Ö¸Ïò-1 
+	// åˆå§‹åŒ–æ•°ç»„ï¼Œçˆ¶ç»“ç‚¹å…¨éƒ¨æŒ‡å‘-1 
 	for (int i = 0; i < MaxSize; i++) 
 	{
 		S[i].Data = i + 1;
