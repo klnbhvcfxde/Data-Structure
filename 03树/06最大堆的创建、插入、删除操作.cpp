@@ -125,6 +125,6 @@ int main()
 	LevelOrderTraversal(H);
 	DeleteMax(H);
 	LevelOrderTraversal(H);
-	system("pause");
+	
 	return 0;
 }

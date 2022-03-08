@@ -1,3 +1,5 @@
+//整篇是做最大堆, 不管了随便了
+
 #include<iostream>
 using namespace std;
 const int MaxData = 100000;  // 哨兵值
@@ -70,6 +72,6 @@ int main()
 		cin >> H->data[++H->size];
 	BuildHeap(H);
 	Traversal(H);
-	system("pause");
+	
 	return 0;
 }
