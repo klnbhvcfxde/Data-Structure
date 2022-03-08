@@ -15,21 +15,21 @@ int main()
 	{
 		getchar();
 		cin >> command >> qq >> ps;
-		if (command == 'N')     // ĞÂÓÃ»§
+		if (command == 'N')     // æ–°ç”¨æˆ·
 		{  
-			if (m.find(qq) != m.end())    // qqºÅÒÑ¾­´æÔÚ(mapÈİÆ÷²éÕÒµÄkeyÈô´æÔÚ£¬·µ»Ø¸Ã¼üµÄÔªËØµÄµü´úÆ÷£»Èô²»´æÔÚ£¬·µ»Øm.end()) 
+			if (m.find(qq) != m.end())    // qqå·å·²ç»å­˜åœ¨(mapå®¹å™¨æŸ¥æ‰¾çš„keyè‹¥å­˜åœ¨ï¼Œè¿”å›è¯¥é”®çš„å…ƒç´ çš„è¿­ä»£å™¨ï¼›è‹¥ä¸å­˜åœ¨ï¼Œè¿”å›m.end()) 
 				cout << "ERROR: Exist";
-			else  // ×¢²á³É¹¦
+			else  // æ³¨å†ŒæˆåŠŸ
 			{     
 				cout << "New: OK";
 				m[qq] = ps;
 			}
 		}
-		else if (command == 'L')   // ÀÏÓÃ»§ 
+		else if (command == 'L')   // è€ç”¨æˆ· 
 		{
-			if (m.find(qq) == m.end())  // Ã»ÕÒµ½ 
+			if (m.find(qq) == m.end())  // æ²¡æ‰¾åˆ° 
 				cout << "ERROR: Not Exist";
-			else if (m[qq] == ps)   // ÃÜÂëÕıÈ· 
+			else if (m[qq] == ps)   // å¯†ç æ­£ç¡® 
 				cout << "Login: OK";
 			else
 				cout << "ERROR: Wrong PW";

@@ -1,77 +1,77 @@
 #include<iostream>
 using namespace std;
-#define MaxSize 100   // ¶ÑÕ»ÔªËØµÄ×î´ó¸öÊı 
-typedef int ElementType; // ElementType ÔİÊ±¶¨ÒåÎª int ÀàĞÍ 
+#define MaxSize 100   // å †æ ˆå…ƒç´ çš„æœ€å¤§ä¸ªæ•° 
+typedef int ElementType; // ElementType æš‚æ—¶å®šä¹‰ä¸º int ç±»å‹ 
 typedef struct SNode *Stack;
 struct SNode {
-	ElementType Data[MaxSize];   // ´æ´¢¶ÑÕ»ÔªËØ
-	int Top;  // ¼ÇÂ¼Õ»¶¥ÔªËØÏÂ±ê 
+	ElementType Data[MaxSize];   // å­˜å‚¨å †æ ˆå…ƒç´ 
+	int Top;  // è®°å½•æ ˆé¡¶å…ƒç´ ä¸‹æ ‡ 
 };
 Stack S;
 
-Stack CreateStack();  // ³õÊ¼»¯¶ÑÕ» 
-int IsFull(Stack S); // ÅĞ¶Ï¶ÑÕ»ÊÇ·ñÒÑÂú 
-int IsEmpty(Stack S);  // ÅĞ¶Ï¶ÑÕ»ÊÇ·ñÎª¿Õ 
-void Push(Stack S, ElementType item);  // ÈëÕ» 
-ElementType Pop(Stack S);  // ³öÕ»
+Stack CreateStack();  // åˆå§‹åŒ–å †æ ˆ 
+int IsFull(Stack S); // åˆ¤æ–­å †æ ˆæ˜¯å¦å·²æ»¡ 
+int IsEmpty(Stack S);  // åˆ¤æ–­å †æ ˆæ˜¯å¦ä¸ºç©º 
+void Push(Stack S, ElementType item);  // å…¥æ ˆ 
+ElementType Pop(Stack S);  // å‡ºæ ˆ
 
-// ³õÊ¼»¯¶ÑÕ» 
+// åˆå§‹åŒ–å †æ ˆ 
 Stack CreateStack() {
 	S = (Stack)malloc(sizeof(struct SNode));
 	S->Top = -1;
 	return S;
 }
 
-// ÊÇ·ñÒÑÂú 
+// æ˜¯å¦å·²æ»¡ 
 int IsFull(Stack S) {
 	return (S->Top == MaxSize - 1);
 }
 
-// ÊÇ·ñÎª¿Õ 
+// æ˜¯å¦ä¸ºç©º 
 int IsEmpty(Stack S) {
 	return (S->Top == -1);
 }
 
-// ÈëÕ» 
+// å…¥æ ˆ 
 void Push(Stack S, ElementType item) {
-	if (IsFull(S)) {   // Top ´Ó 0 ¿ªÊ¼ 
-		cout << "¶ÑÕ»Âú" << endl;
+	if (IsFull(S)) {   // Top ä» 0 å¼€å§‹ 
+		cout << "å †æ ˆæ»¡" << endl;
 		return;
 	}
 	else {
-		S->Top++;   // Õ»¶¥ÔªËØ¼ÓÒ» 
-		S->Data[S->Top] = item;   // ·Å½ø×îÉÏ 
+		S->Top++;   // æ ˆé¡¶å…ƒç´ åŠ ä¸€ 
+		S->Data[S->Top] = item;   // æ”¾è¿›æœ€ä¸Š 
 		return;
 	}
 }
 
-// ³öÕ»
+// å‡ºæ ˆ
 ElementType Pop(Stack S) {
 	if (IsEmpty(S)) {
-		cout << "¶ÑÕ»¿Õ" << endl;
+		cout << "å †æ ˆç©º" << endl;
 		return NULL;
 	}
 	else {
-		ElementType val = S->Data[S->Top];  //È¡³ö×îÉÏ 
-		S->Top--;  // Õ»¶¥ÔªËØ¼õÒ» 
+		ElementType val = S->Data[S->Top];  //å–å‡ºæœ€ä¸Š 
+		S->Top--;  // æ ˆé¡¶å…ƒç´ å‡ä¸€ 
 		return val;
 	}
 }
 int main() {
 	S = CreateStack();
 
-	cout << "1ÈëÕ»" << endl;
+	cout << "1å…¥æ ˆ" << endl;
 	Push(S, 1);
 
-	cout << "2ÈëÕ»" << endl;
+	cout << "2å…¥æ ˆ" << endl;
 	Push(S, 2);
 
-	cout << "3ÈëÕ»" << endl;
+	cout << "3å…¥æ ˆ" << endl;
 	Push(S, 3);
 
-	cout << Pop(S) << "³öÕ»" << endl;
+	cout << Pop(S) << "å‡ºæ ˆ" << endl;
 
-	cout << Pop(S) << "³öÕ»" << endl;
+	cout << Pop(S) << "å‡ºæ ˆ" << endl;
 
 	system("pause");
 

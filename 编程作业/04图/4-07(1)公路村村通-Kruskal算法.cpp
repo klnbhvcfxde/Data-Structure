@@ -5,24 +5,24 @@ using namespace std;
 
 #define MaxVertex 1005
 typedef int Vertex;
-int N;  // ¶¥µã 
-int M;  // ±ß 
-int parent[MaxVertex];   // ²¢²é¼¯
+int N;  // é¡¶ç‚¹ 
+int M;  // è¾¹ 
+int parent[MaxVertex];   // å¹¶æŸ¥é›†
 struct Node {
 	Vertex v1;
 	Vertex v2;
 	int weight;
-	// ÖØÔØÔËËã·û 
+	// é‡è½½è¿ç®—ç¬¦ 
 	bool operator < (const Node &a) const
 	{
 		return weight > a.weight;
 	}
 };
-priority_queue<Node> q;  // ×îĞ¡¶Ñ 
-vector<Node> MST; // ×îĞ¡Éú³ÉÊ÷ 
+priority_queue<Node> q;  // æœ€å°å † 
+vector<Node> MST; // æœ€å°ç”Ÿæˆæ ‘ 
 int sum;
 
-// ³õÊ¼»¯Í¼ĞÅÏ¢ 
+// åˆå§‹åŒ–å›¾ä¿¡æ¯ 
 void BuildGraph() 
 {
 	Vertex v1, v2;
@@ -32,7 +32,7 @@ void BuildGraph()
 	{
 		parent[i] = -1;
 	}
-	// ³õÊ¼»¯µã
+	// åˆå§‹åŒ–ç‚¹
 	for (int i = 0; i < M; i++) 
 	{
 		cin >> v1 >> v2 >> w;
@@ -45,7 +45,7 @@ void BuildGraph()
 	sum = 0;
 }
 
-//  Â·¾¶Ñ¹Ëõ²éÕÒ 
+//  è·¯å¾„å‹ç¼©æŸ¥æ‰¾ 
 int Find(int x) 
 {
 	if (parent[x] < 0)
@@ -54,7 +54,7 @@ int Find(int x)
 		return parent[x] = Find(parent[x]);
 }
 
-//  °´ÖÈ¹é²¢ 
+//  æŒ‰ç§©å½’å¹¶ 
 void Union(int x1, int x2) 
 {
 	x1 = Find(x1);
@@ -75,12 +75,12 @@ void Kruskal()
 {
 	while (MST.size() != M - 1 && !q.empty()) 
 	{
-		Node E = q.top();    // ×îĞ¡¶Ñ£¬³ö¶ÓÈ¨ÖØ×îĞ¡µÄ 
+		Node E = q.top();    // æœ€å°å †ï¼Œå‡ºé˜Ÿæƒé‡æœ€å°çš„ 
 		q.pop();
-		if (Find(E.v1) != Find(E.v2))  // ÅĞ¶ÏÊÇ·ñÊôÓÚÍ¬Ò»¼¯ºÏ 
+		if (Find(E.v1) != Find(E.v2))  // åˆ¤æ–­æ˜¯å¦å±äºåŒä¸€é›†åˆ 
 		{
 			sum += E.weight;
-			Union(E.v1, E.v2);    // ²¢ 
+			Union(E.v1, E.v2);    // å¹¶ 
 			MST.push_back(E);
 		}
 	}
@@ -90,7 +90,7 @@ int main()
 {
 	BuildGraph();
 	Kruskal();
-	// Í¼Á¬Í¨ 
+	// å›¾è¿é€š 
 	if (MST.size() == N - 1)
 		cout << sum << endl;
 	else

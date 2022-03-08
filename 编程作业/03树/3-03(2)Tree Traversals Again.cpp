@@ -6,11 +6,11 @@ using namespace std;
 
 int pre[MaxTree], in[MaxTree], post[MaxTree];
 
-//Ç°ĞòÆğÊ¼Î»ÖÃ£¬ÖĞĞòÆğÊ¼Î»ÖÃ£¬ºóĞòÆğÊ¼Î»ÖÃ£¬ÔªËØ¸öÊı
+//å‰åºèµ·å§‹ä½ç½®ï¼Œä¸­åºèµ·å§‹ä½ç½®ï¼Œååºèµ·å§‹ä½ç½®ï¼Œå…ƒç´ ä¸ªæ•°
 void PostOrder(int prel, int inl, int postl, int n)
 {
 	if (n == 0)
-		return;//µİ¹é½áÊø
+		return;//é€’å½’ç»“æŸ
 	if (n == 1)
 	{
 		post[postl] = pre[prel];
@@ -19,15 +19,15 @@ void PostOrder(int prel, int inl, int postl, int n)
 	int root = pre[prel];
 	post[postl + n - 1] = root;
 	int i;
-	for (i = 0; i < n; i++)  //ÕÒµ½¸ùÔÚÖĞĞòÖĞµÄÎ»ÖÃ
+	for (i = 0; i < n; i++)  //æ‰¾åˆ°æ ¹åœ¨ä¸­åºä¸­çš„ä½ç½®
 	{
 		if (in[inl + i] == root)
 			break;
 	}
-	int L = i;  //×ó×ÓÊ÷½áµãµãÊı
-	int R = n - (i + 1);  //ÓÒ×ÓÊ÷½áµãÊı
-	PostOrder(prel + 1, inl, postl, L);  //½¨Á¢×ó×ÓÊ÷
-	PostOrder(prel + L + 1, inl + L + 1, postl + L, R);  //½¨Á¢ÓÒ×ÓÊ÷
+	int L = i;  //å·¦å­æ ‘ç»“ç‚¹ç‚¹æ•°
+	int R = n - (i + 1);  //å³å­æ ‘ç»“ç‚¹æ•°
+	PostOrder(prel + 1, inl, postl, L);  //å»ºç«‹å·¦å­æ ‘
+	PostOrder(prel + L + 1, inl + L + 1, postl + L, R);  //å»ºç«‹å³å­æ ‘
 }
 
 int main()

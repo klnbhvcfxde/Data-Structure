@@ -1,7 +1,7 @@
 #include<iostream>
 using namespace std;
 
-void PrintN_Iteration(int n)  //循环实现
+void PrintN_Iteration(int n)  //寰幆瀹炵幇
 {
 	for (int i = 1; i <= n; i++)
 	{
@@ -9,7 +9,7 @@ void PrintN_Iteration(int n)  //循环实现
 	}
 }
 
-void PrintN_Recursion(int n)  //递归实现
+void PrintN_Recursion(int n)  //閫掑綊瀹炵幇
 {
 	if(n)
 	{

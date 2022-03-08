@@ -1,20 +1,20 @@
 #include<iostream>
 using namespace std;
-#define MaxSize 100   // ¶ÑÕ»ÔªËØµÄ×î´ó¸öÊý 
-typedef int ElementType; // ElementType ÔÝÊ±¶¨ÒåÎª int ÀàÐÍ 
+#define MaxSize 100   // å †æ ˆå…ƒç´ çš„æœ€å¤§ä¸ªæ•° 
+typedef int ElementType; // ElementType æš‚æ—¶å®šä¹‰ä¸º int ç±»åž‹ 
 typedef struct DStack *Stack;
 struct DStack {
-	ElementType Data[MaxSize];   // ´æ´¢¶ÑÕ»ÔªËØ
-	int Top1; //¶ÑÕ»1µÄÕ»¶¥Ö¸Õë
-	int Top2; //¶ÑÕ»2µÄÕ»¶¥Ö¸Õë
+	ElementType Data[MaxSize];   // å­˜å‚¨å †æ ˆå…ƒç´ 
+	int Top1; //å †æ ˆ1çš„æ ˆé¡¶æŒ‡é’ˆ
+	int Top2; //å †æ ˆ2çš„æ ˆé¡¶æŒ‡é’ˆ
 };
 Stack S;
 
-Stack CreateStack();  // ³õÊ¼»¯¶ÑÕ» 
-void Push(Stack S, ElementType item, int Tag);  // ÈëÕ» 
-ElementType Pop(Stack S, int Tag);  // ³öÕ»
+Stack CreateStack();  // åˆå§‹åŒ–å †æ ˆ 
+void Push(Stack S, ElementType item, int Tag);  // å…¥æ ˆ 
+ElementType Pop(Stack S, int Tag);  // å‡ºæ ˆ
 
-// ³õÊ¼»¯¶ÑÕ» 
+// åˆå§‹åŒ–å †æ ˆ 
 Stack CreateStack() 
 {
 	S = (Stack)malloc(sizeof(struct DStack));
@@ -23,42 +23,42 @@ Stack CreateStack()
 	return S;
 }
 
-// ÈëÕ» 
-void Push(Stack S, ElementType item, int Tag)  //Tag×÷ÎªÇø·ÖÁ½¸ö¶ÑÕ»µÄ±êÖ¾£¬È¡ÖµÎª1ºÍ2
+// å…¥æ ˆ 
+void Push(Stack S, ElementType item, int Tag)  //Tagä½œä¸ºåŒºåˆ†ä¸¤ä¸ªå †æ ˆçš„æ ‡å¿—ï¼Œå–å€¼ä¸º1å’Œ2
 {
 	if (S->Top2 - S->Top1 == 1) 
 	{  
-		cout << "¶ÑÕ»Âú" << endl;
+		cout << "å †æ ˆæ»¡" << endl;
 		return;
 	}
-	if (Tag == 1)   //¶ÔµÚÒ»¸ö¶ÑÕ»½øÐÐ²Ù×÷
+	if (Tag == 1)   //å¯¹ç¬¬ä¸€ä¸ªå †æ ˆè¿›è¡Œæ“ä½œ
 	{
 		S->Data[++(S->Top1)] = item;
 	}
-	else {  //¶ÔµÚ¶þ¸ö¶ÑÕ»½øÐÐ²Ù×÷
+	else {  //å¯¹ç¬¬äºŒä¸ªå †æ ˆè¿›è¡Œæ“ä½œ
 		S->Data[--(S->Top2)] = item;
 	}
 }
 
-// ³öÕ»
+// å‡ºæ ˆ
 ElementType Pop(Stack S, int Tag) 
 {
-	if (Tag == 1)  //¶ÔµÚÒ»¸ö¶ÑÕ»½øÐÐ²Ù×÷
+	if (Tag == 1)  //å¯¹ç¬¬ä¸€ä¸ªå †æ ˆè¿›è¡Œæ“ä½œ
 	{
-		if (S->Top1 == -1)  //¶ÑÕ»1Îª¿Õ
+		if (S->Top1 == -1)  //å †æ ˆ1ä¸ºç©º
 		{
-			cout << "¶ÑÕ»1¿Õ" << endl;
+			cout << "å †æ ˆ1ç©º" << endl;
 			return NULL;
 		}
 		else
 			return S->Data[(S->Top1)--];
 	}
 
-	if (Tag == 2)  //¶ÔµÚ¶þ¸ö¶ÑÕ»½øÐÐ²Ù×÷
+	if (Tag == 2)  //å¯¹ç¬¬äºŒä¸ªå †æ ˆè¿›è¡Œæ“ä½œ
 	{
-		if (S->Top2 == MaxSize)  //¶ÑÕ»2Îª¿Õ
+		if (S->Top2 == MaxSize)  //å †æ ˆ2ä¸ºç©º
 		{
-			cout << "¶ÑÕ»2¿Õ" << endl;
+			cout << "å †æ ˆ2ç©º" << endl;
 			return NULL;
 		}
 		else
@@ -68,27 +68,27 @@ ElementType Pop(Stack S, int Tag)
 int main() {
 	S = CreateStack();
 
-	cout << "1ÈëÕ»1" << endl;
+	cout << "1å…¥æ ˆ1" << endl;
 	Push(S, 1, 1);
 
-	cout << "2ÈëÕ»1" << endl;
+	cout << "2å…¥æ ˆ1" << endl;
 	Push(S, 2, 1);
 
-	cout << "3ÈëÕ»1" << endl;
+	cout << "3å…¥æ ˆ1" << endl;
 	Push(S, 3, 1);
 
-	cout << "1ÈëÕ»2" << endl;
+	cout << "1å…¥æ ˆ2" << endl;
 	Push(S, 1, 2);
 
-	cout << "2ÈëÕ»2" << endl;
+	cout << "2å…¥æ ˆ2" << endl;
 	Push(S, 2, 2);
 
-	cout << "3ÈëÕ»2" << endl;
+	cout << "3å…¥æ ˆ2" << endl;
 	Push(S, 3, 2);
 
-	cout << Pop(S,1) << "³öÕ»1" << endl;
+	cout << Pop(S,1) << "å‡ºæ ˆ1" << endl;
 
-	cout << Pop(S,2) << "³öÕ»2" << endl;
+	cout << Pop(S,2) << "å‡ºæ ˆ2" << endl;
 
 	system("pause");
 

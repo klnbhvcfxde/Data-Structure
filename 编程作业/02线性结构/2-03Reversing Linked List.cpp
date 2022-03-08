@@ -9,36 +9,36 @@ typedef struct node {
 	ElementType next;
 } Node;
 
-//·´×ªÁ´±íº¯Êı£¬Ã¿K¸ö½áµã£¬·´×ªÒ»ÏÂ 
+//åè½¬é“¾è¡¨å‡½æ•°ï¼Œæ¯Kä¸ªç»“ç‚¹ï¼Œåè½¬ä¸€ä¸‹ 
 int reverList(Node list[], int K, int head, int N)
 {
 	int flag = 1;
-	int last_head;	//ÓÃÓÚ¼ÇÂ¼ÉÏÒ»´Î·´×ªºó£¬×ÓÁ´±íµÄ×îºó½áµãµØÖ·
-					//´ıÓëÏÂÒ»´Î·´×ªµÄ×ÓÁ´±íµÄÍ·²¿ÏàÁ¬ 
-	int rev_head = head;//ÏÂÒ»´Î´ı·´×ª×ÓÁ´±íµÄÍ·½áµãµØÖ· 
-	int mid_head = head;//·´×ª¹ı³ÌÖĞµÄÖĞ¼ä½áµãµØÖ· 
-	int mid_next;		//·´×ª¹ı³ÌÖĞµÄÖĞ¼ä½áµãµØÖ· 
+	int last_head;	//ç”¨äºè®°å½•ä¸Šä¸€æ¬¡åè½¬åï¼Œå­é“¾è¡¨çš„æœ€åç»“ç‚¹åœ°å€
+					//å¾…ä¸ä¸‹ä¸€æ¬¡åè½¬çš„å­é“¾è¡¨çš„å¤´éƒ¨ç›¸è¿ 
+	int rev_head = head;//ä¸‹ä¸€æ¬¡å¾…åè½¬å­é“¾è¡¨çš„å¤´ç»“ç‚¹åœ°å€ 
+	int mid_head = head;//åè½¬è¿‡ç¨‹ä¸­çš„ä¸­é—´ç»“ç‚¹åœ°å€ 
+	int mid_next;		//åè½¬è¿‡ç¨‹ä¸­çš„ä¸­é—´ç»“ç‚¹åœ°å€ 
 
-	while (N - K >= 0)//µ±Ê£Óà½áµã²»¹»K¸öÊ±£¬Ôò²»ÔÙ·´×ª 
+	while (N - K >= 0)//å½“å‰©ä½™ç»“ç‚¹ä¸å¤ŸKä¸ªæ—¶ï¼Œåˆ™ä¸å†åè½¬ 
 	{
 		N -= K;
 
-		//·´×ª×ÓÁ´±í 
+		//åè½¬å­é“¾è¡¨ 
 		for (int i = 0; i < K - 1; i++) 
 		{
 			mid_next = list[rev_head].next;
 			list[rev_head].next = list[mid_next].next;
 			list[mid_next].next = mid_head;
 			mid_head = mid_next;
-		}//·´×ª×ÓÁ´±í 
+		}//åè½¬å­é“¾è¡¨ 
 
-		//´ÓµÚ¶ş´Î¿ªÊ¼£¬ĞèÒª°ÑÕâ´Î·´×ªºóµÄ×ÓÁ´±íµÄÍ·½áµãÁ¬½Óµ½ÉÏÒ»¶ÎµÄÎ²²¿ 
+		//ä»ç¬¬äºŒæ¬¡å¼€å§‹ï¼Œéœ€è¦æŠŠè¿™æ¬¡åè½¬åçš„å­é“¾è¡¨çš„å¤´ç»“ç‚¹è¿æ¥åˆ°ä¸Šä¸€æ®µçš„å°¾éƒ¨ 
 		if (flag == 0) 
 {
 			list[last_head].next = mid_head;
 		}
 
-		//¼ÇÂ¼µÚÒ»´Î·´×ªºóµÄÍ·½áµã£¬×÷Îª×îÖÕListµÄÍ·½áµã²¢·µ»Ø 
+		//è®°å½•ç¬¬ä¸€æ¬¡åè½¬åçš„å¤´ç»“ç‚¹ï¼Œä½œä¸ºæœ€ç»ˆListçš„å¤´ç»“ç‚¹å¹¶è¿”å› 
 		if (flag) 
 		{
 			head = mid_head;
@@ -46,7 +46,7 @@ int reverList(Node list[], int K, int head, int N)
 		}
 
 		last_head = rev_head;
-		rev_head = list[rev_head].next;//ÏÂ´Î¿ªÊ¼µÄÍ·½áµãµØÖ· 
+		rev_head = list[rev_head].next;//ä¸‹æ¬¡å¼€å§‹çš„å¤´ç»“ç‚¹åœ°å€ 
 		mid_head = rev_head;
 	}
 	return head;
@@ -65,10 +65,10 @@ void printList(Node list[], int head)
 
 int main()
 {
-	int Head, N, K;  //HeadÎªµÚÒ»¸ö½áµãµÄµØÖ·,NÎª½áµãµÄ×ÜÊı£¬KÎªÒª·´×ªµÄ×ÓÁĞ±íµÄ³¤¶È
+	int Head, N, K;  //Headä¸ºç¬¬ä¸€ä¸ªç»“ç‚¹çš„åœ°å€,Nä¸ºç»“ç‚¹çš„æ€»æ•°ï¼ŒKä¸ºè¦åè½¬çš„å­åˆ—è¡¨çš„é•¿åº¦
 	cin >> Head >> N >> K;
 	Node list[MAXSIZE];
-	int i, Address, Data, Next;  //AddressÊÇ½áµãµÄÎ»ÖÃ£¬DataÊÇÒ»¸öÕûÊı£¬NextÊÇÏÂÒ»¸ö½áµãµÄÎ»ÖÃ
+	int i, Address, Data, Next;  //Addressæ˜¯ç»“ç‚¹çš„ä½ç½®ï¼ŒDataæ˜¯ä¸€ä¸ªæ•´æ•°ï¼ŒNextæ˜¯ä¸‹ä¸€ä¸ªç»“ç‚¹çš„ä½ç½®
 	for (i = 0; i < N; i++) 
 	{
 		cin >> Address >> Data >> Next;
@@ -76,12 +76,12 @@ int main()
 		list[Address].next = Next;
 	}
 	int next = Head;
-	int num = 1;//Ëù¸øÊı¾İ½áµã²¢²»¶¼ÊÇÁ´±íÖĞµÄ½áµã£¬ÓÃÓÚ¼ÆÊıÕæÕıµÄ½áµã¸öÊı 
+	int num = 1;//æ‰€ç»™æ•°æ®ç»“ç‚¹å¹¶ä¸éƒ½æ˜¯é“¾è¡¨ä¸­çš„ç»“ç‚¹ï¼Œç”¨äºè®¡æ•°çœŸæ­£çš„ç»“ç‚¹ä¸ªæ•° 
 	while (list[next].next != -1) {
 		num++;
 		next = list[next].next;
 	}
-	if (K > 1)	//Èç¹ûÊÇ1£¬Ôò²»ĞèÒª·´×ª£¬Ô­ĞòÊä³ö 
+	if (K > 1)	//å¦‚æœæ˜¯1ï¼Œåˆ™ä¸éœ€è¦åè½¬ï¼ŒåŸåºè¾“å‡º 
 		Head = reverList(list, K, Head, num);
 	printList(list, Head);
 

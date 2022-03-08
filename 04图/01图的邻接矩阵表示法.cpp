@@ -1,93 +1,93 @@
 #include<iostream>
 using namespace std;
 
-/* Í¼µÄÁÚ½Ó¾ØÕó±íÊ¾·¨ */
-#define MaxVertexNum 100    // ×î´ó¶¥µãÊıÉèÎª100
-typedef int Vertex;         // ÓÃ¶¥µãÏÂ±ê±íÊ¾¶¥µã,ÎªÕûĞÍ
-typedef int WeightType;        // ±ßµÄÈ¨ÖµÉèÎªÕûĞÍ
-typedef char DataType;        // ¶¥µã´æ´¢µÄÊı¾İÀàĞÍÉèÎª×Ö·ûĞÍ
+/* å›¾çš„é‚»æ¥çŸ©é˜µè¡¨ç¤ºæ³• */
+#define MaxVertexNum 100    // æœ€å¤§é¡¶ç‚¹æ•°è®¾ä¸º100
+typedef int Vertex;         // ç”¨é¡¶ç‚¹ä¸‹æ ‡è¡¨ç¤ºé¡¶ç‚¹,ä¸ºæ•´å‹
+typedef int WeightType;        // è¾¹çš„æƒå€¼è®¾ä¸ºæ•´å‹
+typedef char DataType;        // é¡¶ç‚¹å­˜å‚¨çš„æ•°æ®ç±»å‹è®¾ä¸ºå­—ç¬¦å‹
 
-/* ±ßµÄ¶¨Òå */
+/* è¾¹çš„å®šä¹‰ */
 typedef struct ENode *PtrToENode;
 struct ENode {
-	Vertex V1, V2;    // ÓĞÏò±ß<V1,V2> 
-	WeightType Weight;  // È¨ÖØ 
+	Vertex V1, V2;    // æœ‰å‘è¾¹<V1,V2>
+	WeightType Weight;  // æƒé‡
 };
 typedef PtrToENode Edge;
 
-/* Í¼½áµãµÄ¶¨Òå */
+/* å›¾ç»“ç‚¹çš„å®šä¹‰ */
 typedef struct GNode *PtrToGNode;
 struct GNode {
-	int Nv;   // ¶¥µãÊı 
-	int Ne;   // ±ßÊı
-	WeightType G[MaxVertexNum][MaxVertexNum];  //ÁÚ½Ó¾ØÕó
-	DataType Data[MaxVertexNum]; // ´æ¶¥µãµÄÊı¾İ 
-	/* ×¢Òâ£ººÜ¶àÇé¿öÏÂ£¬¶¥µãÎŞÊı¾İ£¬´ËÊ±Data[]¿ÉÒÔ²»ÓÃ³öÏÖ */
+	int Nv;   // é¡¶ç‚¹æ•°
+	int Ne;   // è¾¹æ•°
+	WeightType G[MaxVertexNum][MaxVertexNum];  //é‚»æ¥çŸ©é˜µ
+	DataType Data[MaxVertexNum]; // å­˜é¡¶ç‚¹çš„æ•°æ®
+	/* æ³¨æ„ï¼šå¾ˆå¤šæƒ…å†µä¸‹ï¼Œé¡¶ç‚¹æ— æ•°æ®ï¼Œæ­¤æ—¶Data[]å¯ä»¥ä¸ç”¨å‡ºç° */
 };
-typedef PtrToGNode MGraph;  // ÒÔÁÚ½Ó¾ØÕó´æ´¢µÄÍ¼ÀàĞÍ
+typedef PtrToGNode MGraph;  // ä»¥é‚»æ¥çŸ©é˜µå­˜å‚¨çš„å›¾ç±»å‹
 
 
-// ³õÊ¼»¯Í¼ 
-MGraph CreateGraph(int VertexNum) 
+// åˆå§‹åŒ–å›¾
+MGraph CreateGraph(int VertexNum)
 {
 	Vertex V, W;
 	MGraph Graph;
 
-	Graph = (MGraph)malloc(sizeof(struct GNode));  // ½¨Á¢Í¼
+	Graph = (MGraph)malloc(sizeof(struct GNode));  // å»ºç«‹å›¾
 	Graph->Nv = VertexNum;
 	Graph->Ne = 0;
-	/* ³õÊ¼»¯ÁÚ½Ó¾ØÕó */
-	/* ×¢Òâ£ºÕâÀïÄ¬ÈÏ¶¥µã±àºÅ´Ó0¿ªÊ¼£¬µ½(Graph->Nv - 1) */
+	/* åˆå§‹åŒ–é‚»æ¥çŸ©é˜µ */
+	/* æ³¨æ„ï¼šè¿™é‡Œé»˜è®¤é¡¶ç‚¹ç¼–å·ä»0å¼€å§‹ï¼Œåˆ°(Graph->Nv - 1) */
 	for (V = 0; V < VertexNum; V++)
 		for (W = 0; W < VertexNum; W++)
 			Graph->G[V][W] = 0;
 	return Graph;
 }
 
-// ²åÈë±ß 
-void Insert(MGraph Graph, Edge E) 
+// æ’å…¥è¾¹
+void Insert(MGraph Graph, Edge E)
 {
-	// ²åÈë±ß <V1,V2>
+	// æ’å…¥è¾¹ <V1,V2>
 	Graph->G[E->V1][E->V2] = E->Weight;
 
-	// Èç¹ûÊÇÎŞÏòÍ¼£¬»¹ĞèÒª²åÈë±ß <V2,V1>
+	// å¦‚æœæ˜¯æ— å‘å›¾ï¼Œè¿˜éœ€è¦æ’å…¥è¾¹ <V2,V1>
 	Graph->G[E->V2][E->V1] = E->Weight;
 }
 
-// ½¨Í¼ 
-MGraph BuildGraph() 
+// å»ºå›¾
+MGraph BuildGraph()
 {
 	MGraph Graph;
 	Edge E;
 	Vertex V;
 	int Nv, i;
 
-	cin >> Nv;   // ¶ÁÈë¶¥µãÊı 
-	Graph = CreateGraph(Nv);  // ³õÊ¼»¯ÓĞNv¸ö¶¥µãµ«Ã»ÓĞ±ßµÄÍ¼
+	cin >> Nv;   // è¯»å…¥é¡¶ç‚¹æ•°
+	Graph = CreateGraph(Nv);  // åˆå§‹åŒ–æœ‰Nvä¸ªé¡¶ç‚¹ä½†æ²¡æœ‰è¾¹çš„å›¾
 
-	cin >>(Graph->Ne);  // ¶ÁÈë±ßÊı 
-	if (Graph->Ne != 0)  // Èç¹ûÓĞ±ß
+	cin >>(Graph->Ne);  // è¯»å…¥è¾¹æ•°
+	if (Graph->Ne != 0)  // å¦‚æœæœ‰è¾¹
 	{
-		E = (Edge)malloc(sizeof(struct ENode));  // ½¨Á¢±ß½áµã
-		for (i = 0; i < Graph->Ne; i++) 
+		E = (Edge)malloc(sizeof(struct ENode));  // å»ºç«‹è¾¹ç»“ç‚¹
+		for (i = 0; i < Graph->Ne; i++)
 		{
-			cin >> E->V1 >> E->V2 >> E->Weight;// ¶ÁÈë±ß£¬¸ñÊ½Îª"Æğµã ÖÕµã È¨ÖØ"£¬²åÈëÁÚ½Ó¾ØÕó 
+			cin >> E->V1 >> E->V2 >> E->Weight;// è¯»å…¥è¾¹ï¼Œæ ¼å¼ä¸º"èµ·ç‚¹ ç»ˆç‚¹ æƒé‡"ï¼Œæ’å…¥é‚»æ¥çŸ©é˜µ
 			Insert(Graph, E);
 		}
 	}
 
-	// Èç¹û¶¥µãÓĞÊı¾İµÄ»°£¬¶ÁÈëÊı¾İ
+	// å¦‚æœé¡¶ç‚¹æœ‰æ•°æ®çš„è¯ï¼Œè¯»å…¥æ•°æ®
 	for (V = 0; V < Graph->Nv; V++)
 		cin >> (Graph->Data[V]);
 
 	return Graph;
 }
 
-// ±éÀúÍ¼
-void Print(MGraph Graph) 
+// éå†å›¾
+void Print(MGraph Graph)
 {
 	Vertex V, W;
-	for (V = 0; V < Graph->Nv; V++) 
+	for (V = 0; V < Graph->Nv; V++)
 	{
 		for (W = 0; W < Graph->Nv; W++)
 			cout << Graph->G[V][W];
@@ -95,7 +95,7 @@ void Print(MGraph Graph)
 	}
 }
 
-int main() 
+int main()
 {
 	MGraph Graph;
 	Graph = BuildGraph();

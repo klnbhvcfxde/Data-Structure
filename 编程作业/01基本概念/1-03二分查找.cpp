@@ -8,7 +8,7 @@ typedef int Position;
 typedef struct LNode *List;
 struct LNode {
 	ElementType Data[MAXSIZE];
-	Position Last; /* ±£´æÏßÐÔ±íÖÐ×îºóÒ»¸öÔªËØµÄÎ»ÖÃ */
+	Position Last; /* ä¿å­˜çº¿æ€§è¡¨ä¸­æœ€åŽä¸€ä¸ªå…ƒç´ çš„ä½ç½® */
 };
 
 List ReadInput();
@@ -35,7 +35,7 @@ List ReadInput()
 	LNode *L = (LNode*)malloc(sizeof(LNode));
 	int Length;
 	cin >> Length;
-	for (int i = 1; i <= Length; i++)  //ÔªËØ´ÓÏÂ±ê1¿ªÊ¼´æ´¢
+	for (int i = 1; i <= Length; i++)  //å…ƒç´ ä»Žä¸‹æ ‡1å¼€å§‹å­˜å‚¨
 	{
 		cin >> L->Data[i];
 	}

@@ -3,30 +3,30 @@ using namespace std;
 
 void CountingSort(int *arr, int size)
 {
-	int minValue = arr[0];  //Í¨¹ımaxValueºÍminValue¼ÆËã³öÁÙÊ±Êı×éËùĞèÒª¿ª±ÙµÄ¿Õ¼ä´óĞ¡
+	int minValue = arr[0];  //é€šè¿‡maxValueå’ŒminValueè®¡ç®—å‡ºä¸´æ—¶æ•°ç»„æ‰€éœ€è¦å¼€è¾Ÿçš„ç©ºé—´å¤§å°
 	int maxValue = arr[0];
 	int* tmp = 0;
 	int count = 0;
-	for (int i = 0; i < size; i++)  //ÕÒ³ö´ıÅÅĞòµÄÊı×éÖĞ×î´óºÍ×îĞ¡µÄÔªËØ
+	for (int i = 0; i < size; i++)  //æ‰¾å‡ºå¾…æ’åºçš„æ•°ç»„ä¸­æœ€å¤§å’Œæœ€å°çš„å…ƒç´ 
 	{
 		if (arr[i] < minValue) 
 			minValue = arr[i];
 		if (arr[i] > maxValue)
 			maxValue = arr[i];
 	}
-	int range = maxValue - minValue + 1;  //¼ÆËãÊı¾İµÄ·ÖÉ¢¿Õ¼ä
-	tmp = (int*)malloc(sizeof(arr[0])*size);  //ÉêÇë¸¨Öú¿Õ¼ä
+	int range = maxValue - minValue + 1;  //è®¡ç®—æ•°æ®çš„åˆ†æ•£ç©ºé—´
+	tmp = (int*)malloc(sizeof(arr[0])*size);  //ç”³è¯·è¾…åŠ©ç©ºé—´
 	if (tmp == NULL)
 		return;
-	memset(tmp, 0, sizeof(int)*range);  //³õÊ¼»¯
+	memset(tmp, 0, sizeof(int)*range);  //åˆå§‹åŒ–
 
-	for (int i = 0; i < size; i++)  //Í³¼ÆÃ¿¸öÔªËØ³öÏÖµÄ´ÎÊı
-		tmp[arr[i] - minValue]++;  //ÔÚ´æ´¢ÉÏÒªÔÚÔ­Ê¼Êı×éÊıÖµÉÏ¼õÈ¥minValue²Å²»»á³öÏÖÔ½½çÎÊÌâ
+	for (int i = 0; i < size; i++)  //ç»Ÿè®¡æ¯ä¸ªå…ƒç´ å‡ºç°çš„æ¬¡æ•°
+		tmp[arr[i] - minValue]++;  //åœ¨å­˜å‚¨ä¸Šè¦åœ¨åŸå§‹æ•°ç»„æ•°å€¼ä¸Šå‡å»minValueæ‰ä¸ä¼šå‡ºç°è¶Šç•Œé—®é¢˜
 
-	for (int i = 0; i < range; i++)  //Í¨¹ıÍ³¼Ætmp[];»ØÊÕÔªËØ
+	for (int i = 0; i < range; i++)  //é€šè¿‡ç»Ÿè®¡tmp[];å›æ”¶å…ƒç´ 
 	{
 		while (tmp[i]--)
-			arr[count++] = i + minValue;  //Òª½«iµÄÖµ¼ÓÉÏminValue²ÅÄÜ»¹Ô­µ½Ô­Ê¼Êı¾İ
+			arr[count++] = i + minValue;  //è¦å°†içš„å€¼åŠ ä¸ŠminValueæ‰èƒ½è¿˜åŸåˆ°åŸå§‹æ•°æ®
 	}
 	free(tmp);
 }
@@ -36,7 +36,7 @@ int main()
 	int a[] = { 2,3,8,7,1,7,3,9,8,2,1,4,2,4,6,9 };
 	int len = (int) sizeof(a) / sizeof(*a);
 
-	cout << "ÅÅĞòÇ°£º" << endl;
+	cout << "æ’åºå‰ï¼š" << endl;
 	for (int i = 0; i < len; i++)
 	{
 		cout << a[i] << "  ";
@@ -45,7 +45,7 @@ int main()
 
 	CountingSort(a, len);
 
-	cout << "ÅÅĞòºó£º" << endl;
+	cout << "æ’åºåï¼š" << endl;
 	for (int i = 0; i < len; i++)
 	{
 		cout << a[i] << "  ";

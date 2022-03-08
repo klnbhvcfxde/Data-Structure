@@ -3,51 +3,51 @@ using namespace std;
 #define MaxSize 10005
 typedef int SetType;
 
-// ³õÊ¼»¯ 
+// åˆå§‹åŒ– 
 void Init(SetType s[], int n) 
 {
 	for (int i = 0; i < n; i++)
 		s[i] = -1;
 }
 
-// ²éÕÒ£¨Â·¾¶Ñ¹Ëõ£©
+// æŸ¥æ‰¾ï¼ˆè·¯å¾„å‹ç¼©ï¼‰
 int Find(SetType s[], int x) 
 {
-	if (s[x] < 0)  // ±¾ÉíÒÑ¾­ÊÇ¸ù 
+	if (s[x] < 0)  // æœ¬èº«å·²ç»æ˜¯æ ¹ 
 		return x;
-	else  // 1. ÕÒµ½¸ù  2. °Ñ¸ù±ä³ÉxµÄ¸¸½áµã  3.ÔÙ·µ»Ø¸ù 
+	else  // 1. æ‰¾åˆ°æ ¹  2. æŠŠæ ¹å˜æˆxçš„çˆ¶ç»“ç‚¹  3.å†è¿”å›æ ¹ 
 		return s[x] = Find(s, s[x]);
 }
 
-// ²¢£¨±È¹æÄ££º°ÑĞ¡Ê÷Ìùµ½´óÊ÷ÉÏ£©
+// å¹¶ï¼ˆæ¯”è§„æ¨¡ï¼šæŠŠå°æ ‘è´´åˆ°å¤§æ ‘ä¸Šï¼‰
 void Union(SetType s[], int x1, int x2) 
 {
-	// x1¹æÄ£¸ü´ó£¬¸ºÊı 
+	// x1è§„æ¨¡æ›´å¤§ï¼Œè´Ÿæ•° 
 	if (s[x1] < s[x2]) 
 	{
-		s[x1] += s[x2];    //  Á½Ê÷ºÏ²¢£¬¹æÄ£Ïà¼Ó 
-		s[x2] = x1;   // x2¹Òµ½x1ÉÏ 
+		s[x1] += s[x2];    //  ä¸¤æ ‘åˆå¹¶ï¼Œè§„æ¨¡ç›¸åŠ  
+		s[x2] = x1;   // x2æŒ‚åˆ°x1ä¸Š 
 	}
 	else 
 	{
-		s[x2] += s[x1];   //  Á½Ê÷ºÏ²¢£¬¹æÄ£Ïà¼Ó 
+		s[x2] += s[x1];   //  ä¸¤æ ‘åˆå¹¶ï¼Œè§„æ¨¡ç›¸åŠ  
 		s[x1] = x2;
 	}
 }
 
-//Á¬½Ó
+//è¿æ¥
 
 void Input_connection(SetType s[]) 
 {
 	int x1, x2;
 	cin >> x1 >> x2;
-	int root1 = Find(s, x1 - 1);  // ÒÔÊı×éÏÂ±ê´æÖµ£¬ÏÂ±êÓë´æÖµ²î 1 
+	int root1 = Find(s, x1 - 1);  // ä»¥æ•°ç»„ä¸‹æ ‡å­˜å€¼ï¼Œä¸‹æ ‡ä¸å­˜å€¼å·® 1 
 	int root2 = Find(s, x2 - 1);
 	if (root1 != root2)
 		Union(s, root1, root2);
 }
 
-//¼ì²éÁ¬½Ó
+//æ£€æŸ¥è¿æ¥
 void check_connection(SetType s[]) 
 {
 	int x1, x2;
@@ -60,7 +60,7 @@ void check_connection(SetType s[])
 		cout << "no" << endl;
 }
 
-// ¼ì²éÍøÂç
+// æ£€æŸ¥ç½‘ç»œ
 void check_network(SetType s[], int n) 
 {
 	int counter = 0;
@@ -82,7 +82,7 @@ int main()
 	SetType s[MaxSize];
 	Init(s, n);
 	do {
-		getchar();  // ½ÓÊÕÃ¿´Î¶à³öÀ´µÄ»Ø³µ 
+		getchar();  // æ¥æ”¶æ¯æ¬¡å¤šå‡ºæ¥çš„å›è½¦ 
 		cin >> in;
 		switch (in) 
 		{

@@ -9,7 +9,7 @@ void InOrder_BST(int root, int N, int InOrder[])
 {
 	if (root <= N) 
 	{
-		//ÍêÈ«¶þ²æÊ÷ÔÚ²ãÐòÊä³öÊ±£¬ÏÂ±êÎªiµÄ½áµãµÄ×óº¢×ÓºÍÓÒº¢×ÓµÄÏÂ±ê·Ö±ðÎª2i,2i+1
+		//å®Œå…¨äºŒå‰æ ‘åœ¨å±‚åºè¾“å‡ºæ—¶ï¼Œä¸‹æ ‡ä¸ºiçš„ç»“ç‚¹çš„å·¦å­©å­å’Œå³å­©å­çš„ä¸‹æ ‡åˆ†åˆ«ä¸º2i,2i+1
 		InOrder_BST(root * 2, N, InOrder);
 		LevelOrder[root] = InOrder[j++];
 		InOrder_BST(root * 2 + 1, N, InOrder);
@@ -24,7 +24,7 @@ int main()
 	{
 		cin >> InOrder[i];
 	}
-	sort(InOrder, InOrder + N);  //¶þ²æËÑË÷Ê÷µÄÖÐÐòÊä³öÎªÒ»¸öÉýÐòµÄÐòÁÐ£¬µ±¶ÔÊäÈëµÄÊý¾Ý½øÐÐÉýÐòÅÅÁÐºó»ñµÃÁËÍêÈ«¶þ²æÅÅÐòÊ÷µÄÖÐÐò±éÀú½á¹û
+	sort(InOrder, InOrder + N);  //äºŒå‰æœç´¢æ ‘çš„ä¸­åºè¾“å‡ºä¸ºä¸€ä¸ªå‡åºçš„åºåˆ—ï¼Œå½“å¯¹è¾“å…¥çš„æ•°æ®è¿›è¡Œå‡åºæŽ’åˆ—åŽèŽ·å¾—äº†å®Œå…¨äºŒå‰æŽ’åºæ ‘çš„ä¸­åºéåŽ†ç»“æžœ
 	InOrder_BST(1, N, InOrder);
 	cout << LevelOrder[1];
 	for (int i = 2; i <= N; i++) 

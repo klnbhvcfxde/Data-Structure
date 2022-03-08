@@ -1,91 +1,91 @@
 #include<iostream>
 using namespace std;
-#define MAXSIZE 100  // MAXSIZE ¶¨ÒåÎª Data Êı×éµÄ´óĞ¡
-typedef int ElementType;  // ElementType ¿É¶¨ÒåÎªÈÎÒâÀàĞÍ£»typedefÎªÏÖÓĞÀàĞÍ´´½¨Ò»¸öĞÂµÄÃû×Ö
-typedef struct LNode *List;  //typedefÊÇÔ¤¶¨Òå¹Ø¼ü×Ö£¬Ïàµ±ÓÚÀàĞÍÖØÃüÃû£¬Æğ¸ö¼òµ¥µÄÃû×Ö£¬ÕâÀï¾ÍÊÇÓÃList±íÊ¾struct LNode½á¹¹ÌåÖ¸Õë
+#define MAXSIZE 100  // MAXSIZE å®šä¹‰ä¸º Data æ•°ç»„çš„å¤§å°
+typedef int ElementType;  // ElementType å¯å®šä¹‰ä¸ºä»»æ„ç±»å‹ï¼›typedefä¸ºç°æœ‰ç±»å‹åˆ›å»ºä¸€ä¸ªæ–°çš„åå­—
+typedef struct LNode *List;  //typedefæ˜¯é¢„å®šä¹‰å…³é”®å­—ï¼Œç›¸å½“äºç±»å‹é‡å‘½åï¼Œèµ·ä¸ªç®€å•çš„åå­—ï¼Œè¿™é‡Œå°±æ˜¯ç”¨Listè¡¨ç¤ºstruct LNodeç»“æ„ä½“æŒ‡é’ˆ
 struct LNode
 {
 	ElementType Data[MAXSIZE];
-	int Last;  // Last ¶¨ÒåÏßĞÔ±íµÄ×îºóÒ»¸öÔªËØ
+	int Last;  // Last å®šä¹‰çº¿æ€§è¡¨çš„æœ€åä¸€ä¸ªå…ƒç´ 
 };
 List L;
-//·ÃÎÊÏÂ±êÎª i µÄÔªËØ£ºL->Data[i]£¬ÏÂ±ê´Ó 0 ¿ªÊ¼
-//ÏßĞÔ±íµÄ³¤¶È£ºL->Last+1
+//è®¿é—®ä¸‹æ ‡ä¸º i çš„å…ƒç´ ï¼šL->Data[i]ï¼Œä¸‹æ ‡ä» 0 å¼€å§‹
+//çº¿æ€§è¡¨çš„é•¿åº¦ï¼šL->Last+1
 
-List MakeEmpty(); //³õÊ¼»¯Ë³Ğò±í 
-int Find(ElementType X, List L); //²éÕÒ X µÚÒ»´Î³öÏÖµÄÏÂ±ê 
-void Insert(ElementType X, int i, List L); //ÔÚÏÂ±êÎª i µÄµØ·½²åÈë X 
-void Delete(int i, List L);   //É¾³ıÏÂ±êÎª i µÄµ±Ç°Öµ 
-ElementType FindKth(int K, List L);  //·µ»ØÏÂ±êÎª K µÄµ±Ç°Öµ
-int Length(List L);  //·µ»ØË³Ğò±íµÄ³¤¶È 
+List MakeEmpty(); //åˆå§‹åŒ–é¡ºåºè¡¨ 
+int Find(ElementType X, List L); //æŸ¥æ‰¾ X ç¬¬ä¸€æ¬¡å‡ºç°çš„ä¸‹æ ‡ 
+void Insert(ElementType X, int i, List L); //åœ¨ä¸‹æ ‡ä¸º i çš„åœ°æ–¹æ’å…¥ X 
+void Delete(int i, List L);   //åˆ é™¤ä¸‹æ ‡ä¸º i çš„å½“å‰å€¼ 
+ElementType FindKth(int K, List L);  //è¿”å›ä¸‹æ ‡ä¸º K çš„å½“å‰å€¼
+int Length(List L);  //è¿”å›é¡ºåºè¡¨çš„é•¿åº¦ 
 
-//³õÊ¼»¯ 
+//åˆå§‹åŒ– 
 List MakeEmpty()
 {
 	List L;
-	L = (List)malloc(sizeof(struct LNode));  //mallocµÄ·µ»ØÖµÊÇÒ»¸öÖ¸Õë£¬Ö¸ÏòÒ»¶Î¿ÉÓÃÄÚ´æµÄÆğÊ¼µØÖ·
+	L = (List)malloc(sizeof(struct LNode));  //mallocçš„è¿”å›å€¼æ˜¯ä¸€ä¸ªæŒ‡é’ˆï¼ŒæŒ‡å‘ä¸€æ®µå¯ç”¨å†…å­˜çš„èµ·å§‹åœ°å€
 	L->Last = -1;
 	return L;
 }
 
-// ²åÈë
+// æ’å…¥
 void Insert(ElementType X, int i, List L)
 {
-	if (L->Last == MAXSIZE - 1)  //Î»ÖÃÒÑÂú
+	if (L->Last == MAXSIZE - 1)  //ä½ç½®å·²æ»¡
 	{
-		cout << "±íÂú" << endl;
+		cout << "è¡¨æ»¡" << endl;
 		return;
 	}
-	if (i < 0 || L->Last + 1 < i)  //Î»ÖÃÔ½½ç£¬Èç¹û½«Êı²åÈë L->Data[L->Last+1]£¬ÏÂÃæ¶¼²»ÓÃÌÚÎ»ÖÃÁË
+	if (i < 0 || L->Last + 1 < i)  //ä½ç½®è¶Šç•Œï¼Œå¦‚æœå°†æ•°æ’å…¥ L->Data[L->Last+1]ï¼Œä¸‹é¢éƒ½ä¸ç”¨è…¾ä½ç½®äº†
 	{
-		cout << "Î»ÖÃ²»ºÏ·¨" << endl;
+		cout << "ä½ç½®ä¸åˆæ³•" << endl;
 		return;
 	}
-	for (int j = L->Last; j >= i; j--)   // ´ÓºóÍùÇ°ÒÀ´ÎÏòºóÅ²Ò»¸ö£¬¸ø a[i]ÌÚ³öÎ»ÖÃ     
+	for (int j = L->Last; j >= i; j--)   // ä»åå¾€å‰ä¾æ¬¡å‘åæŒªä¸€ä¸ªï¼Œç»™ a[i]è…¾å‡ºä½ç½®     
 		L->Data[j + 1] = L->Data[j];
-	L->Data[i] = X;    //ĞÂÔªËØ²åÈë
-	L->Last++;    // LastÈÔÈ»Ö¸Ïò×îºóÔªËØ
+	L->Data[i] = X;    //æ–°å…ƒç´ æ’å…¥
+	L->Last++;    // Lastä»ç„¶æŒ‡å‘æœ€åå…ƒç´ 
 	return;
 }
 
-//É¾³ı
+//åˆ é™¤
 void Delete(int i, List L)
 {
-	if (i < 0 || L->Last < i)  //Î»ÖÃÔ½½ç£¬¶øÉ¾³ı×î¶àµ½ L->Data[L->Last]
+	if (i < 0 || L->Last < i)  //ä½ç½®è¶Šç•Œï¼Œè€Œåˆ é™¤æœ€å¤šåˆ° L->Data[L->Last]
 	{
-		cout << "L->Data[" << i << "]²»´æÔÚÔªËØ" << endl;
+		cout << "L->Data[" << i << "]ä¸å­˜åœ¨å…ƒç´ " << endl;
 		return;
 	}
-	for (int j = i; j <= L->Last; j++)   // ´ÓÇ°ÍùºóÒÀ´ÎÏòÇ°Å²Ò»¸ö£¬½« a[i] ¸²¸ÇÁË 
+	for (int j = i; j <= L->Last; j++)   // ä»å‰å¾€åä¾æ¬¡å‘å‰æŒªä¸€ä¸ªï¼Œå°† a[i] è¦†ç›–äº† 
 		L->Data[j] = L->Data[j + 1];
-	L->Last--;  // LastÈÔÈ»Ö¸Ïò×îºóÔªËØ
+	L->Last--;  // Lastä»ç„¶æŒ‡å‘æœ€åå…ƒç´ 
 	return;
 }
 
-// °´Öµ²éÕÒ 
+// æŒ‰å€¼æŸ¥æ‰¾ 
 int Find(ElementType X, List L)
 {
 	int i = 0;
 	while (i <= L->Last && L->Data[i] != X)
 		i++;
-	if (L->Last < i)  //Èç¹ûÃ»ÕÒµ½£¬·µ»Ø -1
+	if (L->Last < i)  //å¦‚æœæ²¡æ‰¾åˆ°ï¼Œè¿”å› -1
 		return -1;
-	else    // ÕÒµ½ºó·µ»ØÏÂ±ê 
+	else    // æ‰¾åˆ°åè¿”å›ä¸‹æ ‡ 
 		return i;
 }
 
-// °´Ğò²éÕÒ
+// æŒ‰åºæŸ¥æ‰¾
 ElementType FindKth(int K, List L)
 {
-	if (K < 0 || L->Last < K)  //Î»ÖÃÔ½½ç
+	if (K < 0 || L->Last < K)  //ä½ç½®è¶Šç•Œ
 	{
-		cout << "L->Data[" << K << "]²»´æÔÚÔªËØ" << endl;
+		cout << "L->Data[" << K << "]ä¸å­˜åœ¨å…ƒç´ " << endl;
 		return NULL;
 	}
 	return L->Data[K];
 }
 
-//±í³¤
+//è¡¨é•¿
 int Length(List L)
 {
 	return L->Last + 1;
@@ -93,36 +93,36 @@ int Length(List L)
 
 int main() 
 {
-	L = MakeEmpty();  //MakeEmpty()Çå¿Õ¶¨ÒåµÄÊı¾İ½á¹¹
+	L = MakeEmpty();  //MakeEmpty()æ¸…ç©ºå®šä¹‰çš„æ•°æ®ç»“æ„
 
-	//²åÈë
+	//æ’å…¥
 	Insert(11, 0, L); 
-	cout << "ÔÚÏßĞÔ±íL->Data[0]²åÈë11" << endl;
+	cout << "åœ¨çº¿æ€§è¡¨L->Data[0]æ’å…¥11" << endl;
 	Insert(25, 0, L);
-	cout << "ÔÚÏßĞÔ±íL->Data[0]²åÈë25" << endl;
+	cout << "åœ¨çº¿æ€§è¡¨L->Data[0]æ’å…¥25" << endl;
 	Insert(33, 0, L);
-	cout << "ÔÚÏßĞÔ±íL-Data[0]²åÈë33" << endl;
+	cout << "åœ¨çº¿æ€§è¡¨L-Data[0]æ’å…¥33" << endl;
 	Insert(77, 0, L);
-	cout << "ÔÚÏßĞÔ±íL-Data[0]²åÈë77" << endl;
+	cout << "åœ¨çº¿æ€§è¡¨L-Data[0]æ’å…¥77" << endl;
 
-	cout << "´ËÊ±µÄÏßĞÔ±íÎª£º";
+	cout << "æ­¤æ—¶çš„çº¿æ€§è¡¨ä¸ºï¼š";
 	for (int i = 0; i < Length(L); i++)
 		cout << L->Data[i] << " ";
 	cout << endl;
 
-	//²éÕÒ
-	cout << "²éÕÒÖµÎª12µÄÏÂ±êÊÇ£º" << Find(12, L) << endl;
-	cout << "²éÕÒÖµÎª33µÄÏÂ±êÊÇ£º" << Find(33, L) << endl;
-	cout << "²éÕÒÏßĞÔ±íÖĞÏÂ±êÎª3µÄÖµÊÇ£º" << FindKth(3, L) << endl;
-	cout << "²éÕÒÏßĞÔ±íÖĞÏÂ±êÎª5µÄÖµÊÇ£º" << FindKth(5, L) << endl;
+	//æŸ¥æ‰¾
+	cout << "æŸ¥æ‰¾å€¼ä¸º12çš„ä¸‹æ ‡æ˜¯ï¼š" << Find(12, L) << endl;
+	cout << "æŸ¥æ‰¾å€¼ä¸º33çš„ä¸‹æ ‡æ˜¯ï¼š" << Find(33, L) << endl;
+	cout << "æŸ¥æ‰¾çº¿æ€§è¡¨ä¸­ä¸‹æ ‡ä¸º3çš„å€¼æ˜¯ï¼š" << FindKth(3, L) << endl;
+	cout << "æŸ¥æ‰¾çº¿æ€§è¡¨ä¸­ä¸‹æ ‡ä¸º5çš„å€¼æ˜¯ï¼š" << FindKth(5, L) << endl;
 
-	//É¾³ı
+	//åˆ é™¤
 	Delete(2, L);
-	cout << "É¾³ıÏßĞÔ±íÖĞÏÂ±êÎª2µÄÔªËØ" << endl;
+	cout << "åˆ é™¤çº¿æ€§è¡¨ä¸­ä¸‹æ ‡ä¸º2çš„å…ƒç´ " << endl;
 	Delete(2, L);
-	cout << "É¾³ıÏßĞÔ±íÖĞÏÂ±êÎª2µÄÔªËØ" << endl;
+	cout << "åˆ é™¤çº¿æ€§è¡¨ä¸­ä¸‹æ ‡ä¸º2çš„å…ƒç´ " << endl;
 
-	cout << "´ËÊ±µÄÏßĞÔ±íÎª£º";
+	cout << "æ­¤æ—¶çš„çº¿æ€§è¡¨ä¸ºï¼š";
 	for (int i = 0; i < Length(L); i++)
 		cout << L->Data[i] << " ";
 	cout << endl;

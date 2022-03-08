@@ -2,19 +2,19 @@
 using namespace std;
 #include <algorithm>
 
-// ×î´ó¶Ñµ÷Õû
+// æœ€å¤§å †è°ƒæ•´
 void MaxHeapify(int arr[], int start, int end) 
 {
-	// ½¨Á¢¸¸½áµãÖ¸±êºÍ×Ó½áµãÖ¸±ê
+	// å»ºç«‹çˆ¶ç»“ç‚¹æŒ‡æ ‡å’Œå­ç»“ç‚¹æŒ‡æ ‡
 	int Parent = start;
 	int Child = Parent * 2 + 1;
-	while (Child <= end)  // Èô×Ó½áµãÖ¸±êÔÚ·¶Î§ÄÚ²Å×ö±È½Ï
+	while (Child <= end)  // è‹¥å­ç»“ç‚¹æŒ‡æ ‡åœ¨èŒƒå›´å†…æ‰åšæ¯”è¾ƒ
 	{
-		if (Child + 1 <= end && arr[Child] < arr[Child + 1]) // ÏÈ±È½ÏÁ½¸ö×Ó½áµãÖ¸±ê´óĞ¡£¬Ñ¡Ôñ×î´óµÄ
+		if (Child + 1 <= end && arr[Child] < arr[Child + 1]) // å…ˆæ¯”è¾ƒä¸¤ä¸ªå­ç»“ç‚¹æŒ‡æ ‡å¤§å°ï¼Œé€‰æ‹©æœ€å¤§çš„
 			Child++;
-		if (arr[Parent] > arr[Child]) // Èç¹û¸¸½áµã´óÓÚ×Ó½áµã´ú±íµ÷ÕûÍê±Ï£¬Ö±½ÓÌø³öº¯Êı
+		if (arr[Parent] > arr[Child]) // å¦‚æœçˆ¶ç»“ç‚¹å¤§äºå­ç»“ç‚¹ä»£è¡¨è°ƒæ•´å®Œæ¯•ï¼Œç›´æ¥è·³å‡ºå‡½æ•°
 			return;
-		else { // ·ñÔò½»»»¸¸×ÓÄÚÈİÔÙ¼ÌĞø×Ó½áµãºÍËï½áµã±È½Ï
+		else { // å¦åˆ™äº¤æ¢çˆ¶å­å†…å®¹å†ç»§ç»­å­ç»“ç‚¹å’Œå­™ç»“ç‚¹æ¯”è¾ƒ
 			swap(arr[Parent], arr[Child]);
 			Parent = Child;
 			Child = Parent * 2 + 1;
@@ -24,10 +24,10 @@ void MaxHeapify(int arr[], int start, int end)
 
 void HeapSort(int arr[], int len) 
 {
-	// ³õÊ¼»¯£¬i´Ó×îºóÒ»¸ö¸¸½áµã¿ªÊ¼µ÷Õû
+	// åˆå§‹åŒ–ï¼Œiä»æœ€åä¸€ä¸ªçˆ¶ç»“ç‚¹å¼€å§‹è°ƒæ•´
 	for (int i = len / 2 - 1; i >= 0; i--)
 		MaxHeapify(arr, i, len - 1);
-	// ÏÈ½«µÚÒ»¸öÔªËØºÍÒÑ¾­ÅÅºÃµÄÔªËØÇ°Ò»Î»×ö½»»»£¬ÔÙÖØĞÂµ÷Õû£¨¸Õµ÷ÕûµÄÔªËØÖ®Ç°µÄÔªËØ£©£¬Ö±µ½ÅÅĞòÍê±Ï
+	// å…ˆå°†ç¬¬ä¸€ä¸ªå…ƒç´ å’Œå·²ç»æ’å¥½çš„å…ƒç´ å‰ä¸€ä½åšäº¤æ¢ï¼Œå†é‡æ–°è°ƒæ•´ï¼ˆåˆšè°ƒæ•´çš„å…ƒç´ ä¹‹å‰çš„å…ƒç´ ï¼‰ï¼Œç›´åˆ°æ’åºå®Œæ¯•
 	for (int i = len - 1; i > 0; i--) 
 	{
 		swap(arr[0], arr[i]);
@@ -40,7 +40,7 @@ int main()
 	int arr[] = { 4,2,8,0,5,7,1,3,6,9 };
 	int len = (int) sizeof(arr) / sizeof(*arr);
 
-	cout << "ÅÅĞòÇ°£º" << endl;
+	cout << "æ’åºå‰ï¼š" << endl;
 	for (int i = 0; i < len; i++)
 	{
 		cout << arr[i] << "  ";
@@ -49,7 +49,7 @@ int main()
 
 	HeapSort(arr, len);
 
-	cout << "ÅÅĞòºó£º" << endl;
+	cout << "æ’åºåï¼š" << endl;
 	for (int i = 0; i < len; i++)
 	{
 		cout << arr[i] << "  ";

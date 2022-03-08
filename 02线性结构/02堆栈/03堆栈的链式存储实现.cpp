@@ -8,47 +8,47 @@ struct SNode {
 };
 Stack S;
 
-Stack CreateStack();  // ³õÊ¼»¯Á´Õ» 
-int IsEmpty(Stack S);  // ÅĞ¶ÏÁ´Õ»ÊÇ·ñÎª¿Õ 
-void Push(Stack S, ElementType item);  // ÈëÕ» 
-ElementType Pop(Stack S);  // ³öÕ»
+Stack CreateStack();  // åˆå§‹åŒ–é“¾æ ˆ 
+int IsEmpty(Stack S);  // åˆ¤æ–­é“¾æ ˆæ˜¯å¦ä¸ºç©º 
+void Push(Stack S, ElementType item);  // å…¥æ ˆ 
+ElementType Pop(Stack S);  // å‡ºæ ˆ
 
 
-// ³õÊ¼»¯ 
+// åˆå§‹åŒ– 
 Stack CreateStack() {
 	S = (Stack)malloc(sizeof(struct SNode));
 	S->Next = NULL;
 	return S;
 }
 
-// ÅĞ¶ÏÊÇ·ñÎª¿Õ 
+// åˆ¤æ–­æ˜¯å¦ä¸ºç©º 
 int IsEmpty(Stack S) {
 	return (S->Next == NULL);
 }
 
-// ÈëÕ»
+// å…¥æ ˆ
 void Push(Stack S, ElementType item) {
 	Stack tmp;
 	tmp = (Stack)malloc(sizeof(struct SNode));
 	tmp->Data = item;
-	// Á´Õ»Õ»¶¥ÔªËØÊÇÁ´±íÍ·½áµã£¬ĞÂÈëÕ»µÄÁ´±íÔÚÕ»¶¥ÔªËØºóÃæ 
+	// é“¾æ ˆæ ˆé¡¶å…ƒç´ æ˜¯é“¾è¡¨å¤´ç»“ç‚¹ï¼Œæ–°å…¥æ ˆçš„é“¾è¡¨åœ¨æ ˆé¡¶å…ƒç´ åé¢ 
 	tmp->Next = S->Next;
 	S->Next = tmp;
 }
 
-// ³öÕ»
+// å‡ºæ ˆ
 ElementType Pop(Stack S) {
 	Stack First;
 	ElementType TopVal;
 	if (IsEmpty(S)) {
-		cout << "¶ÑÕ»¿Õ" << endl;
+		cout << "å †æ ˆç©º" << endl;
 		return NULL;
 	}
 	else {
-		First = S->Next;   // ³öÕ»µÚÒ»¸öÔªËØÔÚÕ»¶¥ÔªËØºóÃæ 
-		S->Next = First->Next;  //°ÑµÚÒ»¸öÔªËØ´ÓÁ´Õ»É¾³ı 
-		TopVal = First->Data;   // È¡³ö±»É¾³ı½áµãµÄÖµ 
-		free(First);  // ÊÍ·Å¿Õ¼ä 
+		First = S->Next;   // å‡ºæ ˆç¬¬ä¸€ä¸ªå…ƒç´ åœ¨æ ˆé¡¶å…ƒç´ åé¢ 
+		S->Next = First->Next;  //æŠŠç¬¬ä¸€ä¸ªå…ƒç´ ä»é“¾æ ˆåˆ é™¤ 
+		TopVal = First->Data;   // å–å‡ºè¢«åˆ é™¤ç»“ç‚¹çš„å€¼ 
+		free(First);  // é‡Šæ”¾ç©ºé—´ 
 		return TopVal;
 	}
 }
@@ -56,18 +56,18 @@ ElementType Pop(Stack S) {
 int main() {
 	S = CreateStack();
 
-	cout << "1ÈëÕ»" << endl;
+	cout << "1å…¥æ ˆ" << endl;
 	Push(S, 1);
 
-	cout << "2ÈëÕ»" << endl;
+	cout << "2å…¥æ ˆ" << endl;
 	Push(S, 2);
 
-	cout << "3ÈëÕ»" << endl;
+	cout << "3å…¥æ ˆ" << endl;
 	Push(S, 3);
 
-	cout << Pop(S) << "³öÕ»" << endl;
+	cout << Pop(S) << "å‡ºæ ˆ" << endl;
 
-	cout << Pop(S) << "³öÕ»" << endl;
+	cout << Pop(S) << "å‡ºæ ˆ" << endl;
 
 	system("pause");
 

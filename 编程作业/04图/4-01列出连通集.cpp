@@ -7,29 +7,29 @@ int G[MaxVertex][MaxVertex];
 bool visit[MaxVertex];
 int Ne, Nv;
 
-// ½¨Í¼ 
+// å»ºå›¾ 
 void BuildGraph() 
 {
-	cin >> Nv;    // ¶¥µãÊı
+	cin >> Nv;    // é¡¶ç‚¹æ•°
 	for (int i = 0; i < Nv; i++) 
 	{
-		visit[i] = false;   // ÖÃÎªÎ´·ÃÎÊ 
+		visit[i] = false;   // ç½®ä¸ºæœªè®¿é—® 
 		for (int j = 0; j < Nv; j++)
-			G[i][j] = 0;  // ³õÊ¼»¯ÁÚ½Ó¾ØÕó
+			G[i][j] = 0;  // åˆå§‹åŒ–é‚»æ¥çŸ©é˜µ
 	}
-	cin >> Ne;  // ±ßÊı
+	cin >> Ne;  // è¾¹æ•°
 	for (int i = 0; i < Ne; i++) 
 	{
 		int v1, v2;
 		cin >> v1 >> v2;
-		G[v1][v2] = 1;  // ²åÈë±ß <V1,V2>
-		G[v2][v1] = 1;  // ²åÈë±ß <V2,V1>
+		G[v1][v2] = 1;  // æ’å…¥è¾¹ <V1,V2>
+		G[v2][v1] = 1;  // æ’å…¥è¾¹ <V2,V1>
 	}
 }
 
 void DFS(Vertex v) 
 {
-	visit[v] = true;	// ±ê¼ÇÒÑ·ÃÎÊ 
+	visit[v] = true;	// æ ‡è®°å·²è®¿é—® 
 	cout << " " << v;
 	for (int i = 0; i < Nv; i++)
 		if (!visit[i] && G[v][i])
@@ -39,17 +39,17 @@ void DFS(Vertex v)
 void BFS(Vertex v) 
 {
 	queue<Vertex> q;
-	visit[v] = true;	// ±ê¼ÇÒÑ·ÃÎÊ 
+	visit[v] = true;	// æ ‡è®°å·²è®¿é—® 
 	cout << " " << v; 
-	q.push(v);	// Èë¶Ó
+	q.push(v);	// å…¥é˜Ÿ
 	while (!q.empty()) 
 	{
-		// ³ö¶Ó¶ÓÊ×ÔªËØ 
+		// å‡ºé˜Ÿé˜Ÿé¦–å…ƒç´  
 		Vertex tmp = q.front();
 		q.pop();
 		for (Vertex i = 0; i < Nv; i++) 
 		{
-			// Èç¹ûÎ´±»·ÃÎÊ¹ı£¬ÇÒºÍ¸Õ³ö¶ÓÔªËØÏàÁÚ 
+			// å¦‚æœæœªè¢«è®¿é—®è¿‡ï¼Œä¸”å’Œåˆšå‡ºé˜Ÿå…ƒç´ ç›¸é‚» 
 			if (!visit[i] && G[i][tmp]) 
 			{
 				visit[i] = true;
@@ -60,7 +60,7 @@ void BFS(Vertex v)
 	}
 }
 
-// ±éÀúÁªÍ¨¼¯ 
+// éå†è”é€šé›† 
 void ListComponents() 
 {
 	for (Vertex i = 0; i < Nv; i++)
@@ -71,7 +71,7 @@ void ListComponents()
 			cout << " }" << endl;
 		}
 
-	// ³õÊ¼·ÃÎÊ×´Ì¬ 
+	// åˆå§‹è®¿é—®çŠ¶æ€ 
 	for (Vertex i = 0; i < Nv; i++)
 		visit[i] = false;
 

@@ -4,29 +4,29 @@ using namespace std;
 #define NOTFIND -1
 
 typedef int ElementType;
-typedef enum {     // µ¥Ôª¸ñ×´Ì¬£¬·Ö±ğ¶ÔÓ¦£ºÓĞºÏ·¨ÔªËØºÍÓĞ¿ÕÎ» 
+typedef enum {     // å•å…ƒæ ¼çŠ¶æ€ï¼Œåˆ†åˆ«å¯¹åº”ï¼šæœ‰åˆæ³•å…ƒç´ å’Œæœ‰ç©ºä½ 
 	Legitimate, Empty
 } EntryType; 
 
 typedef struct HashEntry Cell;
-struct HashEntry {   // µ¥Ôª¸ñ 
-	ElementType data;  // ´æÖµ
-	EntryType info;   // ´æ×´Ì¬ 
+struct HashEntry {   // å•å…ƒæ ¼ 
+	ElementType data;  // å­˜å€¼
+	EntryType info;   // å­˜çŠ¶æ€ 
 };
 
 typedef struct HashTbl *HashTable;
-struct HashTbl {  // ¹şÏ£±í
-	int TableSize;  // ´óĞ¡ 
-	Cell *Cells;   // Êı×é 
+struct HashTbl {  // å“ˆå¸Œè¡¨
+	int TableSize;  // å¤§å° 
+	Cell *Cells;   // æ•°ç»„ 
 };
 
-// ³ıÁôÓàÊı·¨¹şÏ£º¯Êı 
+// é™¤ç•™ä½™æ•°æ³•å“ˆå¸Œå‡½æ•° 
 int Hash(int key, int p) 
 {
 	return key % p;
 }
 
-// ²éÕÒÏÂÒ»¸öËØÊı 
+// æŸ¥æ‰¾ä¸‹ä¸€ä¸ªç´ æ•° 
 int NextPrime(int N) 
 {
 	int p = N % 2 ? N : N + 1;
@@ -38,16 +38,16 @@ int NextPrime(int N)
 	while (p <= MAXTABLESIZE) 
 	{
 		for (i = (int)sqrt(p); i > 2; i--)
-			if (!(p%i))   // ²»ÊÇËØÊı 
+			if (!(p%i))   // ä¸æ˜¯ç´ æ•° 
 				break;
-		if (i == 2)  // ÕÒµ½ÁË
+		if (i == 2)  // æ‰¾åˆ°äº†
 			break;
 		p += 2;
 	}
 	return p;
 }
 
-// ´´½¨¹şÏ£±í 
+// åˆ›å»ºå“ˆå¸Œè¡¨ 
 HashTable CreateTable(int TableSize) 
 {
 	HashTable H;
@@ -59,18 +59,18 @@ HashTable CreateTable(int TableSize)
 	return H;
 }
 
-//²éÕÒ
+//æŸ¥æ‰¾
 int Find(HashTable H, ElementType key) 
 {
 	int NewPos, CurrentPos;
-	int CNum = 0;  // ¼ÇÂ¼³åÍ»´ÎÊı 
+	int CNum = 0;  // è®°å½•å†²çªæ¬¡æ•° 
 	CurrentPos = NewPos = Hash(key, H->TableSize);
-	// Èç¹ûµ±Ç°×´Ì¬²»Îª¿Õ£¬ÇÒÒ»Ö±²»µÈ£¬Ò»Ö±×ö 
+	// å¦‚æœå½“å‰çŠ¶æ€ä¸ä¸ºç©ºï¼Œä¸”ä¸€ç›´ä¸ç­‰ï¼Œä¸€ç›´åš 
 	while (H->Cells[NewPos].info != Empty && H->Cells[NewPos].data != key) 
 	{
 		CNum++;
 		NewPos = (CurrentPos + CNum * CNum) % H->TableSize;
-		if (CNum == H->TableSize / 2) // Ã»ÕÒµ½
+		if (CNum == H->TableSize / 2) // æ²¡æ‰¾åˆ°
 			return NOTFIND;
 	}
 	return NewPos;
@@ -80,7 +80,7 @@ int Insert(HashTable H, ElementType key)
 {
 	int pos;
 	pos = Find(H, key);
-	if (pos == NOTFIND) // Èç¹ûÃ»ÕÒµ½ 
+	if (pos == NOTFIND) // å¦‚æœæ²¡æ‰¾åˆ° 
 		return NOTFIND;
 	else if (H->Cells[pos].info != Legitimate) 
 	{

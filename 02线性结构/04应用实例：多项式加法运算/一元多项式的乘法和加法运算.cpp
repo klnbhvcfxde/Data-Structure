@@ -2,8 +2,8 @@
 using namespace std;
 
 typedef struct PolyNode {
-	int coef;//ÏµÊý 
-	int exp;//Ö¸Êý 
+	int coef;//ç³»æ•° 
+	int exp;//æŒ‡æ•° 
 	struct PolyNode *next;
 } *Polynomial;
 
@@ -18,9 +18,9 @@ Polynomial read(Polynomial P)
 	P = (struct PolyNode*)malloc(sizeof(struct PolyNode));
 	temp = P;
 	int n, COEF, EXP;
-	cout << "¶àÏîÊ½µÄÏîÊý£º";
+	cout << "å¤šé¡¹å¼çš„é¡¹æ•°ï¼š";
 	cin >> n;
-	cout << "¶àÏîÊ½Ã¿Ïî¶ÔÓ¦µÄÏµÊýºÍÖ¸Êý£º";
+	cout << "å¤šé¡¹å¼æ¯é¡¹å¯¹åº”çš„ç³»æ•°å’ŒæŒ‡æ•°ï¼š";
 	for (int i = 0; i < n; i++) 
 	{
 		cin >> COEF >> EXP;
@@ -40,7 +40,7 @@ Polynomial read(Polynomial P)
 
 void print(Polynomial P) 
 {
-	int num = 0, temp = 0;  //tempÓÃÓÚÍ³¼ÆPÀïÃæÓÐ¶àÉÙ¸öÔªËØ£¬num ÓÃÓÚÍ³¼ÆÓÐ¶àÉÙ¸öÏµÊýÎª0µÄÊý 
+	int num = 0, temp = 0;  //tempç”¨äºŽç»Ÿè®¡Pé‡Œé¢æœ‰å¤šå°‘ä¸ªå…ƒç´ ï¼Œnum ç”¨äºŽç»Ÿè®¡æœ‰å¤šå°‘ä¸ªç³»æ•°ä¸º0çš„æ•° 
 	Polynomial val = P;
 	while (val->next) 
 	{
@@ -123,21 +123,21 @@ Polynomial getAdd(Polynomial P1, Polynomial P2)
 
 Polynomial getMuti(Polynomial P1, Polynomial P2) {
 	/*
-	ÔÚÕâÀïÎÒÃÇ²ÉÓÃµÄÊÇ£ºÖðÏî²åÈë¡£
-	1£¬ÏÈÄÃ³öP2µÄµÚÒ»Ïî£¬ÈÃËüÓëP1µÄÃ¿Ò»ÏîÏà³Ë£¬´Ó¶øµÃµ½P
-	2£¬ÔÙÄÃ³öP2µÄµÚ¶þÏî£¬ÈÃËüÓëP1µÄÃ¿Ò»ÏîÏà³Ë£¬È»ºóÃ¿³ËÒ»Ïî£¬¾Í½«Æä²åÈëµ½PÖÐ
-	3£¬ÒÀ´ÎÖØ¸´ÉÏÃæµÄ²½Öè£¬×îÖÕµÃµ½P£¬½«Æä´òÓ¡³öÀ´
+	åœ¨è¿™é‡Œæˆ‘ä»¬é‡‡ç”¨çš„æ˜¯ï¼šé€é¡¹æ’å…¥ã€‚
+	1ï¼Œå…ˆæ‹¿å‡ºP2çš„ç¬¬ä¸€é¡¹ï¼Œè®©å®ƒä¸ŽP1çš„æ¯ä¸€é¡¹ç›¸ä¹˜ï¼Œä»Žè€Œå¾—åˆ°P
+	2ï¼Œå†æ‹¿å‡ºP2çš„ç¬¬äºŒé¡¹ï¼Œè®©å®ƒä¸ŽP1çš„æ¯ä¸€é¡¹ç›¸ä¹˜ï¼Œç„¶åŽæ¯ä¹˜ä¸€é¡¹ï¼Œå°±å°†å…¶æ’å…¥åˆ°Pä¸­
+	3ï¼Œä¾æ¬¡é‡å¤ä¸Šé¢çš„æ­¥éª¤ï¼Œæœ€ç»ˆå¾—åˆ°Pï¼Œå°†å…¶æ‰“å°å‡ºæ¥
 	*/
 	Polynomial P, temp = NULL, s = NULL;
 	P = (struct PolyNode *)malloc(sizeof(struct PolyNode));
 	temp = P;
 	Polynomial Pa = P1;
 
-	//ÄÃ³öP2µÄµÚÒ»Ïî£¬ÈÃËüÓëP1µÄÃ¿Ò»ÏîÏà³Ë,´Ó¶øµÃµ½P
+	//æ‹¿å‡ºP2çš„ç¬¬ä¸€é¡¹ï¼Œè®©å®ƒä¸ŽP1çš„æ¯ä¸€é¡¹ç›¸ä¹˜,ä»Žè€Œå¾—åˆ°P
 	while (Pa->next) {
 		s = (struct PolyNode *)malloc(sizeof(struct PolyNode));
-		s->coef = Pa->next->coef * P2->next->coef;  //P1µÄÃ¿Ò»ÏîÓëP2µÄµÚÒ»ÏîµÄÏµÊýÏà³Ë
-		s->exp = Pa->next->exp + P2->next->exp;  //P1µÄÃ¿Ò»ÏîÓëP2µÄµÚÒ»ÏîµÄÖ¸ÊýÏà¼Ó
+		s->coef = Pa->next->coef * P2->next->coef;  //P1çš„æ¯ä¸€é¡¹ä¸ŽP2çš„ç¬¬ä¸€é¡¹çš„ç³»æ•°ç›¸ä¹˜
+		s->exp = Pa->next->exp + P2->next->exp;  //P1çš„æ¯ä¸€é¡¹ä¸ŽP2çš„ç¬¬ä¸€é¡¹çš„æŒ‡æ•°ç›¸åŠ 
 		P->next = s;
 		P = s;
 		Pa = Pa->next;
@@ -187,16 +187,16 @@ int main()
 	Polynomial P1 = NULL;
 	Polynomial P2 = NULL;
 	Polynomial P = NULL;
-	cout << "P1£º" << endl;
+	cout << "P1ï¼š" << endl;
 	P1 = read(P1);
-	cout << "P2£º" << endl;
+	cout << "P2ï¼š" << endl;
 	P2 = read(P2);
 
-	cout << "P1*P2£º";
+	cout << "P1*P2ï¼š";
 	P = getMuti(P1, P2);
 	print(P);
 
-	cout << "P1+P2£º";
+	cout << "P1+P2ï¼š";
 	P = getAdd(P1, P2);
 	print(P);
 

@@ -4,22 +4,22 @@ using namespace std;
 #define MaxVertex 505
 
 typedef int Vertex;
-int value[MaxVertex][MaxVertex];    //�շѾ���
-int G[MaxVertex][MaxVertex];    //�������
-int dist[MaxVertex];  // ����
-int cost[MaxVertex];  // ����
-bool collected[MaxVertex];  // ����¼����
+int value[MaxVertex][MaxVertex];    //收费矩阵
+int G[MaxVertex][MaxVertex];    //距离矩阵
+int dist[MaxVertex];  // 距离
+int cost[MaxVertex];  // 费用
+bool collected[MaxVertex];  // 被收录集合
 
-int N;   // ���еĸ���
-int M;   // ���ٹ�·������
-int S;  // �����صĳ��б��
-int D;  // Ŀ�ĵصĳ��б��
+int N;   // 城市的个数
+int M;   // 高速公路的条数
+int S;  // 出发地的城市编号
+int D;  // 目的地的城市编号
 
-// ��ʼ��ͼ��Ϣ
+// 初始化图信息
 void BuildGraph() 
 {
 	Vertex v1, v2, w1, w2;
-	cin >> N >> M >> S >> D;  // ���룺���еĸ��������ٹ�·�������������صĳ��б�š�Ŀ�ĵصĳ��б��
+	cin >> N >> M >> S >> D;  // 输入：城市的个数、高速公路的条数、出发地的城市编号、目的地的城市编号
 	for (Vertex i = 0; i < N; i++) 
 	{
 		for (Vertex j = 0; j < N; j++) 
@@ -33,7 +33,7 @@ void BuildGraph()
 	}
 	for (int i = 0; i < M; i++) 
 	{
-		cin >> v1 >> v2 >> w1 >> w2;  // ���룺����1������2�����ٹ�·���ȡ��շѶ�
+		cin >> v1 >> v2 >> w1 >> w2;  // 输入：城市1、城市2、高速公路长度、收费额
 		G[v1][v2] = w1;
 		G[v2][v1] = w1;
 		value[v1][v2] = w2;
@@ -53,7 +53,7 @@ void Init()
 		}
 }
 
-// ����δ��¼������dist��С��
+// 查找未收录顶点中dist最小者
 Vertex FindMin() 
 {
 	int min = INF;

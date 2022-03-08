@@ -1,41 +1,41 @@
 #include<iostream>
 using namespace std;
 
-/* ÁÚ½Ó¾ØÕó´¢´æ¡ª¡ª¶àÔ´×î¶ÌÂ·Ëã·¨ */
+/* é‚»æ¥çŸ©é˜µå‚¨å­˜â€”â€”å¤šæºæœ€çŸ­è·¯ç®—æ³• */
 
-#define INFINITY 65535   // ¡ŞÉèÎªË«×Ö½ÚÎŞ·ûºÅÕûÊıµÄ×î´óÖµ65535      
-#define MaxVertexNum 100   //×î´ó¶¥µãÊıÉèÎª100     
-typedef int Vertex;   //ÓÃ¶¥µãÏÂ±ê±íÊ¾¶¥µã,ÎªÕûĞÍ
-typedef int WeightType;   //±ßµÄÈ¨ÖµÉèÎªÕûĞÍ
+#define INFINITY 65535   // âˆè®¾ä¸ºåŒå­—èŠ‚æ— ç¬¦å·æ•´æ•°çš„æœ€å¤§å€¼65535      
+#define MaxVertexNum 100   //æœ€å¤§é¡¶ç‚¹æ•°è®¾ä¸º100     
+typedef int Vertex;   //ç”¨é¡¶ç‚¹ä¸‹æ ‡è¡¨ç¤ºé¡¶ç‚¹,ä¸ºæ•´å‹
+typedef int WeightType;   //è¾¹çš„æƒå€¼è®¾ä¸ºæ•´å‹
 
-// Í¼½áµãµÄ¶¨Òå
+// å›¾ç»“ç‚¹çš„å®šä¹‰
 typedef struct GNode *PtrToGNode;
 struct GNode {
-	int Nv;  // ¶¥µãÊı
-	int Ne;  // ±ßÊı
-	WeightType G[MaxVertexNum][MaxVertexNum];  // ÁÚ½Ó¾ØÕó
+	int Nv;  // é¡¶ç‚¹æ•°
+	int Ne;  // è¾¹æ•°
+	WeightType G[MaxVertexNum][MaxVertexNum];  // é‚»æ¥çŸ©é˜µ
 };
-typedef PtrToGNode MGraph; // ÒÔÁÚ½Ó¾ØÕó´æ´¢µÄÍ¼ÀàĞÍ
+typedef PtrToGNode MGraph; // ä»¥é‚»æ¥çŸ©é˜µå­˜å‚¨çš„å›¾ç±»å‹
 
-//±ßµÄÊı¾İ½á¹¹
+//è¾¹çš„æ•°æ®ç»“æ„
 typedef struct ENode *PtrToENode;
 struct ENode {
-	Vertex V1, V2;  // ÓĞÏò±ß<V1, V2>
-	WeightType Weight;  // È¨ÖØ
+	Vertex V1, V2;  // æœ‰å‘è¾¹<V1, V2>
+	WeightType Weight;  // æƒé‡
 };
 typedef PtrToENode Edge;
 
-// ³õÊ¼»¯Ò»¸öÓĞVertexNum¸ö¶¥µãµ«Ã»ÓĞ±ßµÄÍ¼
+// åˆå§‹åŒ–ä¸€ä¸ªæœ‰VertexNumä¸ªé¡¶ç‚¹ä½†æ²¡æœ‰è¾¹çš„å›¾
 MGraph CreateGraph(int VertexNum)
 {
 	Vertex V, W;
 	MGraph Graph;
 
-	Graph = (MGraph)malloc(sizeof(struct GNode));  // ½¨Á¢Í¼
+	Graph = (MGraph)malloc(sizeof(struct GNode));  // å»ºç«‹å›¾
 	Graph->Nv = VertexNum;
 	Graph->Ne = 0;
-	/* ³õÊ¼»¯ÁÚ½Ó¾ØÕó */
-	/* ×¢Òâ£ºÕâÀïÄ¬ÈÏ¶¥µã±àºÅ´Ó0¿ªÊ¼£¬µ½(Graph->Nv - 1) */
+	/* åˆå§‹åŒ–é‚»æ¥çŸ©é˜µ */
+	/* æ³¨æ„ï¼šè¿™é‡Œé»˜è®¤é¡¶ç‚¹ç¼–å·ä»0å¼€å§‹ï¼Œåˆ°(Graph->Nv - 1) */
 	for (V = 0; V <= Graph->Nv; V++)
 		for (W = 0; W <= Graph->Nv; W++)
 			Graph->G[V][W] = INFINITY;
@@ -43,17 +43,17 @@ MGraph CreateGraph(int VertexNum)
 	return Graph;
 }
 
-// ²åÈë±ß 
+// æ’å…¥è¾¹ 
 void InsertEdge(MGraph Graph, Edge E) 
 {
-	// ²åÈë±ß <V1,V2>
+	// æ’å…¥è¾¹ <V1,V2>
 	Graph->G[E->V1][E->V2] = E->Weight;
 
-	// Èç¹ûÊÇÎŞÏòÍ¼£¬»¹ĞèÒª²åÈë±ß <V2,V1>
+	// å¦‚æœæ˜¯æ— å‘å›¾ï¼Œè¿˜éœ€è¦æ’å…¥è¾¹ <V2,V1>
 	Graph->G[E->V2][E->V1] = E->Weight;
 }
 
-// ½¨Í¼ 
+// å»ºå›¾ 
 MGraph BuildGraph() 
 {
 	MGraph Graph;
@@ -61,16 +61,16 @@ MGraph BuildGraph()
 	Vertex V;
 	int Nv, i;
 
-	cin >> Nv;   // ¶ÁÈë¶¥µãÊı 
-	Graph = CreateGraph(Nv);  // ³õÊ¼»¯ÓĞNv¸ö¶¥µãµ«Ã»ÓĞ±ßµÄÍ¼
+	cin >> Nv;   // è¯»å…¥é¡¶ç‚¹æ•° 
+	Graph = CreateGraph(Nv);  // åˆå§‹åŒ–æœ‰Nvä¸ªé¡¶ç‚¹ä½†æ²¡æœ‰è¾¹çš„å›¾
 
-	cin >>(Graph->Ne);  // ¶ÁÈë±ßÊı 
-	if (Graph->Ne != 0)  // Èç¹ûÓĞ±ß
+	cin >>(Graph->Ne);  // è¯»å…¥è¾¹æ•° 
+	if (Graph->Ne != 0)  // å¦‚æœæœ‰è¾¹
 	{
-		E = (Edge)malloc(sizeof(struct ENode));  // ½¨Á¢±ß½áµã
+		E = (Edge)malloc(sizeof(struct ENode));  // å»ºç«‹è¾¹ç»“ç‚¹
 		for (i = 0; i < Graph->Ne; i++) 
 		{
-			cin >> E->V1 >> E->V2 >> E->Weight;// ¶ÁÈë±ß£¬¸ñÊ½Îª"Æğµã ÖÕµã È¨ÖØ"£¬²åÈëÁÚ½Ó¾ØÕó 
+			cin >> E->V1 >> E->V2 >> E->Weight;// è¯»å…¥è¾¹ï¼Œæ ¼å¼ä¸º"èµ·ç‚¹ ç»ˆç‚¹ æƒé‡"ï¼Œæ’å…¥é‚»æ¥çŸ©é˜µ 
 			InsertEdge(Graph, E);
 		}
 	}
@@ -78,12 +78,12 @@ MGraph BuildGraph()
 	return Graph;
 }
 
-//¶àÔ´×î¶ÌÂ·¾¶
+//å¤šæºæœ€çŸ­è·¯å¾„
 bool Floyd(MGraph Graph, WeightType D[][MaxVertexNum], Vertex path[][MaxVertexNum])
 {
 	Vertex i, j, k;
 
-	// ³õÊ¼»¯
+	// åˆå§‹åŒ–
 	for (i = 1; i <= Graph->Nv; i++)
 		for (j = 1; j <= Graph->Nv; j++) 
 		{
@@ -97,14 +97,14 @@ bool Floyd(MGraph Graph, WeightType D[][MaxVertexNum], Vertex path[][MaxVertexNu
 				if (D[i][k] + D[k][j] < D[i][j]) 
 				{
 					D[i][j] = D[i][k] + D[k][j];
-					if (i == j && D[i][j] < 0)  // Èô·¢ÏÖ¸ºÖµÈ¦
-						return false;  // ²»ÄÜÕıÈ·½â¾ö£¬·µ»Ø´íÎó±ê¼Ç
+					if (i == j && D[i][j] < 0)  // è‹¥å‘ç°è´Ÿå€¼åœˆ
+						return false;  // ä¸èƒ½æ­£ç¡®è§£å†³ï¼Œè¿”å›é”™è¯¯æ ‡è®°
 					path[i][j] = k;
 				}
-	return true;  // Ëã·¨Ö´ĞĞÍê±Ï£¬·µ»ØÕıÈ·±ê¼Ç
+	return true;  // ç®—æ³•æ‰§è¡Œå®Œæ¯•ï¼Œè¿”å›æ­£ç¡®æ ‡è®°
 }
 
-//Â·¾¶µÄ´òÓ¡
+//è·¯å¾„çš„æ‰“å°
 void PrintPath(Vertex path[][MaxVertexNum], Vertex v1, Vertex v2)
 {
 	cout << v2 << " ";
@@ -127,12 +127,12 @@ int main()
 	Vertex path[MaxVertexNum][MaxVertexNum];
 	Floyd(Graph, Weight, path);
 
-	cout << "ÇëÊäÈëÒª²éÑ¯×î¶ÌÂ·¾¶µÄÁ½¸ö¶¥µã£º";
+	cout << "è¯·è¾“å…¥è¦æŸ¥è¯¢æœ€çŸ­è·¯å¾„çš„ä¸¤ä¸ªé¡¶ç‚¹ï¼š";
 	Vertex v1, v2;
 	cin >> v1 >> v2;
-	cout << "×î¶ÌÂ·¾¶Îª£º";
+	cout << "æœ€çŸ­è·¯å¾„ä¸ºï¼š";
 	PrintPath(path, v1, v2);
-	cout << "×î¶ÌÂ·¾¶¶ÔÓ¦µÄÈ¨ÖµÎª£º" << Weight[v1][v2] << endl;
+	cout << "æœ€çŸ­è·¯å¾„å¯¹åº”çš„æƒå€¼ä¸ºï¼š" << Weight[v1][v2] << endl;
 
 	system("pause");
 	return 0;

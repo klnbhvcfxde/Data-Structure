@@ -1,88 +1,88 @@
 #include<iostream>
 using namespace std;
 
-/* ÁÚ½Ó±í´æ´¢µÄÍ¼ - DFS */
+/* é‚»æ¥è¡¨å­˜å‚¨çš„å›¾ - DFS */
 
-#define MaxVertexNum 100  // ×î´ó¶¥µãÊıÉèÎª100
-typedef int Vertex;  // ÓÃ¶¥µãÏÂ±ê±íÊ¾¶¥µã,ÎªÕûĞÍ
-typedef int WeightType;  // ±ßµÄÈ¨ÖµÉèÎªÕûĞÍ
-typedef char DataType;  // ¶¥µã´æ´¢µÄÊı¾İÀàĞÍÉèÎª×Ö·ûĞÍ
+#define MaxVertexNum 100  // æœ€å¤§é¡¶ç‚¹æ•°è®¾ä¸º100
+typedef int Vertex;  // ç”¨é¡¶ç‚¹ä¸‹æ ‡è¡¨ç¤ºé¡¶ç‚¹,ä¸ºæ•´å‹
+typedef int WeightType;  // è¾¹çš„æƒå€¼è®¾ä¸ºæ•´å‹
+typedef char DataType;  // é¡¶ç‚¹å­˜å‚¨çš„æ•°æ®ç±»å‹è®¾ä¸ºå­—ç¬¦å‹
 bool Visited[MaxVertexNum];
 
-// ±ßµÄ¶¨Òå
+// è¾¹çš„å®šä¹‰
 typedef struct ENode *PtrToENode;
 struct ENode {
-	Vertex V1, V2;  // ÓĞÏò±ß<V1, V2>
-	WeightType Weight;  // È¨ÖØ
+	Vertex V1, V2;  // æœ‰å‘è¾¹<V1, V2>
+	WeightType Weight;  // æƒé‡
 };
 typedef PtrToENode Edge;
 
-// ÁÚ½ÓµãµÄ¶¨Òå
+// é‚»æ¥ç‚¹çš„å®šä¹‰
 typedef struct AdjVNode *PtrToAdjVNode;
 struct AdjVNode {
-	Vertex AdjV;  // ÁÚ½ÓµãÏÂ±ê
-	WeightType Weight;  // ±ßÈ¨ÖØ
-	PtrToAdjVNode Next;  // Ö¸ÏòÏÂÒ»¸öÁÚ½ÓµãµÄÖ¸Õë
+	Vertex AdjV;  // é‚»æ¥ç‚¹ä¸‹æ ‡
+	WeightType Weight;  // è¾¹æƒé‡
+	PtrToAdjVNode Next;  // æŒ‡å‘ä¸‹ä¸€ä¸ªé‚»æ¥ç‚¹çš„æŒ‡é’ˆ
 };
 
-// ¶¥µã±íÍ·½áµãµÄ¶¨Òå
+// é¡¶ç‚¹è¡¨å¤´ç»“ç‚¹çš„å®šä¹‰
 typedef struct Vnode { 
-	PtrToAdjVNode FirstEdge;  // ±ß±íÍ·Ö¸Õë
-	DataType Data;  // ´æ¶¥µãµÄÊı¾İ£¨×¢Òâ£ººÜ¶àÇé¿öÏÂ£¬¶¥µãÎŞÊı¾İ£¬´ËÊ±Data¿ÉÒÔ²»ÓÃ³öÏÖ£©
-} AdjList[MaxVertexNum];  // AdjListÊÇÁÚ½Ó±íÀàĞÍ
+	PtrToAdjVNode FirstEdge;  // è¾¹è¡¨å¤´æŒ‡é’ˆ
+	DataType Data;  // å­˜é¡¶ç‚¹çš„æ•°æ®ï¼ˆæ³¨æ„ï¼šå¾ˆå¤šæƒ…å†µä¸‹ï¼Œé¡¶ç‚¹æ— æ•°æ®ï¼Œæ­¤æ—¶Dataå¯ä»¥ä¸ç”¨å‡ºç°ï¼‰
+} AdjList[MaxVertexNum];  // AdjListæ˜¯é‚»æ¥è¡¨ç±»å‹
 
-// Í¼½áµãµÄ¶¨Òå
+// å›¾ç»“ç‚¹çš„å®šä¹‰
 typedef struct GNode *PtrToGNode;
 struct GNode {
-	int Nv;  // ¶¥µãÊı
-	int Ne;  // ±ßÊı
-	AdjList G;  // ÁÚ½Ó±í
+	int Nv;  // é¡¶ç‚¹æ•°
+	int Ne;  // è¾¹æ•°
+	AdjList G;  // é‚»æ¥è¡¨
 };
-typedef PtrToGNode LGraph;  // ÒÔÁÚ½Ó±í·½Ê½´æ´¢µÄÍ¼ÀàĞÍ
+typedef PtrToGNode LGraph;  // ä»¥é‚»æ¥è¡¨æ–¹å¼å­˜å‚¨çš„å›¾ç±»å‹
 
-// ³õÊ¼»¯Ò»¸öÓĞVertexNum¸ö¶¥µãµ«Ã»ÓĞ±ßµÄÍ¼
+// åˆå§‹åŒ–ä¸€ä¸ªæœ‰VertexNumä¸ªé¡¶ç‚¹ä½†æ²¡æœ‰è¾¹çš„å›¾
 LGraph CreateGraph(int VertexNum)
 {
 	Vertex V;
 	LGraph Graph;
 
-	Graph = (LGraph)malloc(sizeof(struct GNode));  // ½¨Á¢Í¼
-	Graph->Nv = VertexNum;  // ³õÊ¼»¯±ß
-	Graph->Ne = 0;  // ³õÊ¼»¯µã
-	/* ³õÊ¼»¯ÁÚ½Ó±íÍ·Ö¸Õë */
-	/* ×¢Òâ£ºÕâÀïÄ¬ÈÏ¶¥µã±àºÅ´Ó0¿ªÊ¼£¬µ½(Graph->Nv - 1) */
+	Graph = (LGraph)malloc(sizeof(struct GNode));  // å»ºç«‹å›¾
+	Graph->Nv = VertexNum;  // åˆå§‹åŒ–è¾¹
+	Graph->Ne = 0;  // åˆå§‹åŒ–ç‚¹
+	/* åˆå§‹åŒ–é‚»æ¥è¡¨å¤´æŒ‡é’ˆ */
+	/* æ³¨æ„ï¼šè¿™é‡Œé»˜è®¤é¡¶ç‚¹ç¼–å·ä»0å¼€å§‹ï¼Œåˆ°(Graph->Nv - 1) */
 	for (V = 0; V < Graph->Nv; V++)
 		Graph->G[V].FirstEdge = NULL;
 
 	return Graph;
 }
 
-// ²åÈëÒ»Ìõ±ßµ½ÁÚ½Ó±íµÄ¶¥µãÖ¸ÕëÖ®ºó
+// æ’å…¥ä¸€æ¡è¾¹åˆ°é‚»æ¥è¡¨çš„é¡¶ç‚¹æŒ‡é’ˆä¹‹å
 void InsertEdge(LGraph Graph, Edge E) 
 {
 	PtrToAdjVNode NewNode;
 
-	/* ²åÈë±ß <V1, V2> */
-	// ÎªV2½¨Á¢ĞÂµÄÁÚ½Óµã
+	/* æ’å…¥è¾¹ <V1, V2> */
+	// ä¸ºV2å»ºç«‹æ–°çš„é‚»æ¥ç‚¹
 	NewNode = (PtrToAdjVNode)malloc(sizeof(struct AdjVNode));
 	NewNode->AdjV = E->V2;
 	NewNode->Weight = E->Weight;
-	// ½«V2²åÈëV1µÄ±íÍ·
+	// å°†V2æ’å…¥V1çš„è¡¨å¤´
 	NewNode->Next = Graph->G[E->V1].FirstEdge;
 	Graph->G[E->V1].FirstEdge = NewNode;
 
-	/* ÈôÊÇÎŞÏòÍ¼£¬»¹Òª²åÈë±ß <V2, V1> */
-	// ÎªV1½¨Á¢ĞÂµÄÁÚ½Óµã
+	/* è‹¥æ˜¯æ— å‘å›¾ï¼Œè¿˜è¦æ’å…¥è¾¹ <V2, V1> */
+	// ä¸ºV1å»ºç«‹æ–°çš„é‚»æ¥ç‚¹
 	NewNode = (PtrToAdjVNode)malloc(sizeof(struct AdjVNode));
 	NewNode->AdjV = E->V1;
 	NewNode->Weight = E->Weight;
 
-	// ½«V1²åÈëV2µÄ±íÍ·
+	// å°†V1æ’å…¥V2çš„è¡¨å¤´
 	NewNode->Next = Graph->G[E->V2].FirstEdge;
 	Graph->G[E->V2].FirstEdge = NewNode;
 }
 
-// ½¨Í¼
+// å»ºå›¾
 LGraph BuildGraph()
 {
 	LGraph Graph;
@@ -90,42 +90,42 @@ LGraph BuildGraph()
 	Vertex V;
 	int Nv, i;
 
-	cin >> Nv;  // ¶ÁÈë¶¥µã¸öÊı
-	Graph = CreateGraph(Nv);  // ³õÊ¼»¯ÓĞNv¸ö¶¥µãµ«Ã»ÓĞ±ßµÄÍ¼
+	cin >> Nv;  // è¯»å…¥é¡¶ç‚¹ä¸ªæ•°
+	Graph = CreateGraph(Nv);  // åˆå§‹åŒ–æœ‰Nvä¸ªé¡¶ç‚¹ä½†æ²¡æœ‰è¾¹çš„å›¾
 
-	cin >> (Graph->Ne);  // ¶ÁÈë±ßÊı
-	if (Graph->Ne != 0)  // Èç¹ûÓĞ±ß
+	cin >> (Graph->Ne);  // è¯»å…¥è¾¹æ•°
+	if (Graph->Ne != 0)  // å¦‚æœæœ‰è¾¹
 	{
-		E = (Edge)malloc(sizeof(struct ENode));  // ½¨Á¢±ß½áµã
+		E = (Edge)malloc(sizeof(struct ENode));  // å»ºç«‹è¾¹ç»“ç‚¹
 		for (i = 0; i < Graph->Ne; i++) {
-			cin >> E->V1 >> E->V2 >> E->Weight;  // ¶ÁÈë±ß£¬¸ñÊ½Îª"Æğµã ÖÕµã È¨ÖØ"£¬²åÈëÁÚ½Ó¾ØÕó
+			cin >> E->V1 >> E->V2 >> E->Weight;  // è¯»å…¥è¾¹ï¼Œæ ¼å¼ä¸º"èµ·ç‚¹ ç»ˆç‚¹ æƒé‡"ï¼Œæ’å…¥é‚»æ¥çŸ©é˜µ
 			InsertEdge(Graph, E);
 		}
 	}
 
-	// Èç¹û¶¥µãÓĞÊı¾İµÄ»°£¬¶ÁÈëÊı¾İ
+	// å¦‚æœé¡¶ç‚¹æœ‰æ•°æ®çš„è¯ï¼Œè¯»å…¥æ•°æ®
 	for (V = 0; V < Graph->Nv; V++)
 		cin >> (Graph->G[V].Data);
 
 	return Graph;
 }
 
-// ÒÔVÎª³ö·¢µã¶ÔÁÚ½Ó±í´æ´¢µÄÍ¼Graph½øĞĞDFSËÑË÷
+// ä»¥Vä¸ºå‡ºå‘ç‚¹å¯¹é‚»æ¥è¡¨å­˜å‚¨çš„å›¾Graphè¿›è¡ŒDFSæœç´¢
 void DFS(LGraph Graph, Vertex V, void(*Visit)(Vertex))
 { 
 	PtrToAdjVNode W;
 
-	Visit(V);  // ·ÃÎÊµÚV¸ö¶¥µã
-	Visited[V] = true;  // ±ê¼ÇVÒÑ·ÃÎÊ£¬Visited[]ÎªÈ«¾Ö±äÁ¿£¬ÒÑ¾­³õÊ¼»¯Îªfalse
+	Visit(V);  // è®¿é—®ç¬¬Vä¸ªé¡¶ç‚¹
+	Visited[V] = true;  // æ ‡è®°Vå·²è®¿é—®ï¼ŒVisited[]ä¸ºå…¨å±€å˜é‡ï¼Œå·²ç»åˆå§‹åŒ–ä¸ºfalse
 
-	for (W = Graph->G[V].FirstEdge; W; W = W->Next) // ¶ÔVµÄÃ¿¸öÁÚ½ÓµãW->AdjV 
-		if (!Visited[W->AdjV])    // ÈôW->AdjVÎ´±»·ÃÎÊ
-			DFS(Graph, W->AdjV, Visit);    // Ôòµİ¹é·ÃÎÊÖ®
+	for (W = Graph->G[V].FirstEdge; W; W = W->Next) // å¯¹Vçš„æ¯ä¸ªé‚»æ¥ç‚¹W->AdjV 
+		if (!Visited[W->AdjV])    // è‹¥W->AdjVæœªè¢«è®¿é—®
+			DFS(Graph, W->AdjV, Visit);    // åˆ™é€’å½’è®¿é—®ä¹‹
 }
 
 void Visit(Vertex V)
 {
-	cout << "ÕıÔÚ·ÃÎÊ¶¥µã" << V << endl;
+	cout << "æ­£åœ¨è®¿é—®é¡¶ç‚¹" << V << endl;
 }
 
 int main() 

@@ -1,15 +1,15 @@
 #include<iostream>
 using namespace std;
-const int MinData = -100000;  // ÉÚ±øÖµ
-const int MaxSize = 1005;   // ×î´ó¸öÊý 
+const int MinData = -100000;  // å“¨å…µå€¼
+const int MaxSize = 1005;   // æœ€å¤§ä¸ªæ•° 
 typedef struct HeapStruct *Heap;
 struct HeapStruct {
-	int *data;   // ´æÖµµÄÊý×é 
-	int size;   // µ±Ç°ÔªËØ¸öÊý 
-	int capacity;  // ×î´óÈÝÁ¿ 
+	int *data;   // å­˜å€¼çš„æ•°ç»„ 
+	int size;   // å½“å‰å…ƒç´ ä¸ªæ•° 
+	int capacity;  // æœ€å¤§å®¹é‡ 
 };
 
-// ³õÊ¼»¯¶Ñ
+// åˆå§‹åŒ–å †
 Heap Create()
 {
 	Heap H;
@@ -21,16 +21,16 @@ Heap Create()
 	return H;
 }
 
-// ²åÈë
+// æ’å…¥
 void Insert(Heap H, int x)
 {
-	int i = ++H->size;  // Ö¸ÏòÊý×é×îºóÒ»¸ö 
+	int i = ++H->size;  // æŒ‡å‘æ•°ç»„æœ€åŽä¸€ä¸ª 
 	for (; H->data[i / 2] > x; i /= 2)
 		H->data[i] = H->data[i / 2];
 	H->data[i] = x;
 }
 
-// ´òÓ¡Â·¾¶ 
+// æ‰“å°è·¯å¾„ 
 void Print(Heap H, int i)
 {
 	for (; i > 0; i /= 2)

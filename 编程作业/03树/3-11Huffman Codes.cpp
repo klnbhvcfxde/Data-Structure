@@ -6,127 +6,127 @@ using namespace std;
 #define MinData 0
 
 typedef struct TreeNode *HuffmanTree;
-struct TreeNode {   // ¹ş·òÂüÊ÷ 
-	int weight;  // ÆµÂÊ
+struct TreeNode {   // å“ˆå¤«æ›¼æ ‘ 
+	int weight;  // é¢‘ç‡
 	HuffmanTree left;
 	HuffmanTree right;
 };
 
 typedef struct Heap *MinHeap;
-struct Heap {   // ¶Ñ 
-	HuffmanTree *data;  // ´æ¹ş·òÂüÊ÷ 
-	int size; // ¶ÑµÄµ±Ç°´óĞ¡ 
+struct Heap {   // å † 
+	HuffmanTree *data;  // å­˜å“ˆå¤«æ›¼æ ‘ 
+	int size; // å †çš„å½“å‰å¤§å° 
 };
 
-MinHeap createHeap();   // ½¨¶Ñ 
-HuffmanTree createHuffman();  // ½¨¹ş·òÂüÊ÷ 
-void sortHeap(MinHeap H, int i); // µ÷Õû×Ó×îĞ¡¶Ñ 
-void adjust(MinHeap H);  // µ÷Õû¶Ñ 
-MinHeap InitHeap(int n); // ³õÊ¼»¯¶Ñ 
-HuffmanTree Delete(MinHeap H); // ¶ÑµÄÉ¾³ı 
-void Insert(MinHeap H, HuffmanTree Huff); // ¶ÑµÄ²åÈë 
-HuffmanTree Huffman(MinHeap H);  // ¹ş·òÂüÊ÷µÄ¹¹Ôì 
-int WPL(HuffmanTree Huff, int depth); // ¼ÆËã HuffmanTree µÄ±àÂë³¤¶È 
+MinHeap createHeap();   // å»ºå † 
+HuffmanTree createHuffman();  // å»ºå“ˆå¤«æ›¼æ ‘ 
+void sortHeap(MinHeap H, int i); // è°ƒæ•´å­æœ€å°å † 
+void adjust(MinHeap H);  // è°ƒæ•´å † 
+MinHeap InitHeap(int n); // åˆå§‹åŒ–å † 
+HuffmanTree Delete(MinHeap H); // å †çš„åˆ é™¤ 
+void Insert(MinHeap H, HuffmanTree Huff); // å †çš„æ’å…¥ 
+HuffmanTree Huffman(MinHeap H);  // å“ˆå¤«æ›¼æ ‘çš„æ„é€  
+int WPL(HuffmanTree Huff, int depth); // è®¡ç®— HuffmanTree çš„ç¼–ç é•¿åº¦ 
 
-map<char, int> mappp;  // ±£´æ×Ö·ûµ½ÆµÂÊµÄÓ³Éä¹ØÏµ 
+map<char, int> mappp;  // ä¿å­˜å­—ç¬¦åˆ°é¢‘ç‡çš„æ˜ å°„å…³ç³» 
 
-// ½¨¶Ñ 
+// å»ºå † 
 MinHeap createHeap() 
 {
 	MinHeap H;
 	H = (MinHeap)malloc(sizeof(struct Heap));
 	H->data = (HuffmanTree *)malloc(sizeof(struct TreeNode) * HeapCapacity);
 	H->size = 0;
-	// ÉèÖÃÉÚ±ø
+	// è®¾ç½®å“¨å…µ
 	HuffmanTree Huff = createHuffman();
 	H->data[0] = Huff;
 	return H;
 }
 
-// ½¨¹ş·òÂüÊ÷ 
+// å»ºå“ˆå¤«æ›¼æ ‘ 
 HuffmanTree createHuffman() 
 {
 	HuffmanTree Huff;
 	Huff = (HuffmanTree)malloc(sizeof(struct TreeNode));
-	Huff->weight = MinData;   // ³õÊ¼»¯³ÉÆµÂÊ×îĞ¡ 
+	Huff->weight = MinData;   // åˆå§‹åŒ–æˆé¢‘ç‡æœ€å° 
 	Huff->left = NULL;
 	Huff->right = NULL;
 	return Huff;
 }
 
-// µ÷Õû×Ó×îĞ¡¶Ñ 
+// è°ƒæ•´å­æœ€å°å † 
 void sortHeap(MinHeap H, int i) 
 {
 	int parent, child;
-	HuffmanTree Huff = H->data[i]; // ÄÃµ½µ±Ç°¸ù½áµãµÄ¹ş·òÂüÊ÷
+	HuffmanTree Huff = H->data[i]; // æ‹¿åˆ°å½“å‰æ ¹ç»“ç‚¹çš„å“ˆå¤«æ›¼æ ‘
 	for (parent = i; parent * 2 <= H->size; parent = child) 
 	{
-		// ×óÓÒ¶ù×ÓÖĞÌôĞ¡µÄ 
+		// å·¦å³å„¿å­ä¸­æŒ‘å°çš„ 
 		child = parent * 2;
 		if ((child != H->size) && (H->data[child + 1]->weight < H->data[child]->weight))
 			child++;
-		// Ã»ÓĞ¸üĞ¡µÄÁË£¬½áÊøÑ­»· 
+		// æ²¡æœ‰æ›´å°çš„äº†ï¼Œç»“æŸå¾ªç¯ 
 		if (Huff->weight <= H->data[child]->weight)
 			break;
-		// ·ñÔò°Ñ¶ù×Ó½áµãÄÃÉÏÀ´
+		// å¦åˆ™æŠŠå„¿å­ç»“ç‚¹æ‹¿ä¸Šæ¥
 		H->data[parent] = H->data[child];
 	}
 	H->data[parent] = Huff;
 }
 
 
-// µ÷Õû¶Ñ 
+// è°ƒæ•´å † 
 void adjust(MinHeap H) 
 {
-	// ´ÓµÚÒ»¸öÓĞº¢×Ó½áµãµÄ½áµã¿ªÊ¼µ÷Õû 
+	// ä»ç¬¬ä¸€ä¸ªæœ‰å­©å­ç»“ç‚¹çš„ç»“ç‚¹å¼€å§‹è°ƒæ•´ 
 	for (int i = H->size / 2; i > 0; i--)
 		sortHeap(H, i);
 }
 
-// ³õÊ¼»¯¶Ñ 
+// åˆå§‹åŒ–å † 
 MinHeap InitHeap(int n) 
 {
 	MinHeap H = createHeap();
 	HuffmanTree Huff;
-	char c;  // ÁÙÊ±±£´æ×Ö·û 
-	int f;  //  ÁÙÊ±±£´æÆµÂÊ 
+	char c;  // ä¸´æ—¶ä¿å­˜å­—ç¬¦ 
+	int f;  //  ä¸´æ—¶ä¿å­˜é¢‘ç‡ 
 	for (int i = 0; i < n; i++) 
 	{
 		getchar();
 		cin >> c >> f;
-		mappp.insert(pair<char, int>(c, f));  // °Ñ×Ö·ûºÍÆµÂÊµÄÓ³Éä¹ØÏµ´æ½ømap 
+		mappp.insert(pair<char, int>(c, f));  // æŠŠå­—ç¬¦å’Œé¢‘ç‡çš„æ˜ å°„å…³ç³»å­˜è¿›map 
 		Huff = createHuffman();
 		Huff->weight = f;
 		H->data[++H->size] = Huff;
 	}
-	// µ÷Õû×îĞ¡¶Ñ 
+	// è°ƒæ•´æœ€å°å † 
 	adjust(H);
 	return H;
 }
 
-// ¶ÑµÄÉ¾³ı 
+// å †çš„åˆ é™¤ 
 HuffmanTree Delete(MinHeap H) 
 {
 	int parent, child;
-	HuffmanTree T = H->data[1]; // ÄÃµ½¸ù½áµãµÄ¹ş·òÂüÊ÷ 
-	HuffmanTree Huff = H->data[H->size--];  // ÄÃµ½×îºóÒ»¸öÎ»ÖÃµÄ¹ş·òÂüÊ÷ 
+	HuffmanTree T = H->data[1]; // æ‹¿åˆ°æ ¹ç»“ç‚¹çš„å“ˆå¤«æ›¼æ ‘ 
+	HuffmanTree Huff = H->data[H->size--];  // æ‹¿åˆ°æœ€åä¸€ä¸ªä½ç½®çš„å“ˆå¤«æ›¼æ ‘ 
 	for (parent = 1; parent * 2 <= H->size; parent = child) 
 	{
-		// ×óÓÒ¶ù×ÓÖĞÌôĞ¡µÄ 
+		// å·¦å³å„¿å­ä¸­æŒ‘å°çš„ 
 		child = parent * 2;
 		if ((child != H->size) && (H->data[child + 1]->weight < H->data[child]->weight))
 			child++;
-		// Ã»ÓĞ¸üĞ¡µÄÁË£¬½áÊøÑ­»· 
+		// æ²¡æœ‰æ›´å°çš„äº†ï¼Œç»“æŸå¾ªç¯ 
 		if (Huff->weight <= H->data[child]->weight)
 			break;
-		// ·ñÔò°Ñ¶ù×Ó½áµãÄÃÉÏÀ´
+		// å¦åˆ™æŠŠå„¿å­ç»“ç‚¹æ‹¿ä¸Šæ¥
 		H->data[parent] = H->data[child];
 	}
 	H->data[parent] = Huff;
 	return T;
 }
 
-// ¶ÑµÄ²åÈë
+// å †çš„æ’å…¥
 void Insert(MinHeap H, HuffmanTree Huff) 
 {
 	int i = ++H->size;
@@ -135,7 +135,7 @@ void Insert(MinHeap H, HuffmanTree Huff)
 	H->data[i] = Huff;
 }
 
-// ¹ş·òÂüÊ÷µÄ¹¹Ôì 
+// å“ˆå¤«æ›¼æ ‘çš„æ„é€  
 HuffmanTree Huffman(MinHeap H) 
 {
 	HuffmanTree Huff;
@@ -143,26 +143,26 @@ HuffmanTree Huffman(MinHeap H)
 	for (int i = 1; i < times; i++) 
 	{
 		Huff = createHuffman();
-		Huff->left = Delete(H);  // ´Ó¶ÑÖĞÉ¾³ıÒ»¸ö½áµã£¬×÷ÎªĞÂTµÄ×ó×Ó½áµã 
-		Huff->right = Delete(H);  // ´Ó¶ÑÖĞÉ¾³ıÒ»¸ö½áµã£¬×÷ÎªĞÂTµÄÓÒ×Ó½áµã 
-		Huff->weight = Huff->left->weight + Huff->right->weight; // ÖØĞÂ¼ÆËãÈ¨Öµ 
-		Insert(H, Huff);   // ÔÙ¼Ó½ø¶ÑÖĞ 
+		Huff->left = Delete(H);  // ä»å †ä¸­åˆ é™¤ä¸€ä¸ªç»“ç‚¹ï¼Œä½œä¸ºæ–°Tçš„å·¦å­ç»“ç‚¹ 
+		Huff->right = Delete(H);  // ä»å †ä¸­åˆ é™¤ä¸€ä¸ªç»“ç‚¹ï¼Œä½œä¸ºæ–°Tçš„å³å­ç»“ç‚¹ 
+		Huff->weight = Huff->left->weight + Huff->right->weight; // é‡æ–°è®¡ç®—æƒå€¼ 
+		Insert(H, Huff);   // å†åŠ è¿›å †ä¸­ 
 	}
 	Huff = Delete(H);
 	return Huff;
 }
 
-// ¼ÆËãHuffmanTreeµÄ±àÂë³¤¶È 
+// è®¡ç®—HuffmanTreeçš„ç¼–ç é•¿åº¦ 
 int WPL(HuffmanTree Huff, int depth) 
 {
-	// Èç¹ûÊÇÒ¶½áµã£¬·µ»Ø±àÂë³¤¶È 
+	// å¦‚æœæ˜¯å¶ç»“ç‚¹ï¼Œè¿”å›ç¼–ç é•¿åº¦ 
 	if (Huff->left == NULL && Huff->right == NULL)
 		return depth * Huff->weight;
-	else  // ·ñÔò·µ»ØÆä×óÓÒ×Ó½áµãµÄ±àÂë³¤¶È 
+	else  // å¦åˆ™è¿”å›å…¶å·¦å³å­ç»“ç‚¹çš„ç¼–ç é•¿åº¦ 
 		return (WPL(Huff->left, depth + 1) + WPL(Huff->right, depth + 1));
 }
 
-// ÅĞ¶ÏÊÇ·ñÕıÈ· 
+// åˆ¤æ–­æ˜¯å¦æ­£ç¡® 
 void judge(int n, int codeLen) 
 {
 	HuffmanTree Huff = createHuffman();
@@ -175,16 +175,16 @@ void judge(int n, int codeLen)
 	{
 		getchar();
 		pre = Huff;
-		// ¶ÁÈëÃ¿ĞĞ 
+		// è¯»å…¥æ¯è¡Œ 
 		cin >> ch;
 		cin >> code;
-		// ±éÀú±àÂë 
+		// éå†ç¼–ç  
 		for (int j = 0; j < code.size(); j++) 
 		{
 			if (code[j] == '0') 
-			{  // Èç¹ûµ±Ç°±àÂëÎª 0£¬×ó·ÖÖ§ 
+			{  // å¦‚æœå½“å‰ç¼–ç ä¸º 0ï¼Œå·¦åˆ†æ”¯ 
 				if (pre->left == NULL) 
-				{   // Èç¹û×ó×ÓÊ÷²»´æÔÚ£¬´´½¨ 
+				{   // å¦‚æœå·¦å­æ ‘ä¸å­˜åœ¨ï¼Œåˆ›å»º 
 					pre->left = createHuffman();
 					counter++;
 				}
@@ -193,9 +193,9 @@ void judge(int n, int codeLen)
 				pre = pre->left;
 			}
 			else if (code[j] == '1') 
-			{ // Èç¹ûµ±Ç°±àÂëÎª 0£¬×ó·ÖÖ§ 
+			{ // å¦‚æœå½“å‰ç¼–ç ä¸º 0ï¼Œå·¦åˆ†æ”¯ 
 				if (pre->right == NULL) 
-				{   // Èç¹û×ó×ÓÊ÷²»´æÔÚ£¬´´½¨ 
+				{   // å¦‚æœå·¦å­æ ‘ä¸å­˜åœ¨ï¼Œåˆ›å»º 
 					pre->right = createHuffman();
 					counter++;
 				}
@@ -206,10 +206,10 @@ void judge(int n, int codeLen)
 		}
 		if (pre->left || pre->right)
 			flag = false;
-		pre->weight = mappp[ch];   // ´ÓmappÈ¡³ö´æµÄÆµÂÊ
+		pre->weight = mappp[ch];   // ä»mappå–å‡ºå­˜çš„é¢‘ç‡
 	}
 	if (counter != 2 * n - 1 || !flag || WPL(Huff, 0) != codeLen) 
-	{ // Èç¹û½áµã²»ÊÇ2n-1¸ö»òÕß±àÂë³¤¶È²»ÏàµÈ 
+	{ // å¦‚æœç»“ç‚¹ä¸æ˜¯2n-1ä¸ªæˆ–è€…ç¼–ç é•¿åº¦ä¸ç›¸ç­‰ 
 		cout << "No" << endl;
 		return;
 	}
@@ -224,11 +224,11 @@ int main()
 {
 	int n, m;
 	cin >> n;
-	// ³õÊ¼»¯×îĞ¡¶Ñ 
+	// åˆå§‹åŒ–æœ€å°å † 
 	MinHeap H = InitHeap(n);
-	// ³õÊ¼»¯¹ş·òÂüÊ÷ 
+	// åˆå§‹åŒ–å“ˆå¤«æ›¼æ ‘ 
 	HuffmanTree Huff = Huffman(H);
-	// ¼ÆËã¸Ã¹ş·òÂüÊ÷µÄ±àÂë³¤¶È 
+	// è®¡ç®—è¯¥å“ˆå¤«æ›¼æ ‘çš„ç¼–ç é•¿åº¦ 
 	int codeLen = WPL(Huff, 0);
 	cin >> m;
 	for (int i = 0; i < m; i++)

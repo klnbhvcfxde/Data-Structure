@@ -4,17 +4,17 @@ using namespace std;
 template<class T>
 void InsertionSort(T *a, int n)
 {
-	int in, out;  //inÅÅºÃË³ĞòµÄ£»outÎ´ÅÅºÃË³ĞòµÄ
-	for (out = 1; out < n;out++)  //out = 0ÒÑ¾­Ä¬ÈÏÎªÅÅºÃË³ĞòµÄ
+	int in, out;  //inæ’å¥½é¡ºåºçš„ï¼›outæœªæ’å¥½é¡ºåºçš„
+	for (out = 1; out < n;out++)  //out = 0å·²ç»é»˜è®¤ä¸ºæ’å¥½é¡ºåºçš„
 	{
-		T temp = a[out];  //½«´ı²åÈëÔªËØ¸´ÖÆÎªÉÚ±ø
+		T temp = a[out];  //å°†å¾…æ’å…¥å…ƒç´ å¤åˆ¶ä¸ºå“¨å…µ
 		in = out;
-		while (in > 0 && a[in - 1] >= temp)  //´ÓºóÍùÇ°²éÕÒ´ı²åÈëµÄÎ»ÖÃ
+		while (in > 0 && a[in - 1] >= temp)  //ä»åå¾€å‰æŸ¥æ‰¾å¾…æ’å…¥çš„ä½ç½®
 		{
-			a[in] = a[in - 1];  //ÍùºóÅ²Î»ÖÃ
+			a[in] = a[in - 1];  //å¾€åæŒªä½ç½®
 			in--;
 		}
-		a[in] = temp;  //¸´ÖÆ´ı²åÈëÔªËØµ½²åÈëÎ»ÖÃ
+		a[in] = temp;  //å¤åˆ¶å¾…æ’å…¥å…ƒç´ åˆ°æ’å…¥ä½ç½®
 	}
 }
 
@@ -22,7 +22,7 @@ int main()
 {
 	int a[] = { 4,2,8,0,5,7,1,3,6,9 };
 
-	cout << "ÅÅĞòÇ°£º" << endl;
+	cout << "æ’åºå‰ï¼š" << endl;
 	for (int i = 0; i < 10; i++)
 	{
 		cout << a[i] << "  ";
@@ -31,7 +31,7 @@ int main()
 
 	InsertionSort(a, 10);
 
-	cout << "ÅÅĞòºó£º" << endl;
+	cout << "æ’åºåï¼š" << endl;
 	for (int i = 0; i < 10; i++)
 	{
 		cout << a[i] << "  ";
@@ -40,7 +40,7 @@ int main()
 
 	double b[] = { 4.1,2.2,8.3,0.4,5.5,7.6,1.7,3.8,6.9,9.0 };
 
-	cout << "ÅÅĞòÇ°£º" << endl;
+	cout << "æ’åºå‰ï¼š" << endl;
 	for (int i = 0; i < 10; i++)
 	{
 		cout << b[i] << "  ";
@@ -49,7 +49,7 @@ int main()
 
 	InsertionSort(b, 10);
 
-	cout << "ÅÅĞòºó£º" << endl;
+	cout << "æ’åºåï¼š" << endl;
 	for (int i = 0; i < 10; i++)
 	{
 		cout << b[i] << "  ";

@@ -1,12 +1,12 @@
 #include <iostream>
 using namespace std;
 
-//½«a[low, mid]ºÍa[mid+1, high]Á½¸öÓĞĞòÊı×éºÏ²¢ÎªÒ»¸öÓĞĞòÊı×é
+//å°†a[low, mid]å’Œa[mid+1, high]ä¸¤ä¸ªæœ‰åºæ•°ç»„åˆå¹¶ä¸ºä¸€ä¸ªæœ‰åºæ•°ç»„
 void Merge(int *a, int *temp, int low, int mid, int high)
 {
-	int i = low;  //×ó±ß²¿·ÖÊı×éÖ¸Õë
-	int j = mid + 1;  //ÓÒ±ß²¿·ÖÊı×éÖ¸Õë
-	int k = low;  //¶ÔtempÊı×é½øĞĞ²Ù×÷µÄÖ¸Õë
+	int i = low;  //å·¦è¾¹éƒ¨åˆ†æ•°ç»„æŒ‡é’ˆ
+	int j = mid + 1;  //å³è¾¹éƒ¨åˆ†æ•°ç»„æŒ‡é’ˆ
+	int k = low;  //å¯¹tempæ•°ç»„è¿›è¡Œæ“ä½œçš„æŒ‡é’ˆ
 	while (i <= mid && j <= high)
 	{
 		if (a[i] <= a[j])
@@ -14,7 +14,7 @@ void Merge(int *a, int *temp, int low, int mid, int high)
 			//temp[k] = a[i];
 			//k++;
 			//i++;
-			temp[k++] = a[i++];  //µÈ¼ÛÓÚÉÏÃæÈıĞĞ´úÂë
+			temp[k++] = a[i++];  //ç­‰ä»·äºä¸Šé¢ä¸‰è¡Œä»£ç 
 		}
 		else
 		{
@@ -23,42 +23,42 @@ void Merge(int *a, int *temp, int low, int mid, int high)
 	}
 	if (i <= mid)
 	{
-		while (i <= mid)  //²é¿´×ó±ßĞòÁĞÊÇ·ñÎª¿Õ
+		while (i <= mid)  //æŸ¥çœ‹å·¦è¾¹åºåˆ—æ˜¯å¦ä¸ºç©º
 		{
 			temp[k++] = a[i++];
 		}
 	}
 	else
 	{
-		while (j <= high)  //²é¿´ÓÒ±ßĞòÁĞÊÇ·ñÎª¿Õ
+		while (j <= high)  //æŸ¥çœ‹å³è¾¹åºåˆ—æ˜¯å¦ä¸ºç©º
 		{
 			temp[k++] = a[j++];
 		}
 	}
-	for (int n = low; n <= high; n++)  //ÒÆ¶¯»ØÔ­Êı×é
+	for (int n = low; n <= high; n++)  //ç§»åŠ¨å›åŸæ•°ç»„
 	{
 		a[n] = temp[n];
 
 	}
 }
 
-void MergeSort(int *a, int *temp, int low, int high)  // aÎª´ıÅÅĞòµÄÊı×é£»tempÎª¸¨ÖúÊı×é
+void MergeSort(int *a, int *temp, int low, int high)  // aä¸ºå¾…æ’åºçš„æ•°ç»„ï¼›tempä¸ºè¾…åŠ©æ•°ç»„
 {
-	if (low < high)  // low == highÊ±£¬¾Íµİ¹éµ½Ö»ÓĞÒ»¸öÔªËØ£¬ÎªÖÕÖ¹Ìõ¼ş
+	if (low < high)  // low == highæ—¶ï¼Œå°±é€’å½’åˆ°åªæœ‰ä¸€ä¸ªå…ƒç´ ï¼Œä¸ºç»ˆæ­¢æ¡ä»¶
 	{
-		int mid = low + (high - low) / 2;  //·Ö£º½«Êı×éÒ»·ÖÎª¶ş£¨(ÀûÓÃlow + (high - low) / 2ÇómidÊÇÎªÁË·ÀÖ¹ÕûÊıÒç³öÎÊÌâ)£©
-		MergeSort(a, temp, low, mid);  //ÖÎ£º½«×ó±ßµÄÊı×éÅÅĞò(a[low] ~ a[mid])
-		MergeSort(a, temp, mid + 1, high);  //ÖÎ£º½«ÓÒ±ßµÄÊı×éÅÅĞò(a[mid+1] ~ a[high])
-		Merge(a, temp, low, mid, high);  //ºÏ£ººÏ²¢Á½¸öÓĞĞòÊı×é
+		int mid = low + (high - low) / 2;  //åˆ†ï¼šå°†æ•°ç»„ä¸€åˆ†ä¸ºäºŒï¼ˆ(åˆ©ç”¨low + (high - low) / 2æ±‚midæ˜¯ä¸ºäº†é˜²æ­¢æ•´æ•°æº¢å‡ºé—®é¢˜)ï¼‰
+		MergeSort(a, temp, low, mid);  //æ²»ï¼šå°†å·¦è¾¹çš„æ•°ç»„æ’åº(a[low] ~ a[mid])
+		MergeSort(a, temp, mid + 1, high);  //æ²»ï¼šå°†å³è¾¹çš„æ•°ç»„æ’åº(a[mid+1] ~ a[high])
+		Merge(a, temp, low, mid, high);  //åˆï¼šåˆå¹¶ä¸¤ä¸ªæœ‰åºæ•°ç»„
 	}
 }
 
 int main()
 {
 	int a[] = { 4,2,5,0,7,1,6,3 };
-	int b[8] = { 0 };  //ÓÃÓÚ´æ·Å¹é²¢ºóµÄ½á¹û
+	int b[8] = { 0 };  //ç”¨äºå­˜æ”¾å½’å¹¶åçš„ç»“æœ
 
-	cout << "ÅÅĞòÇ°£º" << endl;
+	cout << "æ’åºå‰ï¼š" << endl;
 	for (int i = 0; i < 8; i++)
 	{
 		cout << a[i] << "  ";
@@ -67,7 +67,7 @@ int main()
 
 	MergeSort(a, b, 0, 7);
 
-	cout << "ÅÅĞòºó£º" << endl;
+	cout << "æ’åºåï¼š" << endl;
 	for (int i = 0; i < 8; i++)
 	{
 		cout << a[i] << "  ";

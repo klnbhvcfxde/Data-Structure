@@ -8,7 +8,7 @@ void InsertSort(T *a, int n, int i, int gap)
 
 	for (j = i + gap; j < n; j += gap)
 	{
-		// Èç¹ûa[j] < a[j-gap]£¬ÔòÑ°ÕÒa[j]Î»ÖÃ£¬²¢½«ºóÃæÊı¾İµÄÎ»ÖÃ¶¼ºóÒÆ¡£
+		// å¦‚æœa[j] < a[j-gap]ï¼Œåˆ™å¯»æ‰¾a[j]ä½ç½®ï¼Œå¹¶å°†åé¢æ•°æ®çš„ä½ç½®éƒ½åç§»ã€‚
 		if (a[j] < a[j - gap])
 		{
 			T temp = a[j];
@@ -28,10 +28,10 @@ void ShellSort(T *a, int n)
 {
 	int i, gap;
 
-	// gapÎª²½³¤£¬Ã¿´Î¼õÎªÔ­À´µÄÒ»°ë
+	// gapä¸ºæ­¥é•¿ï¼Œæ¯æ¬¡å‡ä¸ºåŸæ¥çš„ä¸€åŠ
 	for (gap = n / 2; gap > 0; gap /= 2)
 	{
-		// ¹²gap¸ö×é£¬¶ÔÃ¿Ò»×é¶¼Ö´ĞĞÖ±½Ó²åÈëÅÅĞò
+		// å…±gapä¸ªç»„ï¼Œå¯¹æ¯ä¸€ç»„éƒ½æ‰§è¡Œç›´æ¥æ’å…¥æ’åº
 		for (i = 0; i < gap; i++)
 		{
 			InsertSort(a, n, i, gap);
@@ -43,7 +43,7 @@ int main()
 {
 	int a[] = { 4,2,8,0,5,7,1,3,6,9 };
 
-	cout << "ÅÅĞòÇ°£º" << endl;
+	cout << "æ’åºå‰ï¼š" << endl;
 	for (int i = 0; i < 10; i++)
 	{
 		cout << a[i] << "  ";
@@ -52,7 +52,7 @@ int main()
 
 	ShellSort(a, 10);
 
-	cout << "ÅÅĞòºó£º" << endl;
+	cout << "æ’åºåï¼š" << endl;
 	for (int i = 0; i < 10; i++)
 	{
 		cout << a[i] << "  ";
@@ -61,7 +61,7 @@ int main()
 
 	double b[] = { 4.1,2.2,8.3,0.4,5.5,7.6,1.7,3.8,6.9,9.0 };
 
-	cout << "ÅÅĞòÇ°£º" << endl;
+	cout << "æ’åºå‰ï¼š" << endl;
 	for (int i = 0; i < 10; i++)
 	{
 		cout << b[i] << "  ";
@@ -70,7 +70,7 @@ int main()
 
 	ShellSort(b, 10);
 
-	cout << "ÅÅĞòºó£º" << endl;
+	cout << "æ’åºåï¼š" << endl;
 	for (int i = 0; i < 10; i++)
 	{
 		cout << b[i] << "  ";

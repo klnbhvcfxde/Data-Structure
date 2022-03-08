@@ -15,10 +15,10 @@ int BFS(Vertex v)
 {
 	queue<int> q;
 	visited[v] = true;
-	int level = 0;  // ²ãÊı
-	int last = v;  // ¼ÇÂ¼Ã¿Ò»È¦µÄ×îºóÒ»¸öµã
-	int tail = 0;  // »º´æÃ¿Ò»È¦µÄ×îºóÒ»¸öµã
-	int count = 1;   // 6²ãÄÚµÄµãÊı
+	int level = 0;  // å±‚æ•°
+	int last = v;  // è®°å½•æ¯ä¸€åœˆçš„æœ€åä¸€ä¸ªç‚¹
+	int tail = 0;  // ç¼“å­˜æ¯ä¸€åœˆçš„æœ€åä¸€ä¸ªç‚¹
+	int count = 1;   // 6å±‚å†…çš„ç‚¹æ•°
 	q.push(v);
 	while (!q.empty()) 
 	{
@@ -30,18 +30,18 @@ int BFS(Vertex v)
 			{
 				visited[w] = true;
 				q.push(w);
-				tail = w;  // ¼ÇÏÂµ±Ç°È¦µÄ×îºóÒ»¸öµãµÄ±àºÅ
+				tail = w;  // è®°ä¸‹å½“å‰åœˆçš„æœ€åä¸€ä¸ªç‚¹çš„ç¼–å·
 				count++;
 			}
 		}
 
-		if (last == temp)  // Èç¹û¸Ãµ±Ç°½áµãÊÇÕâ²ã×îºóÒ»¸ö½áµã
+		if (last == temp)  // å¦‚æœè¯¥å½“å‰ç»“ç‚¹æ˜¯è¿™å±‚æœ€åä¸€ä¸ªç»“ç‚¹
 		{
-			level++;  // ²ãÊı +1
-			last = tail;   // ¸ü¸Ä last 
+			level++;  // å±‚æ•° +1
+			last = tail;   // æ›´æ”¹ last 
 		}
 		if (level == 6)
-			break;  // Ö»±éÀú6²ã£¬6²ãºóÍ£Ö¹
+			break;  // åªéå†6å±‚ï¼Œ6å±‚ååœæ­¢
 	}
 	return count;
 }

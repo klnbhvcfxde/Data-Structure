@@ -2,9 +2,9 @@
 using namespace std;
 
 struct PolyNode {
-	int coef;  //ÏµÊı
-	int expon;  //Ö¸Êı
-	struct PolyNode *link;  //Ö¸ÏòÏÂÒ»¸ö½ÚµãµÄÖ¸Õë
+	int coef;  //ç³»æ•°
+	int expon;  //æŒ‡æ•°
+	struct PolyNode *link;  //æŒ‡å‘ä¸‹ä¸€ä¸ªèŠ‚ç‚¹çš„æŒ‡é’ˆ
 };
 typedef struct PolyNode *Polynomial;
 Polynomial P1, P2;
@@ -18,38 +18,38 @@ Polynomial PolyAdd(Polynomial P1, Polynomial P2)
 {
 	Polynomial front, rear, temp;
 	int sum;
-	rear = (Polynomial)malloc(sizeof(struct PolyNode));  //Îª·½±ã±íÍ·²åÈë£¬ÏÈ²úÉúÒ»¸öÁÙÊ±¿Õ½áµã×÷Îª½á¹û¶àÏîÊ½Á´±íÍ·
-	front = rear;  //ÓÉfront¼ÇÂ¼½á¹û¶àÏîÊ½Á´±íÍ·½áµã
-	while (P1 && P2)  //µ±Á½¸ö¶àÏîÊ½¶¼ÓĞ·ÇÁãÏî´ı´¦ÀíÊ±
+	rear = (Polynomial)malloc(sizeof(struct PolyNode));  //ä¸ºæ–¹ä¾¿è¡¨å¤´æ’å…¥ï¼Œå…ˆäº§ç”Ÿä¸€ä¸ªä¸´æ—¶ç©ºç»“ç‚¹ä½œä¸ºç»“æœå¤šé¡¹å¼é“¾è¡¨å¤´
+	front = rear;  //ç”±frontè®°å½•ç»“æœå¤šé¡¹å¼é“¾è¡¨å¤´ç»“ç‚¹
+	while (P1 && P2)  //å½“ä¸¤ä¸ªå¤šé¡¹å¼éƒ½æœ‰éé›¶é¡¹å¾…å¤„ç†æ—¶
 	{
 		switch (Compare(P1->expon, P2->expon))
 		{
-		case 1:  //P1ÖĞµÄÊı¾İÏîÖ¸Êı½Ï´ó
+		case 1:  //P1ä¸­çš„æ•°æ®é¡¹æŒ‡æ•°è¾ƒå¤§
 			Attach(P1->coef, P1->expon, &rear);
 			P1 = P1->link;
 			break;
-		case -1:  //P2ÖĞµÄÊı¾İÏîÖ¸Êı½Ï´ó
+		case -1:  //P2ä¸­çš„æ•°æ®é¡¹æŒ‡æ•°è¾ƒå¤§
 			Attach(P2->coef, P2->expon, &rear);
 			P2 = P2->link;
 			break;
-		case 0:  //Á½Êı¾İÏîÖ¸ÊıÏàµÈ
+		case 0:  //ä¸¤æ•°æ®é¡¹æŒ‡æ•°ç›¸ç­‰
 			sum = P1->coef + P2->coef;
-			if (sum)  //×¢ÒâÅĞ¶ÏÏµÊıºÍÊÇ·ñÎª0
+			if (sum)  //æ³¨æ„åˆ¤æ–­ç³»æ•°å’Œæ˜¯å¦ä¸º0
 				Attach(sum, P1->expon, &rear);
 			P1 = P1->link;
 			P2 = P2->link;
 			break;
 		}
 	}
-	//½«Î´´¦ÀíÍêµÄÁíÒ»¸ö¶àÏîÊ½µÄËùÓĞ½ÚµãÒÀ´Î¸´ÖÆµ½½á¹û¶àÏîÊ½ÖĞÈ¥
-	for (; P1; P1 = P1->link)  //P1²»Îª¿Õ
+	//å°†æœªå¤„ç†å®Œçš„å¦ä¸€ä¸ªå¤šé¡¹å¼çš„æ‰€æœ‰èŠ‚ç‚¹ä¾æ¬¡å¤åˆ¶åˆ°ç»“æœå¤šé¡¹å¼ä¸­å»
+	for (; P1; P1 = P1->link)  //P1ä¸ä¸ºç©º
 		Attach(P1->coef, P1->expon, &rear);
-	for (; P2; P2 = P2->link)  //P2²»Îª¿Õ
+	for (; P2; P2 = P2->link)  //P2ä¸ä¸ºç©º
 		Attach(P2->coef, P2->expon, &rear);
 	rear->link = NULL;
 	temp = front;
-	front = front->link;  //ÁîfrontÖ¸Ïò½á¹û¶àÏîÊ½µÚÒ»¸ö·ÇÁãÏî
-	free(temp);  //ÊÍ·ÅÁÙÊ±¿Õ±íÍ·½áµã
+	front = front->link;  //ä»¤frontæŒ‡å‘ç»“æœå¤šé¡¹å¼ç¬¬ä¸€ä¸ªéé›¶é¡¹
+	free(temp);  //é‡Šæ”¾ä¸´æ—¶ç©ºè¡¨å¤´ç»“ç‚¹
 	return front;
 }
 
@@ -63,17 +63,17 @@ int Compare(int a, int b)
 		return 0;
 }
 
-// ĞÂÔöÒ»¸ö½Úµã
-void Attach(int c, int e, Polynomial *pRear)  //ÓÉÓÚÔÚ±¾º¯ÊıÖĞĞèÒª¸Ä±äµ±Ç°½á¹û±í´ïÊ½Î²ÏîÖ¸ÕëµÄÖµ£¬ËùÒÔº¯Êı´«µİ½øÀ´µÄÊÇ½áµãÖ¸ÕëµÄµØÖ·£¬*pRearÖ¸ÏòÎ²Ïî
+// æ–°å¢ä¸€ä¸ªèŠ‚ç‚¹
+void Attach(int c, int e, Polynomial *pRear)  //ç”±äºåœ¨æœ¬å‡½æ•°ä¸­éœ€è¦æ”¹å˜å½“å‰ç»“æœè¡¨è¾¾å¼å°¾é¡¹æŒ‡é’ˆçš„å€¼ï¼Œæ‰€ä»¥å‡½æ•°ä¼ é€’è¿›æ¥çš„æ˜¯ç»“ç‚¹æŒ‡é’ˆçš„åœ°å€ï¼Œ*pRearæŒ‡å‘å°¾é¡¹
 {
 	Polynomial P;
-	P = (Polynomial)malloc(sizeof(struct PolyNode));  //ÉêÇëĞÂ½áµã
-	P->coef = c;  //¶ÔĞÂ½áµã¸³Öµ
+	P = (Polynomial)malloc(sizeof(struct PolyNode));  //ç”³è¯·æ–°ç»“ç‚¹
+	P->coef = c;  //å¯¹æ–°ç»“ç‚¹èµ‹å€¼
 	P->expon = e;
 	P->link = NULL;  
-	//½«PÖ¸ÏòµÄĞÂ½áµã²åÈëµ½µ±Ç°½á¹û±í´ïÊ½Î²ÏîµÄºóÃæ
-	(*pRear)->link = P;  // Î²½ÚµãÖ¸ÏòP
-	*pRear = P;  //ĞŞ¸ÄpRearÖ¸ÕëÖ¸ÏòµÄÖµ
+	//å°†PæŒ‡å‘çš„æ–°ç»“ç‚¹æ’å…¥åˆ°å½“å‰ç»“æœè¡¨è¾¾å¼å°¾é¡¹çš„åé¢
+	(*pRear)->link = P;  // å°¾èŠ‚ç‚¹æŒ‡å‘P
+	*pRear = P;  //ä¿®æ”¹pRearæŒ‡é’ˆæŒ‡å‘çš„å€¼
 }
 
 void PrintPoly(Polynomial P)
@@ -104,9 +104,9 @@ int main()
 
 	for (int i = 0; i < 5; ++i)
 	{
-		Attach(P1Coef[i], P1expon[i], &P1Rear); // ×¢ÒâÕâÀï´«µÄÊÇµØÖ·£¡£¡£¡
+		Attach(P1Coef[i], P1expon[i], &P1Rear); // æ³¨æ„è¿™é‡Œä¼ çš„æ˜¯åœ°å€ï¼ï¼ï¼
 	}
-	P1 = P1->link; // ÒòÎªµÚÒ»¸ö½ÚµãÃ»ÓĞ´æ´¢Êı¾İ£¬ËùÒÔ P1 ÒªÍùºóÅ²Ò»Î»
+	P1 = P1->link; // å› ä¸ºç¬¬ä¸€ä¸ªèŠ‚ç‚¹æ²¡æœ‰å­˜å‚¨æ•°æ®ï¼Œæ‰€ä»¥ P1 è¦å¾€åæŒªä¸€ä½
 
 	for (int i = 0; i < 4; ++i)
 	{
@@ -116,11 +116,11 @@ int main()
 
 	Polynomial res = PolyAdd(P1, P2);
 
-	cout << "P1£º   ";
+	cout << "P1ï¼š   ";
 	PrintPoly(P1);
-	cout << "P2£º   ";
+	cout << "P2ï¼š   ";
 	PrintPoly(P2);
-	cout << "P1+P2£º";
+	cout << "P1+P2ï¼š";
 	PrintPoly(res);
 
 	system("pause");

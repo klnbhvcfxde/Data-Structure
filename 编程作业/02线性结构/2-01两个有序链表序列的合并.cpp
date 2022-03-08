@@ -10,7 +10,7 @@ struct Node {
 typedef PtrToNode List;
 
 List Read();
-void Print(List L);  //¿ÕÁ´±í½«Êä³öNULL 
+void Print(List L);  //ç©ºé“¾è¡¨å°†è¾“å‡ºNULL 
 List Merge(List L1, List L2);
 
 int main()
@@ -28,17 +28,17 @@ int main()
 
 List Read()
 {
-	List L = (List)malloc(sizeof(PtrToNode));   //ÉêÇëÒ»¸öÍ·½áµã
-	L->Next = NULL;        //Í·Ö¸ÕëÎª¿Õ
+	List L = (List)malloc(sizeof(PtrToNode));   //ç”³è¯·ä¸€ä¸ªå¤´ç»“ç‚¹
+	L->Next = NULL;        //å¤´æŒ‡é’ˆä¸ºç©º
 	int n;
 	cin >> n;
-	if (n)    //µ±n²»ÊÇ0Ê±
+	if (n)    //å½“nä¸æ˜¯0æ—¶
 	{
-		List last = L;     //lastÎªÖ¸ÏòÎ²½áµãµÄÖ¸Õë
+		List last = L;     //lastä¸ºæŒ‡å‘å°¾ç»“ç‚¹çš„æŒ‡é’ˆ
 		for (int i = 0; i < n; i++)
 		{
 			List p = (List)malloc(sizeof(struct Node));
-			cin >> p->Data;    //Î²²å·¨
+			cin >> p->Data;    //å°¾æ’æ³•
 			last->Next = p;
 			last = p;
 		}
@@ -60,7 +60,7 @@ void Print(List L)
 	}
 	else
 	{
-		cout << "NULL";  //¿ÕÁ´±í½«Êä³öNULL 
+		cout << "NULL";  //ç©ºé“¾è¡¨å°†è¾“å‡ºNULL 
 	}
 	cout << endl;
 }
@@ -87,7 +87,7 @@ List Merge(List L1, List L2)
 			pb = pb->Next;
 		}
 	}
-	pc->Next = pa ? pa : pb;  //Èç¹ûpa²»Îª¿Õ£¬pc->Next = pa£¬·ñÔòpc->Next = pb
+	pc->Next = pa ? pa : pb;  //å¦‚æœpaä¸ä¸ºç©ºï¼Œpc->Next = paï¼Œå¦åˆ™pc->Next = pb
 	L1->Next = NULL;
 	L2->Next = NULL;
 	return L;

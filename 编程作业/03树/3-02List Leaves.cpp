@@ -6,17 +6,17 @@ using namespace std;
 
 #define Tree int
 struct TreeNode {
-	Tree left;   // ×ó×ÓÊ÷µÄÏÂ±ê 
-	Tree right;  // ÓÒ×ÓÊ÷µÄÏÂ±ê 
+	Tree left;   // å·¦å­æ ‘çš„ä¸‹æ ‡ 
+	Tree right;  // å³å­æ ‘çš„ä¸‹æ ‡ 
 }T[MaxTree];
 
-// ½¨¶ş²æÊ÷£¬·µ»Ø¸ù½áµã
+// å»ºäºŒå‰æ ‘ï¼Œè¿”å›æ ¹ç»“ç‚¹
 Tree BuildTree(struct TreeNode T[])
 {
 	int i, n;
-	int check[MaxTree];  //´´½¨Ò»¸öcheckÊı×éÀ´È·¶¨¸ù½Úµã£¬ÈôÔÚ¾²Ì¬Á´±íÖĞÎ´³öÏÖµÄÏÂ±êÔòÎª¸ù½Úµã
+	int check[MaxTree];  //åˆ›å»ºä¸€ä¸ªcheckæ•°ç»„æ¥ç¡®å®šæ ¹èŠ‚ç‚¹ï¼Œè‹¥åœ¨é™æ€é“¾è¡¨ä¸­æœªå‡ºç°çš„ä¸‹æ ‡åˆ™ä¸ºæ ¹èŠ‚ç‚¹
 	char left, right;
-	Tree root = Null;   //ÈônÎª0£¬·µ»ØNull
+	Tree root = Null;   //è‹¥nä¸º0ï¼Œè¿”å›Null
 
 	cin >> n;
 	if (n)
@@ -30,8 +30,8 @@ Tree BuildTree(struct TreeNode T[])
 			cin >> left >> right;
 			if (left != '-')
 			{
-				T[i].left = left - '0';   //ÈôÊäÈë²»Îª'-',ÄÇ×Ö·û¼õÈ¥×Ö·û0×ª»»ÎªÕûĞÍÊıÖµ
-				check[T[i].left] = 1; //°ÑÔÚ¾²Ì¬Á´±íÖĞ³öÏÖ¹ıµÄÊıÖµ±ê¼ÇÎª1
+				T[i].left = left - '0';   //è‹¥è¾“å…¥ä¸ä¸º'-',é‚£å­—ç¬¦å‡å»å­—ç¬¦0è½¬æ¢ä¸ºæ•´å‹æ•°å€¼
+				check[T[i].left] = 1; //æŠŠåœ¨é™æ€é“¾è¡¨ä¸­å‡ºç°è¿‡çš„æ•°å€¼æ ‡è®°ä¸º1
 			}
 			else if (left == '-')
 				T[i].left = Null;
@@ -55,10 +55,10 @@ Tree BuildTree(struct TreeNode T[])
 	return root;
 }
 
-//²ãĞò±éÀú£¬Êä³öÒ¶½áµã
+//å±‚åºéå†ï¼Œè¾“å‡ºå¶ç»“ç‚¹
 void PrintLeava(int root)
 {
-	if (root == Null)  //Èç¹û¸ù½áµãÎª¿ÕÖ¤Ã÷ÊÇ¿ÕÊ÷
+	if (root == Null)  //å¦‚æœæ ¹ç»“ç‚¹ä¸ºç©ºè¯æ˜æ˜¯ç©ºæ ‘
 	{
 		cout << "-1" << endl;
 		return;
@@ -72,29 +72,29 @@ void PrintLeava(int root)
 	{
 		int s = q.front();
 		q.pop();
-		if (T[s].left == Null && T[s].right == Null)  //Èç¹û¸Ã½áµã¼ÈÃ»ÓĞ×óº¢×ÓÓÖÃ»ÓĞÓÒº¢×Ó¾ÍÊÇÒ¶×Ó
+		if (T[s].left == Null && T[s].right == Null)  //å¦‚æœè¯¥ç»“ç‚¹æ—¢æ²¡æœ‰å·¦å­©å­åˆæ²¡æœ‰å³å­©å­å°±æ˜¯å¶å­
 		{
 			leave[i++] = s;
 		}
 		else
 		{
-			if (T[s].left != Null)/*Èç¹û×óº¢×Ó²»Îª¿Õ¾Ípush×óº¢×Ó*/
+			if (T[s].left != Null)/*å¦‚æœå·¦å­©å­ä¸ä¸ºç©ºå°±pushå·¦å­©å­*/
 			{
 				q.push(T[s].left);
 			}
-			if (T[s].right != Null)  //Èç¹ûÓÒº¢×Ó²»Îª¿Õ¾ÍpushÓÒº¢×Ó
+			if (T[s].right != Null)  //å¦‚æœå³å­©å­ä¸ä¸ºç©ºå°±pushå³å­©å­
 			{
 				q.push(T[s].right);
 			}
 		}
 	}
-	for (int j = 0; j < i; j++)  //°´Ë³ĞòÊä³öÒ¶×Ó
+	for (int j = 0; j < i; j++)  //æŒ‰é¡ºåºè¾“å‡ºå¶å­
 	{
-		if (j < i - 1)  //ÏàÁÚÊı×ÖÖ®¼ä±ØĞëÓĞÒ»¸ö¿Õ¸ñ
+		if (j < i - 1)  //ç›¸é‚»æ•°å­—ä¹‹é—´å¿…é¡»æœ‰ä¸€ä¸ªç©ºæ ¼
 		{
 			cout << leave[j] << " ";
 		}
-		else  //j=i-1ÎªĞĞÎ²²»ÄÜÓĞ¶àÓàµÄ¿Õ¸ñ
+		else  //j=i-1ä¸ºè¡Œå°¾ä¸èƒ½æœ‰å¤šä½™çš„ç©ºæ ¼
 		{
 			cout << leave[j];
 		}

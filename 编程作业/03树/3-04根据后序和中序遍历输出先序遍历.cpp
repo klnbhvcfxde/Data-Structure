@@ -6,7 +6,7 @@ typedef struct Node {
 	struct Node *left, *right;
 }Node, *Tree;
 
-//ÒÑÖªÖĞĞòºÍºóĞò±éÀú£¬½¨Á¢Ò»¿Ã¶ş²æÊ÷
+//å·²çŸ¥ä¸­åºå’Œååºéå†ï¼Œå»ºç«‹ä¸€æ£µäºŒå‰æ ‘
 Tree BuildTree(int n, int *InOrder, int *PostOrder)
 {
 	if (n == 0)
@@ -20,14 +20,14 @@ Tree BuildTree(int n, int *InOrder, int *PostOrder)
 		if (PostOrder[n-1] == InOrder[i])
 			break;
 	}
-	int L = i;  //×ó×ÓÊ÷½áµãµãÊı
- 	int R = n - (i + 1);  //ÓÒ×ÓÊ÷½áµãÊı
+	int L = i;  //å·¦å­æ ‘ç»“ç‚¹ç‚¹æ•°
+ 	int R = n - (i + 1);  //å³å­æ ‘ç»“ç‚¹æ•°
 	tree->left = BuildTree(L, InOrder, PostOrder);
     tree->right = BuildTree(R, InOrder + L + 1, PostOrder + L);
 	return tree;
 }
 
-//½øĞĞÏÈĞò±éÀú
+//è¿›è¡Œå…ˆåºéå†
 void PreOrder(Tree tree) 
 {
 	if (!tree)

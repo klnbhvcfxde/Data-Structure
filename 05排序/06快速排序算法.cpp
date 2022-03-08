@@ -6,23 +6,23 @@ void QuickSort(T *a, const int left, const int right)
 {
 	if (left < right)
 	{
-		//Ñ¡ÊàÖá
+		//é€‰æ¢è½´
 		int i = left;
 		int j = right + 1;
-		T pivot = a[left];  //pivotÎªÊàÖá£¬´ÓÊı×é×ó±ß¿ªÊ¼
+		T pivot = a[left];  //pivotä¸ºæ¢è½´ï¼Œä»æ•°ç»„å·¦è¾¹å¼€å§‹
 
-		//½øĞĞ»®·Ö
+		//è¿›è¡Œåˆ’åˆ†
 		do {
-			do i++; while (a[i] < pivot);  //ÕÒµ½±ÈÊàÖá´óµÄ
-			do j--; while (a[j] > pivot);  //ÕÒµ½±ÈÊàÖáĞ¡µÄ
+			do i++; while (a[i] < pivot);  //æ‰¾åˆ°æ¯”æ¢è½´å¤§çš„
+			do j--; while (a[j] > pivot);  //æ‰¾åˆ°æ¯”æ¢è½´å°çš„
 			if (i < j)
 			{
-				swap(a[i], a[j]);  //Ğ¡µÄ·Å×ó±ß£¬´óµÄ·ÅÓÒ±ß
+				swap(a[i], a[j]);  //å°çš„æ”¾å·¦è¾¹ï¼Œå¤§çš„æ”¾å³è¾¹
 			}
 		} while (i < j);
 		swap(a[left], a[j]);
 
-		//µİ¹é
+		//é€’å½’
 		QuickSort(a, left, j - 1);
 
 		QuickSort(a, j + 1, right);
@@ -33,7 +33,7 @@ int main()
 {
 	int a[] = { 4,2,8,0,5,7,1,3,6,9 };  
 	
-	cout << "ÅÅĞòÇ°£º" << endl;
+	cout << "æ’åºå‰ï¼š" << endl;
 	for (int i = 0; i < 10; i++)
 	{
 		cout << a[i] << "  ";
@@ -42,7 +42,7 @@ int main()
 
 	QuickSort(a, 0, 9);
 
-	cout << "ÅÅĞòºó£º" << endl;
+	cout << "æ’åºåï¼š" << endl;
 	for (int i = 0; i < 10; i++)
 	{
 		cout << a[i] << "  ";
@@ -51,7 +51,7 @@ int main()
 
 	double b[] = { 4.1,2.2,8.3,0.4,5.5,7.6,1.7,3.8,6.9,9.0 };
 
-	cout << "ÅÅĞòÇ°£º" << endl;
+	cout << "æ’åºå‰ï¼š" << endl;
 	for (int i = 0; i < 10; i++)
 	{
 		cout << b[i] << "  ";
@@ -60,7 +60,7 @@ int main()
 
 	QuickSort(b, 0, 9);
 
-	cout << "ÅÅĞòºó£º" << endl;
+	cout << "æ’åºåï¼š" << endl;
 	for (int i = 0; i < 10; i++)
 	{
 		cout << b[i] << "  ";

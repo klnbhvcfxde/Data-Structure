@@ -5,7 +5,7 @@ void BubbleSort(int list[], int n)
 {
 	for (int i = 0; i < n - 1; i++)
 	{
-		bool flag = true;  //±íÊ¾±¾ÂÖÃ°ÅİÊÇ·ñ·¢Éú½»»»µÄ±êÖ¾
+		bool flag = true;  //è¡¨ç¤ºæœ¬è½®å†’æ³¡æ˜¯å¦å‘ç”Ÿäº¤æ¢çš„æ ‡å¿—
 		for (int j = 0; j < n - i - 1; j++)
 		{
 			if (list[j] > list[j + 1])
@@ -14,7 +14,7 @@ void BubbleSort(int list[], int n)
 				std::swap(list[j], list[j + 1]);
 			}
 		}
-		if(flag)  //Ò»ÂÖ¶Ô±ÈÏÂÀ´ÊÇ·ñ·¢ÉúÎ»ÖÃ½»»»
+		if(flag)  //ä¸€è½®å¯¹æ¯”ä¸‹æ¥æ˜¯å¦å‘ç”Ÿä½ç½®äº¤æ¢
 		{
 			break;
 		}
@@ -25,7 +25,7 @@ int main()
 {
 	int a[] = { 4,2,8,0,5,7,1,3,6,9 };
 
-	cout << "ÅÅĞòÇ°£º" << endl;
+	cout << "æ’åºå‰ï¼š" << endl;
 	for (int i = 0; i < 10; i++)
 	{
 		cout << a[i] << "  ";
@@ -34,7 +34,7 @@ int main()
 
 	BubbleSort(a, 10);
 
-	cout << "ÅÅĞòºó£º" << endl;
+	cout << "æ’åºåï¼š" << endl;
 	for (int i = 0; i < 10; i++)
 	{
 		cout << a[i] << "  ";

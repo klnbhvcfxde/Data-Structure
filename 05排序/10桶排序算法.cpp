@@ -19,19 +19,19 @@ void BubbleSort(int arr[], int len)
 void BucketSort(int* arr, int len)
 {
 
-	int bucket[5][5];  //·ÖÅä5¸öÍ°
-	int bucketsize[5];  //Ã¿¸öÍ°ÖĞÔªËØ¸öÊıµÄ¼ÆÊıÆ÷
+	int bucket[5][5];  //åˆ†é…5ä¸ªæ¡¶
+	int bucketsize[5];  //æ¯ä¸ªæ¡¶ä¸­å…ƒç´ ä¸ªæ•°çš„è®¡æ•°å™¨
 
-	//³õÊ¼»¯Í°ºÍÍ°¼ÆÊıÆ÷
+	//åˆå§‹åŒ–æ¡¶å’Œæ¡¶è®¡æ•°å™¨
 	memset(bucket, 0, sizeof(bucket));
 	memset(bucketsize, 0, sizeof(bucketsize));
 
-	for (int i = 0; i < len; i++)  //°ÑÊı×éÖĞµÄÊı¾İ·ÅÈëÍ°ÖĞ
+	for (int i = 0; i < len; i++)  //æŠŠæ•°ç»„ä¸­çš„æ•°æ®æ”¾å…¥æ¡¶ä¸­
 	{
 		bucket[arr[i] / 10][bucketsize[arr[i] / 10]++] = arr[i];
 	}
 
-	for (int i = 0; i < len; i++)  //¶ÔÃ¿¸öÍ°ÖĞµÄÊı¾İ½øĞĞÅÅĞò
+	for (int i = 0; i < len; i++)  //å¯¹æ¯ä¸ªæ¡¶ä¸­çš„æ•°æ®è¿›è¡Œæ’åº
 		BubbleSort(bucket[i], bucketsize[i]);
 
 	int k = 0;
@@ -39,7 +39,7 @@ void BucketSort(int* arr, int len)
 	{
 		for (int j = 0; j < bucketsize[i]; j++)
 		{
-			arr[k++] = bucket[i][j];  //½«Ã¿¸öÍ°ÖĞµÄÔªËØÌî³äµ½Êı×éÖĞÈ¥
+			arr[k++] = bucket[i][j];  //å°†æ¯ä¸ªæ¡¶ä¸­çš„å…ƒç´ å¡«å……åˆ°æ•°ç»„ä¸­å»
 		}
 	}
 }
@@ -49,7 +49,7 @@ int main()
 	int a[] = { 21,3,30,44,15,36,6,10,9,19,25,48,5,23,47 };
 	int len = sizeof(a) / sizeof(a[0]);
 
-	cout << "ÅÅĞòÇ°£º" << endl;
+	cout << "æ’åºå‰ï¼š" << endl;
 	for (int i = 0; i < len; i++)
 	{
 		cout << a[i] << "  ";
@@ -58,7 +58,7 @@ int main()
 
 	BucketSort(a, len);
 
-	cout << "ÅÅĞòºó£º" << endl;
+	cout << "æ’åºåï¼š" << endl;
 	for (int i = 0; i < len; i++)
 	{
 		cout << a[i] << "  ";

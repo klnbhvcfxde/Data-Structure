@@ -5,25 +5,25 @@ using namespace std;
 
 typedef string ElementType;
 typedef struct LNode *List;
-struct LNode {  // µ¥Á´±í 
-	ElementType number;  // µç»°ºÅÂë 
-	int Count;  // ¼ÆÊı 
+struct LNode {  // å•é“¾è¡¨ 
+	ElementType number;  // ç”µè¯å·ç  
+	int Count;  // è®¡æ•° 
 	List Next;
 };
 
 typedef struct HashTbl *HashTable;
-struct HashTbl {   // ¹şÏ£±í 
-	int TableSize;  // ¹şÏ£±í´óĞ¡
-	List Heads;   // Í·½áµã 
+struct HashTbl {   // å“ˆå¸Œè¡¨ 
+	int TableSize;  // å“ˆå¸Œè¡¨å¤§å°
+	List Heads;   // å¤´ç»“ç‚¹ 
 };
 
-// ³ıÁôÓàÊı·¨¹şÏ£º¯Êı 
+// é™¤ç•™ä½™æ•°æ³•å“ˆå¸Œå‡½æ•° 
 int Hash(int key, int p) 
 {
 	return key % p;
 }
 
-// ²éÕÒËØÊı 
+// æŸ¥æ‰¾ç´ æ•° 
 int NextPrime(int N) 
 {
 	int p = (N % 2) ? N + 2 : N + 1;
@@ -31,23 +31,23 @@ int NextPrime(int N)
 	while (p <= MAXTABLESIZE) 
 	{
 		for (i = (int)sqrt(1.0*p); i > 2; i--)
-			if (!(p%i))   // ²»ÊÇËØÊı 
+			if (!(p%i))   // ä¸æ˜¯ç´ æ•° 
 				break;
-		if (i == 2)  // ÕÒµ½ÁË 
+		if (i == 2)  // æ‰¾åˆ°äº† 
 			break;
-		p += 2;  // È¥ÕÒÏÂ¸öËØÊı 
+		p += 2;  // å»æ‰¾ä¸‹ä¸ªç´ æ•° 
 	}
 	return p;
 }
 
-// ³õÊ¼»¯¹şÏ£±í 
+// åˆå§‹åŒ–å“ˆå¸Œè¡¨ 
 HashTable CreateTable(int TableSize) 
 {
 	HashTable H;
 	H = (HashTable)malloc(sizeof(struct HashTbl));
 	H->TableSize = NextPrime(TableSize);
 
-	// ½á¹¹ÌåÖĞº¬×Ö·û´®±ØĞë¶¯Ì¬·ÖÅäµØÖ·¿Õ¼ä 
+	// ç»“æ„ä½“ä¸­å«å­—ç¬¦ä¸²å¿…é¡»åŠ¨æ€åˆ†é…åœ°å€ç©ºé—´ 
 	H->Heads = new LNode[H->TableSize];
 	for (int i = 0; i < H->TableSize; i++) 
 	{
@@ -57,10 +57,10 @@ HashTable CreateTable(int TableSize)
 	return H;
 }
 
-// ²éÕÒ 
+// æŸ¥æ‰¾ 
 List Find(HashTable H, ElementType key)
 {
-	// ÒÔµç»°ºÅÂë×îºóÎåÎ»É¢ÁĞ
+	// ä»¥ç”µè¯å·ç æœ€åäº”ä½æ•£åˆ—
 	int pos = Hash(atoi(key.substr(6, 5).c_str()), H->TableSize);
 
 	List p = H->Heads[pos].Next;
@@ -69,45 +69,45 @@ List Find(HashTable H, ElementType key)
 	return p;
 }
 
-// ²åÈë 
+// æ’å…¥ 
 bool Insert(HashTable H, ElementType key) 
 {
 	List p, NewCell;
 	int pos;
 	p = Find(H, key);
-	if (!p)  // pÎª¿Õ£¬¹Ø¼ü´ÊÎ´ÕÒµ½£¬¿ÉÒÔ²åÈë
+	if (!p)  // pä¸ºç©ºï¼Œå…³é”®è¯æœªæ‰¾åˆ°ï¼Œå¯ä»¥æ’å…¥
 	{  
 		NewCell = new LNode();
 		NewCell->number = key;
 		NewCell->Count = 1;
-		pos = Hash(atoi(key.substr(6, 5).c_str()), H->TableSize);  // ÕÒµ½É¢ÁĞµØÖ· 
+		pos = Hash(atoi(key.substr(6, 5).c_str()), H->TableSize);  // æ‰¾åˆ°æ•£åˆ—åœ°å€ 
 
-		// ½«ĞÂ½áµã²åÈëµ½Á´±íÍ· 
+		// å°†æ–°ç»“ç‚¹æ’å…¥åˆ°é“¾è¡¨å¤´ 
 		NewCell->Next = H->Heads[pos].Next;
 		H->Heads[pos].Next = NewCell;
 		return true;
 	}
 	else 
 	{
-		p->Count++;   // ÒÑ¾­´æÔÚ£¬¼ÆÊı+1 
+		p->Count++;   // å·²ç»å­˜åœ¨ï¼Œè®¡æ•°+1 
 		return false;
 	}
 }
 
-// É¨ÃèÕû¸öÉ¢ÁĞ±í
+// æ‰«ææ•´ä¸ªæ•£åˆ—è¡¨
 void ScanAndOutput(HashTable H) 
 {
 	List p;
-	int MaxCnt = 0;  // ×î´óÍ¨»°´ÎÊı 
-	string MinPhone; // ×îĞ¡ºÅÂë 
-	int PCnt = 0;   // ²¢ÁĞÈËÊı 
-	// É¨ÃèÁ´±í 
+	int MaxCnt = 0;  // æœ€å¤§é€šè¯æ¬¡æ•° 
+	string MinPhone; // æœ€å°å·ç  
+	int PCnt = 0;   // å¹¶åˆ—äººæ•° 
+	// æ‰«æé“¾è¡¨ 
 	for (int i = 0; i < H->TableSize; i++) 
 	{
 		p = H->Heads[i].Next;
 		while (p) 
 		{
-			if (p->Count > MaxCnt)   // ¸üĞÂ×î´óÍ¨»°´ÎÊı
+			if (p->Count > MaxCnt)   // æ›´æ–°æœ€å¤§é€šè¯æ¬¡æ•°
 			{
 				MaxCnt = p->Count;
 				MinPhone = p->number;
@@ -115,8 +115,8 @@ void ScanAndOutput(HashTable H)
 			}
 			else if (p->Count == MaxCnt) 
 			{
-				PCnt++;  //¿ñÈË¼ÆÊı
-				if (p->number < MinPhone)  //¸üĞÂ¿ñÈËµÄ×îĞ¡ÊÖ»úºÅÂë
+				PCnt++;  //ç‹‚äººè®¡æ•°
+				if (p->number < MinPhone)  //æ›´æ–°ç‹‚äººçš„æœ€å°æ‰‹æœºå·ç 
 					MinPhone = p->number;
 			}
 			p = p->Next;

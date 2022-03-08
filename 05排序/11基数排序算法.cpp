@@ -1,10 +1,10 @@
 #include<iostream>
 using namespace std;
 
-int maxbit(int arr[], int len)  //ÇóÊı×éµÄ×î´óÎ»Êı
+int maxbit(int arr[], int len)  //æ±‚æ•°ç»„çš„æœ€å¤§ä½æ•°
 {
-	int maxData = arr[0];              // ×î´óÊı
-	// ÏÈÇó³ö×î´óÊı£¬ÔÙÇóÆäÎ»Êı
+	int maxData = arr[0];              // æœ€å¤§æ•°
+	// å…ˆæ±‚å‡ºæœ€å¤§æ•°ï¼Œå†æ±‚å…¶ä½æ•°
 	for (int i = 1; i < len; i++)
 	{
 		if (maxData < arr[i])
@@ -20,30 +20,30 @@ int maxbit(int arr[], int len)  //ÇóÊı×éµÄ×î´óÎ»Êı
 	return d;
 }
 
-void RadixSort(int arr[], int len)  //»ùÊıÅÅĞò
+void RadixSort(int arr[], int len)  //åŸºæ•°æ’åº
 {
-	int d = maxbit(arr, len);  //Êı×éÖĞ×î´óÖµµÄÎ»Êı
+	int d = maxbit(arr, len);  //æ•°ç»„ä¸­æœ€å¤§å€¼çš„ä½æ•°
 	int *tmp = new int[len];
-	int *count = new int[10]; //¼ÆÊıÆ÷
+	int *count = new int[10]; //è®¡æ•°å™¨
 	int radix = 1;
-	for (int i = 1; i <= d; i++) //½øĞĞd´ÎÅÅĞò
+	for (int i = 1; i <= d; i++) //è¿›è¡Œdæ¬¡æ’åº
 	{
 		for (int j = 0; j < 10; j++)
-			count[j] = 0; //Ã¿´Î·ÖÅäÇ°Çå¿Õ¼ÆÊıÆ÷
+			count[j] = 0; //æ¯æ¬¡åˆ†é…å‰æ¸…ç©ºè®¡æ•°å™¨
 		for (int j = 0; j < len; j++)
 		{
-			int k = (arr[j] / radix) % 10; //Í³¼ÆÃ¿¸öÍ°ÖĞµÄ¼ÇÂ¼Êı
+			int k = (arr[j] / radix) % 10; //ç»Ÿè®¡æ¯ä¸ªæ¡¶ä¸­çš„è®°å½•æ•°
 			count[k]++;
 		}
 		for (int j = 1; j < 10; j++)
-			count[j] = count[j - 1] + count[j]; //½«tmpÖĞµÄÎ»ÖÃÒÀ´Î·ÖÅä¸øÃ¿¸öÍ°
-		for (int j = len - 1; j >= 0; j--) //½«ËùÓĞÍ°ÖĞ¼ÇÂ¼ÒÀ´ÎÊÕ¼¯µ½tmpÖĞ
+			count[j] = count[j - 1] + count[j]; //å°†tmpä¸­çš„ä½ç½®ä¾æ¬¡åˆ†é…ç»™æ¯ä¸ªæ¡¶
+		for (int j = len - 1; j >= 0; j--) //å°†æ‰€æœ‰æ¡¶ä¸­è®°å½•ä¾æ¬¡æ”¶é›†åˆ°tmpä¸­
 		{
 			int k = (arr[j] / radix) % 10;
 			tmp[count[k] - 1] = arr[j];
 			count[k]--;
 		}
-		for (int j = 0; j < len; j++) //½«ÁÙÊ±Êı×éµÄÄÚÈİ¸´ÖÆµ½arrÖĞ
+		for (int j = 0; j < len; j++) //å°†ä¸´æ—¶æ•°ç»„çš„å†…å®¹å¤åˆ¶åˆ°arrä¸­
 			arr[j] = tmp[j];
 		radix = radix * 10;
 	}
@@ -56,7 +56,7 @@ int main()
 	int a[] = { 144,203,6,905,47,215,836,26,527,602,848 };
 	int len = sizeof(a) / sizeof(a[0]);
 
-	cout << "ÅÅĞòÇ°£º" << endl;
+	cout << "æ’åºå‰ï¼š" << endl;
 	for (int i = 0; i < len; i++)
 	{
 		cout << a[i] << "  ";
@@ -65,7 +65,7 @@ int main()
 
 	RadixSort(a, len);
 
-	cout << "ÅÅĞòºó£º" << endl;
+	cout << "æ’åºåï¼š" << endl;
 	for (int i = 0; i < len; i++)
 	{
 		cout << a[i] << "  ";

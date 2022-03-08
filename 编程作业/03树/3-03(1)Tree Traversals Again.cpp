@@ -9,9 +9,9 @@ typedef struct Node {
 	struct Node *left, *right;
 }Node, *Tree;
 
-bool flag = true;//ºóĞòÊä³öÊ±ÊÇ·ñÊä³ö¿Õ¸ñ 
+bool flag = true;//ååºè¾“å‡ºæ—¶æ˜¯å¦è¾“å‡ºç©ºæ ¼ 
 
-//ÒÑÖªÇ°ĞòºÍÖĞĞò±éÀú£¬½¨Á¢Ò»¿Ã¶ş²æÊ÷
+//å·²çŸ¥å‰åºå’Œä¸­åºéå†ï¼Œå»ºç«‹ä¸€æ£µäºŒå‰æ ‘
 Tree BuildTree(int n, int *PreOrder, int *InOrder) 
 {
 	if (n == 0)
@@ -25,14 +25,14 @@ Tree BuildTree(int n, int *PreOrder, int *InOrder)
 		if (PreOrder[0] == InOrder[i])
 			break;
 	}
-	int L = i;  //×ó×ÓÊ÷½áµãµãÊı
- 	int R = n - (i + 1);  //ÓÒ×ÓÊ÷½áµãÊı
+	int L = i;  //å·¦å­æ ‘ç»“ç‚¹ç‚¹æ•°
+ 	int R = n - (i + 1);  //å³å­æ ‘ç»“ç‚¹æ•°
 	tree->left = BuildTree(L, PreOrder + 1, InOrder);
     tree->right = BuildTree(R, PreOrder + L + 1, InOrder + L + 1);
 	return tree;
 }
 
-//½øĞĞºóĞò±éÀú
+//è¿›è¡Œååºéå†
 void PostOrder(Tree tree) 
 {
 	if (!tree)
@@ -64,11 +64,11 @@ int main()
 		if (s == "Push") 
 		{
 			cin >> num;
-			PreOrder[p++] = num;  //PreOrderÖĞ´æ·ÅÏÈĞò±éÀúµÄĞòÁĞ
+			PreOrder[p++] = num;  //PreOrderä¸­å­˜æ”¾å…ˆåºéå†çš„åºåˆ—
 			st.push(num);
 		}
 		else {
-			InOrder[k++] = st.top();  //InOrderÖĞ´æ·ÅÖĞĞò±éÀúµÄĞòÁĞ
+			InOrder[k++] = st.top();  //InOrderä¸­å­˜æ”¾ä¸­åºéå†çš„åºåˆ—
 			st.pop();
 		}
 	}

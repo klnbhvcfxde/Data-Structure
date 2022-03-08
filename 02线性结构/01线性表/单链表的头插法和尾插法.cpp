@@ -9,14 +9,14 @@ struct Node {
 };
 typedef PtrToNode List;
 
-List HeadCreatList() //Í·²å·¨½¨Á¢Á´±í
+List HeadCreatList() //å¤´æ’æ³•å»ºç«‹é“¾è¡¨
 {
-	List L = (List)malloc(sizeof(PtrToNode));   //³õÊ¼»¯¿Õ±í£¬ÉêÇëÒ»¸öÍ·½áµã
-	L->Next = NULL;        //Í·Ö¸ÕëÎª¿Õ
+	List L = (List)malloc(sizeof(PtrToNode));   //åˆå§‹åŒ–ç©ºè¡¨ï¼Œç”³è¯·ä¸€ä¸ªå¤´ç»“ç‚¹
+	L->Next = NULL;        //å¤´æŒ‡é’ˆä¸ºç©º
 	for (int i = 0; i < 2; i++) 
 	{
-		List p = (List)malloc(sizeof(struct Node));  //pÖ¸ÏòĞÂÉêÇëµÄ½áµã
-		cout << "ÊäÈëÒª²åÈëµÄµÚ" << i + 1 << "¸öÔªËØ£º";
+		List p = (List)malloc(sizeof(struct Node));  //pæŒ‡å‘æ–°ç”³è¯·çš„ç»“ç‚¹
+		cout << "è¾“å…¥è¦æ’å…¥çš„ç¬¬" << i + 1 << "ä¸ªå…ƒç´ ï¼š";
 		cin >> p->Data;
 		p->Next = L->Next;
 		L->Next = p;
@@ -24,18 +24,18 @@ List HeadCreatList() //Í·²å·¨½¨Á¢Á´±í
 	return L;
 }
 
-List TailCreatList() //Î²²å·¨½¨Á¢Á´±í
+List TailCreatList() //å°¾æ’æ³•å»ºç«‹é“¾è¡¨
 {
-	List L = (List)malloc(sizeof(PtrToNode));   //³õÊ¼»¯¿Õ±í£¬ÉêÇëÒ»¸öÍ·½áµã
-	L->Next = NULL;        //Í·Ö¸ÕëÎª¿Õ
-	List last = L;     //lastÎªÖ¸ÏòÎ²½áµãµÄÖ¸Õë
+	List L = (List)malloc(sizeof(PtrToNode));   //åˆå§‹åŒ–ç©ºè¡¨ï¼Œç”³è¯·ä¸€ä¸ªå¤´ç»“ç‚¹
+	L->Next = NULL;        //å¤´æŒ‡é’ˆä¸ºç©º
+	List last = L;     //lastä¸ºæŒ‡å‘å°¾ç»“ç‚¹çš„æŒ‡é’ˆ
 	for (int i = 0; i < 2; i++)
 	{
-		List p = (List)malloc(sizeof(struct Node));  //pÖ¸ÏòĞÂÉêÇëµÄ½áµã
-		cout << "ÊäÈëÒª²åÈëµÄµÚ" << i + 1 << "¸öÔªËØ£º";
+		List p = (List)malloc(sizeof(struct Node));  //pæŒ‡å‘æ–°ç”³è¯·çš„ç»“ç‚¹
+		cout << "è¾“å…¥è¦æ’å…¥çš„ç¬¬" << i + 1 << "ä¸ªå…ƒç´ ï¼š";
 		cin >> p->Data;
 		last->Next = p;
-		last = p;  //lastÖ¸ÏòÎ²½áµã
+		last = p;  //lastæŒ‡å‘å°¾ç»“ç‚¹
 	}
 	last->Next = NULL;
 
@@ -55,23 +55,23 @@ void Print(List L)
 	}
 	else
 	{
-		cout << "NULL";  //¿ÕÁ´±í½«Êä³öNULL 
+		cout << "NULL";  //ç©ºé“¾è¡¨å°†è¾“å‡ºNULL 
 	}
 	cout << endl;
 }
 
 int main()
 {
-	//Í·²å·¨
-	cout << "Í·²å·¨½¨Á¢Á´±í£º" << endl;
+	//å¤´æ’æ³•
+	cout << "å¤´æ’æ³•å»ºç«‹é“¾è¡¨ï¼š" << endl;
 	List L1 = HeadCreatList();
-	cout << "L1£º";
+	cout << "L1ï¼š";
 	Print(L1);
 
-	//Î²²å·¨
-	cout << "Î²²å·¨½¨Á¢Á´±í£º" << endl;
+	//å°¾æ’æ³•
+	cout << "å°¾æ’æ³•å»ºç«‹é“¾è¡¨ï¼š" << endl;
 	List L2 = TailCreatList();
-	cout << "L2£º";
+	cout << "L2ï¼š";
 	Print(L2);
 
 	system("pause");

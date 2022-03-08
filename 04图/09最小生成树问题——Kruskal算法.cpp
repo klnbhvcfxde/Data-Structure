@@ -7,38 +7,38 @@ using namespace std;
 #define MaxVertex 105
 typedef int Vertex;
 int G[MaxVertex][MaxVertex];
-int parent[MaxVertex];   // ²¢²é¼¯×îĞ¡Éú³ÉÊ÷ 
-int Nv;    // ½áµã 
-int Ne;    // ±ß 
-int sum;  // È¨ÖØºÍ 
+int parent[MaxVertex];   // å¹¶æŸ¥é›†æœ€å°ç”Ÿæˆæ ‘
+int Nv;    // ç»“ç‚¹
+int Ne;    // è¾¹
+int sum;  // æƒé‡å’Œ
 
 struct Node {
 	Vertex v1;
 	Vertex v2;
-	int weight; // È¨ÖØ 
-	// ÖØÔØÔËËã·û³É×î´ó¶Ñ 
+	int weight; // æƒé‡
+	// é‡è½½è¿ç®—ç¬¦æˆæœ€å¤§å †
 	bool operator < (const Node &a) const
 	{
 		return weight > a.weight;
 	}
 };
-queue<Node> MST;  // ×îĞ¡Éú³ÉÊ÷ 
-priority_queue<Node> q;  // ×îĞ¡¶Ñ 
+queue<Node> MST;  // æœ€å°ç”Ÿæˆæ ‘
+priority_queue<Node> q;  // æœ€å°å †
 
-// ³õÊ¼»¯Í¼ĞÅÏ¢ 
-void BuildGraph() 
+// åˆå§‹åŒ–å›¾ä¿¡æ¯
+void BuildGraph()
 {
 	Vertex v1, v2;
 	int w;
 	cin >> Nv >> Ne;
-	for (int i = 1; i <= Nv; i++) 
+	for (int i = 1; i <= Nv; i++)
 	{
 		for (int j = 1; j <= Nv; j++)
-			G[i][j] = 0;  // ³õÊ¼»¯Í¼
+			G[i][j] = 0;  // åˆå§‹åŒ–å›¾
 		parent[i] = -1;
 	}
-	// ³õÊ¼»¯µã
-	for (int i = 0; i < Ne; i++) 
+	// åˆå§‹åŒ–ç‚¹
+	for (int i = 0; i < Ne; i++)
 	{
 		cin >> v1 >> v2 >> w;
 		struct Node tmpE;
@@ -49,8 +49,8 @@ void BuildGraph()
 	}
 }
 
-//  Â·¾¶Ñ¹Ëõ²éÕÒ 
-int Find(int x) 
+//  è·¯å¾„å‹ç¼©æŸ¥æ‰¾
+int Find(int x)
 {
 	if (parent[x] < 0)
 		return x;
@@ -58,55 +58,55 @@ int Find(int x)
 		return parent[x] = Find(parent[x]);
 }
 
-//  °´ÖÈ¹é²¢ 
-void Union(int x1, int x2) 
+//  æŒ‰ç§©å½’å¹¶
+void Union(int x1, int x2)
 {
 	x1 = Find(x1);
 	x2 = Find(x2);
-	if (parent[x1] < parent[x2]) 
+	if (parent[x1] < parent[x2])
 	{
 		parent[x1] += parent[x2];
 		parent[x2] = x1;
 	}
-	else 
+	else
 	{
 		parent[x2] += parent[x1];
 		parent[x1] = x2;
 	}
 }
 
-void Kruskal() 
+void Kruskal()
 {
-	// ×îĞ¡Éú³ÉÊ÷µÄ±ß²»µ½ Nv-1 ÌõÇÒ»¹ÓĞ±ß 
-	while (MST.size() != Nv - 1 && !q.empty()) 
+	// æœ€å°ç”Ÿæˆæ ‘çš„è¾¹ä¸åˆ° Nv-1 æ¡ä¸”è¿˜æœ‰è¾¹
+	while (MST.size() != Nv - 1 && !q.empty())
 	{
-		Node E = q.top();  // ´Ó×îĞ¡¶ÑÈ¡³öÒ»ÌõÈ¨ÖØ×îĞ¡µÄ±ß
-		q.pop(); // ³ö¶ÓÕâÌõ±ß 
-		if (Find(E.v1) != Find(E.v2)) 
-		{  // ¼ì²âÁ½Ìõ±ßÊÇ·ñÔÚÍ¬Ò»¼¯ºÏ 
+		Node E = q.top();  // ä»æœ€å°å †å–å‡ºä¸€æ¡æƒé‡æœ€å°çš„è¾¹
+		q.pop(); // å‡ºé˜Ÿè¿™æ¡è¾¹
+		if (Find(E.v1) != Find(E.v2))
+		{  // æ£€æµ‹ä¸¤æ¡è¾¹æ˜¯å¦åœ¨åŒä¸€é›†åˆ
 			sum += E.weight;
-			Union(E.v1, E.v2);     // ²¢ÆğÀ´ 
+			Union(E.v1, E.v2);     // å¹¶èµ·æ¥
 			MST.push(E);
 		}
 	}
 
 }
 
-void Print() 
+void Print()
 {
-	cout << "±»ÊÕÂ¼Ë³Ğò(Ã¿Ìõ±ß¶ÔÓ¦µÄ¶¥µã1 ¶¥µã2 È¨ÖØ)£º" << endl;
+	cout << "è¢«æ”¶å½•é¡ºåº(æ¯æ¡è¾¹å¯¹åº”çš„é¡¶ç‚¹1 é¡¶ç‚¹2 æƒé‡)ï¼š" << endl;
 	while (!MST.empty())
 	{
 		Node a = MST.front();
 		cout << a.v1 << " " << a.v2 << " " << a.weight << endl;
 		MST.pop();
 	}
-	cout << "È¨ÖØºÍÎª£º" << endl;
+	cout << "æƒé‡å’Œä¸ºï¼š" << endl;
 	cout << sum << endl;
 }
 
 
-int main() 
+int main()
 {
 	BuildGraph();
 	Kruskal();

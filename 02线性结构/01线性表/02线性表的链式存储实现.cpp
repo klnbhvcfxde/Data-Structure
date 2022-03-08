@@ -1,23 +1,23 @@
 #include<iostream>
 using namespace std;
-typedef int ElementType; // ElementType ¿É¶¨ÒåÎªÈÎÒâÀàĞÍ
+typedef int ElementType; // ElementType å¯å®šä¹‰ä¸ºä»»æ„ç±»å‹
 typedef struct LNode *List;
 struct LNode 
 {
-	ElementType Data;   //Êı¾İÓò 
-	List Next;   // ÏÂÒ»¸öÁ´±íµÄµØÖ· 
+	ElementType Data;   //æ•°æ®åŸŸ 
+	List Next;   // ä¸‹ä¸€ä¸ªé“¾è¡¨çš„åœ°å€ 
 };
 List L;
 
-List MakeEmpty(); //³õÊ¼»¯Á´±í 
-int Length(List L);  // ÒÔ±éÀúÁ´±íµÄ·½·¨ÇóÁ´±í³¤¶È 
-List FindKth(int K, List L);  // °´ĞòºÅ²éÕÒ 
-List Find(ElementType X, List L);  // °´Öµ²éÕÒ 
-List Insert(ElementType X, int i, List L);  //½« X ²åÈëµ½µÚ i-1(i>0) ¸ö½áµãÖ®ºó 
-List Delete(int i, List L); // É¾³ıµÚ i(i>0) ¸ö½áµã 
-void Print(List L); // Êä³öÁ´±íÔªËØ 
+List MakeEmpty(); //åˆå§‹åŒ–é“¾è¡¨ 
+int Length(List L);  // ä»¥éå†é“¾è¡¨çš„æ–¹æ³•æ±‚é“¾è¡¨é•¿åº¦ 
+List FindKth(int K, List L);  // æŒ‰åºå·æŸ¥æ‰¾ 
+List Find(ElementType X, List L);  // æŒ‰å€¼æŸ¥æ‰¾ 
+List Insert(ElementType X, int i, List L);  //å°† X æ’å…¥åˆ°ç¬¬ i-1(i>0) ä¸ªç»“ç‚¹ä¹‹å 
+List Delete(int i, List L); // åˆ é™¤ç¬¬ i(i>0) ä¸ªç»“ç‚¹ 
+void Print(List L); // è¾“å‡ºé“¾è¡¨å…ƒç´  
 
-// ³õÊ¼»¯Á´±í 
+// åˆå§‹åŒ–é“¾è¡¨ 
 List MakeEmpty() 
 {
 	List L = (List)malloc(sizeof(struct LNode));
@@ -25,12 +25,12 @@ List MakeEmpty()
 	return L;
 }
 
-//Çó±í³¤ 
+//æ±‚è¡¨é•¿ 
 int Length(List L) 
 {
 	List p = L;
 	int len = 0;
-	while (p)  // µ± p ²»Îª¿Õ 
+	while (p)  // å½“ p ä¸ä¸ºç©º 
 	{   
 		p = p->Next;
 		len++;
@@ -38,94 +38,94 @@ int Length(List L)
 	return len;
 }
 
-// °´Ğò²éÕÒ 
+// æŒ‰åºæŸ¥æ‰¾ 
 List FindKth(int K, List L) 
 {
 	List p = L;
-	int i = 1;  //´Ó 1 ¿ªÊ¼ 
+	int i = 1;  //ä» 1 å¼€å§‹ 
 	while (p && i < K) {
 		p = p->Next;
 		i++;
 	}
-	if (i == K)    // ÕÒµ½ÁË 
+	if (i == K)    // æ‰¾åˆ°äº† 
 		return p;
-	else    // Î´ÕÒµ½ 
+	else    // æœªæ‰¾åˆ° 
 		return NULL;
 }
 
-// °´Öµ²éÕÒ  
+// æŒ‰å€¼æŸ¥æ‰¾  
 List Find(ElementType X, List L) {
 	List p = L;
 	while (p && p->Data != X)
 		p = p->Next;
-	// ÕÒµ½ÁË£¬·µ»Ø p
-	// Î´ÕÒµ½£¬·µ»Ø NULL£¬´ËÊ± p µÈÓÚ NULL 
+	// æ‰¾åˆ°äº†ï¼Œè¿”å› p
+	// æœªæ‰¾åˆ°ï¼Œè¿”å› NULLï¼Œæ­¤æ—¶ p ç­‰äº NULL 
 	return p;
 }
 
-/* ²åÈë
-1. ÓÃ s Ö¸ÏòÒ»¸öĞÂµÄ½áµã
-2. ÓÃ p Ö¸ÏòÁ´±íµÄµÚ i-1 ¸ö½áµã
-3. s->Next = p->Next£¬½« s µÄÏÂÒ»¸ö½áµãÖ¸Ïò p µÄÏÂÒ»¸ö½áµã
-4. p->Next = s£¬½« p µÄÏÂÒ»½áµã¸ÄÎª s   */
+/* æ’å…¥
+1. ç”¨ s æŒ‡å‘ä¸€ä¸ªæ–°çš„ç»“ç‚¹
+2. ç”¨ p æŒ‡å‘é“¾è¡¨çš„ç¬¬ i-1 ä¸ªç»“ç‚¹
+3. s->Next = p->Nextï¼Œå°† s çš„ä¸‹ä¸€ä¸ªç»“ç‚¹æŒ‡å‘ p çš„ä¸‹ä¸€ä¸ªç»“ç‚¹
+4. p->Next = sï¼Œå°† p çš„ä¸‹ä¸€ç»“ç‚¹æ”¹ä¸º s   */
 List Insert(ElementType X, int i, List L) {
 	List p, s;
-	if (i == 1) {     // ĞÂ½áµã²åÈëÔÚ±íÍ· 
+	if (i == 1) {     // æ–°ç»“ç‚¹æ’å…¥åœ¨è¡¨å¤´ 
 		s = (List)malloc(sizeof(struct LNode));
 		s->Data = X;
 		s->Next = L;
-		return s;     //²åÈëµÄ½áµãÎªÍ·½áµã 
+		return s;     //æ’å…¥çš„ç»“ç‚¹ä¸ºå¤´ç»“ç‚¹ 
 	}
-	p = FindKth(i - 1, L);   // ÕÒµ½µÚ i-1 ¸ö½áµã
-	if (!p) {   // µÚ i-1 ¸ö½áµã²»´æÔÚ 
-		cout << "½áµã´íÎó" << endl;
+	p = FindKth(i - 1, L);   // æ‰¾åˆ°ç¬¬ i-1 ä¸ªç»“ç‚¹
+	if (!p) {   // ç¬¬ i-1 ä¸ªç»“ç‚¹ä¸å­˜åœ¨ 
+		cout << "ç»“ç‚¹é”™è¯¯" << endl;
 		return NULL;
 	}
 	else {
 		s = (List)malloc(sizeof(struct LNode));
 		s->Data = X;
-		s->Next = p->Next;   //½« s µÄÏÂÒ»¸ö½áµãÖ¸Ïò p µÄÏÂÒ»¸ö½áµã 
-		p->Next = s;   // ½« p µÄÏÂÒ»½áµã¸ÄÎª s
+		s->Next = p->Next;   //å°† s çš„ä¸‹ä¸€ä¸ªç»“ç‚¹æŒ‡å‘ p çš„ä¸‹ä¸€ä¸ªç»“ç‚¹ 
+		p->Next = s;   // å°† p çš„ä¸‹ä¸€ç»“ç‚¹æ”¹ä¸º s
 		return L;
 	}
 }
 
-/* É¾³ı
-1. ÓÃ p Ö¸ÏòÁ´±íµÄµÚ i-1 ¸ö½áµã
-2. ÓÃ s Ö¸ÏòÒª±»É¾³ıµÄµÄµÚ i ¸ö½áµã
-3. p->Next = s->Next£¬p Ö¸ÕëÖ¸Ïò s ºóÃæ
-4. free(s)£¬ÊÍ·Å¿Õ¼ä
+/* åˆ é™¤
+1. ç”¨ p æŒ‡å‘é“¾è¡¨çš„ç¬¬ i-1 ä¸ªç»“ç‚¹
+2. ç”¨ s æŒ‡å‘è¦è¢«åˆ é™¤çš„çš„ç¬¬ i ä¸ªç»“ç‚¹
+3. p->Next = s->Nextï¼Œp æŒ‡é’ˆæŒ‡å‘ s åé¢
+4. free(s)ï¼Œé‡Šæ”¾ç©ºé—´
 */
 List Delete(int i, List L) {
 	List p, s;
-	if (i == 1) {   //Èç¹ûÒªÉ¾³ıÍ·½áµã 
+	if (i == 1) {   //å¦‚æœè¦åˆ é™¤å¤´ç»“ç‚¹ 
 		s = L;
-		if (L)   // Èç¹û²»Îª¿Õ 
+		if (L)   // å¦‚æœä¸ä¸ºç©º 
 			L = L->Next;
 		else
 			return NULL;
-		free(s);   // ÊÍ·Å±»É¾³ı½áµã 
+		free(s);   // é‡Šæ”¾è¢«åˆ é™¤ç»“ç‚¹ 
 		return L;
 	}
-	p = FindKth(i - 1, L);    // ²éÕÒµÚ i-1 ¸ö½áµã
-	if (!p || !(p->Next)) {     // µÚ i-1 ¸ö»òµÚ i ¸ö½áµã²»´æÔÚ 
-		cout << "½áµã´íÎó" << endl;
+	p = FindKth(i - 1, L);    // æŸ¥æ‰¾ç¬¬ i-1 ä¸ªç»“ç‚¹
+	if (!p || !(p->Next)) {     // ç¬¬ i-1 ä¸ªæˆ–ç¬¬ i ä¸ªç»“ç‚¹ä¸å­˜åœ¨ 
+		cout << "ç»“ç‚¹é”™è¯¯" << endl;
 		return NULL;
 	}
 	else {
-		s = p->Next;    // s Ö¸ÏòµÚ i ¸ö½áµã 
-		p->Next = s->Next;  //´ÓÁ´±íÉ¾³ı 
-		free(s);  // ÊÍ·Å±»É¾³ı½áµã 
+		s = p->Next;    // s æŒ‡å‘ç¬¬ i ä¸ªç»“ç‚¹ 
+		p->Next = s->Next;  //ä»é“¾è¡¨åˆ é™¤ 
+		free(s);  // é‡Šæ”¾è¢«åˆ é™¤ç»“ç‚¹ 
 		return L;
 	}
 }
 
-// Êä³öÁ´±íÔªËØ 
+// è¾“å‡ºé“¾è¡¨å…ƒç´  
 void Print(List L) 
 {
 	List t;
 	int flag = 1;
-	cout << "µ±Ç°Á´±íÎª£º";
+	cout << "å½“å‰é“¾è¡¨ä¸ºï¼š";
 	for (t = L; t; t = t->Next) 
 	{
 		cout << t->Data << " ";
@@ -147,24 +147,24 @@ int main()
 	L = Insert(77, 3, L);
 	Print(L);
 
-	cout << "µ±Ç°Á´±í³¤¶ÈÎª£º" << Length(L) << endl;
+	cout << "å½“å‰é“¾è¡¨é•¿åº¦ä¸ºï¼š" << Length(L) << endl;
 
-	cout << "´ËÊ±Á´±íÖĞµÚ¶ş¸ö½áµãµÄÖµÊÇ£º" << FindKth(2, L)->Data << endl;
-	cout << "²éÕÒ22ÊÇ·ñÔÚ¸ÃÁ´±íÖĞ£º";
+	cout << "æ­¤æ—¶é“¾è¡¨ä¸­ç¬¬äºŒä¸ªç»“ç‚¹çš„å€¼æ˜¯ï¼š" << FindKth(2, L)->Data << endl;
+	cout << "æŸ¥æ‰¾22æ˜¯å¦åœ¨è¯¥é“¾è¡¨ä¸­ï¼š";
 	if (Find(22, L))
-		cout << "ÊÇ£¡" << endl;
+		cout << "æ˜¯ï¼" << endl;
 	else
-		cout << "·ñ£¡" << endl;
-	cout << "²éÕÒ33ÊÇ·ñÔÚ¸ÃÁ´±íÖĞ£º";
+		cout << "å¦ï¼" << endl;
+	cout << "æŸ¥æ‰¾33æ˜¯å¦åœ¨è¯¥é“¾è¡¨ä¸­ï¼š";
 	if (Find(33, L))
-		cout << "ÊÇ£¡" << endl;
+		cout << "æ˜¯ï¼" << endl;
 	else
-		cout << "·ñ£¡" << endl;
+		cout << "å¦ï¼" << endl;
 
 	L = Delete(1, L);
-	cout << "É¾³ıÁ´±íÖĞÏÂ±êÎª1µÄÔªËØ" << endl;
+	cout << "åˆ é™¤é“¾è¡¨ä¸­ä¸‹æ ‡ä¸º1çš„å…ƒç´ " << endl;
 	L = Delete(3, L);
-	cout << "É¾³ıÁ´±íÖĞÏÂ±êÎª3µÄÔªËØ" << endl;
+	cout << "åˆ é™¤é“¾è¡¨ä¸­ä¸‹æ ‡ä¸º3çš„å…ƒç´ " << endl;
 	Print(L);
 
 	system("pause");

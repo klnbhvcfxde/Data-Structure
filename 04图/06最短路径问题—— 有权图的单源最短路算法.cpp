@@ -1,46 +1,46 @@
 #include<iostream>
 using namespace std;
 
-/* ÁÚ½Ó¾ØÕó´¢´æ¡ª¡ªÓĞÈ¨Í¼µÄµ¥Ô´×î¶ÌÂ·Ëã·¨ */
+/* é‚»æ¥çŸ©é˜µå‚¨å­˜â€”â€”æœ‰æƒå›¾çš„å•æºæœ€çŸ­è·¯ç®—æ³• */
 
 #define ERROR 0        
-#define INFINITY 65535   // ¡ŞÉèÎªË«×Ö½ÚÎŞ·ûºÅÕûÊıµÄ×î´óÖµ65535      
-#define MaxVertexNum 100   //×î´ó¶¥µãÊıÉèÎª100     
-typedef int Vertex;   //ÓÃ¶¥µãÏÂ±ê±íÊ¾¶¥µã,ÎªÕûĞÍ
-typedef int WeightType;   //±ßµÄÈ¨ÖµÉèÎªÕûĞÍ
+#define INFINITY 65535   // âˆè®¾ä¸ºåŒå­—èŠ‚æ— ç¬¦å·æ•´æ•°çš„æœ€å¤§å€¼65535      
+#define MaxVertexNum 100   //æœ€å¤§é¡¶ç‚¹æ•°è®¾ä¸º100     
+typedef int Vertex;   //ç”¨é¡¶ç‚¹ä¸‹æ ‡è¡¨ç¤ºé¡¶ç‚¹,ä¸ºæ•´å‹
+typedef int WeightType;   //è¾¹çš„æƒå€¼è®¾ä¸ºæ•´å‹
 
 int Visited[MaxVertexNum];
 int dist[MaxVertexNum];
 int path[MaxVertexNum];
 
-// ±ßµÄ¶¨Òå
+// è¾¹çš„å®šä¹‰
 typedef struct ENode *PtrToENode;
 struct ENode {
-	Vertex V1, V2;   // ÓĞÏò±ß<V1, V2>
-	WeightType Weight;  // È¨ÖØ
+	Vertex V1, V2;   // æœ‰å‘è¾¹<V1, V2>
+	WeightType Weight;  // æƒé‡
 };
 typedef PtrToENode Edge;
 
-// Í¼½áµãµÄ¶¨Òå
+// å›¾ç»“ç‚¹çš„å®šä¹‰
 typedef struct GNode *PtrToGNode;
 struct GNode {
-	int Nv;  // ¶¥µãÊı
-	int Ne;  // ±ßÊı
-	WeightType G[MaxVertexNum][MaxVertexNum];  // ÁÚ½Ó¾ØÕó
+	int Nv;  // é¡¶ç‚¹æ•°
+	int Ne;  // è¾¹æ•°
+	WeightType G[MaxVertexNum][MaxVertexNum];  // é‚»æ¥çŸ©é˜µ
 };
-typedef PtrToGNode MGraph; // ÒÔÁÚ½Ó¾ØÕó´æ´¢µÄÍ¼ÀàĞÍ
+typedef PtrToGNode MGraph; // ä»¥é‚»æ¥çŸ©é˜µå­˜å‚¨çš„å›¾ç±»å‹
 
-// ³õÊ¼»¯Ò»¸öÓĞVertexNum¸ö¶¥µãµ«Ã»ÓĞ±ßµÄÍ¼
+// åˆå§‹åŒ–ä¸€ä¸ªæœ‰VertexNumä¸ªé¡¶ç‚¹ä½†æ²¡æœ‰è¾¹çš„å›¾
 MGraph CreateGraph(int VertexNum)
 {
 	Vertex V, W;
 	MGraph Graph;
 
-	Graph = (MGraph)malloc(sizeof(struct GNode));  // ½¨Á¢Í¼
+	Graph = (MGraph)malloc(sizeof(struct GNode));  // å»ºç«‹å›¾
 	Graph->Nv = VertexNum;
 	Graph->Ne = 0;
-	/* ³õÊ¼»¯ÁÚ½Ó¾ØÕó */
-	/* ×¢Òâ£ºÕâÀïÄ¬ÈÏ¶¥µã±àºÅ´Ó0¿ªÊ¼£¬µ½(Graph->Nv - 1) */
+	/* åˆå§‹åŒ–é‚»æ¥çŸ©é˜µ */
+	/* æ³¨æ„ï¼šè¿™é‡Œé»˜è®¤é¡¶ç‚¹ç¼–å·ä»0å¼€å§‹ï¼Œåˆ°(Graph->Nv - 1) */
 	for (V = 0; V <= Graph->Nv; V++)
 		for (W = 0; W <= Graph->Nv; W++)
 			Graph->G[V][W] = INFINITY;
@@ -50,13 +50,13 @@ MGraph CreateGraph(int VertexNum)
 
 void InsertEdge(MGraph Graph, Edge E)
 {
-	/* ²åÈë±ß <V1, V2> */
+	/* æ’å…¥è¾¹ <V1, V2> */
 	Graph->G[E->V1][E->V2] = E->Weight;
-	/* ÈôÊÇÎŞÏòÍ¼£¬»¹Òª²åÈë±ß<V2, V1> */
+	/* è‹¥æ˜¯æ— å‘å›¾ï¼Œè¿˜è¦æ’å…¥è¾¹<V2, V1> */
 	//Graph->G[E->V2][E->V1] = 1;    
 }
 
-// ½¨Í¼ 
+// å»ºå›¾ 
 MGraph BuildGraph() 
 {
 	MGraph Graph;
@@ -64,16 +64,16 @@ MGraph BuildGraph()
 	Vertex V;
 	int Nv, i;
 
-	cin >> Nv;   // ¶ÁÈë¶¥µãÊı 
-	Graph = CreateGraph(Nv);  // ³õÊ¼»¯ÓĞNv¸ö¶¥µãµ«Ã»ÓĞ±ßµÄÍ¼
+	cin >> Nv;   // è¯»å…¥é¡¶ç‚¹æ•° 
+	Graph = CreateGraph(Nv);  // åˆå§‹åŒ–æœ‰Nvä¸ªé¡¶ç‚¹ä½†æ²¡æœ‰è¾¹çš„å›¾
 
-	cin >>(Graph->Ne);  // ¶ÁÈë±ßÊı 
-	if (Graph->Ne != 0)  // Èç¹ûÓĞ±ß
+	cin >>(Graph->Ne);  // è¯»å…¥è¾¹æ•° 
+	if (Graph->Ne != 0)  // å¦‚æœæœ‰è¾¹
 	{
-		E = (Edge)malloc(sizeof(struct ENode));  // ½¨Á¢±ß½áµã
+		E = (Edge)malloc(sizeof(struct ENode));  // å»ºç«‹è¾¹ç»“ç‚¹
 		for (i = 0; i < Graph->Ne; i++) 
 		{
-			cin >> E->V1 >> E->V2 >> E->Weight;// ¶ÁÈë±ß£¬¸ñÊ½Îª"Æğµã ÖÕµã È¨ÖØ"£¬²åÈëÁÚ½Ó¾ØÕó 
+			cin >> E->V1 >> E->V2 >> E->Weight;// è¯»å…¥è¾¹ï¼Œæ ¼å¼ä¸º"èµ·ç‚¹ ç»ˆç‚¹ æƒé‡"ï¼Œæ’å…¥é‚»æ¥çŸ©é˜µ 
 			InsertEdge(Graph, E);
 		}
 	}
@@ -81,15 +81,15 @@ MGraph BuildGraph()
 	return Graph;
 }
 
-/* IsEdge(Graph, V, W)¼ì²é<V, W>ÊÇ·ñÍ¼GraphÖĞµÄÒ»Ìõ±ß£¬¼´WÊÇ·ñVµÄÁÚ½Óµã¡£  */
-/* ´Ëº¯Êı¸ù¾İÍ¼µÄ²»Í¬ÀàĞÍÒª×ö²»Í¬µÄÊµÏÖ£¬¹Ø¼üÈ¡¾öÓÚ¶Ô²»´æÔÚµÄ±ßµÄ±íÊ¾·½·¨¡£*/
-/* ÀıÈç¶ÔÓĞÈ¨Í¼, Èç¹û²»´æÔÚµÄ±ß±»³õÊ¼»¯ÎªINFINITY, Ôòº¯ÊıÊµÏÖÈçÏÂ:         */
+/* IsEdge(Graph, V, W)æ£€æŸ¥<V, W>æ˜¯å¦å›¾Graphä¸­çš„ä¸€æ¡è¾¹ï¼Œå³Wæ˜¯å¦Vçš„é‚»æ¥ç‚¹ã€‚  */
+/* æ­¤å‡½æ•°æ ¹æ®å›¾çš„ä¸åŒç±»å‹è¦åšä¸åŒçš„å®ç°ï¼Œå…³é”®å–å†³äºå¯¹ä¸å­˜åœ¨çš„è¾¹çš„è¡¨ç¤ºæ–¹æ³•ã€‚*/
+/* ä¾‹å¦‚å¯¹æœ‰æƒå›¾, å¦‚æœä¸å­˜åœ¨çš„è¾¹è¢«åˆå§‹åŒ–ä¸ºINFINITY, åˆ™å‡½æ•°å®ç°å¦‚ä¸‹:         */
 bool IsEdge(MGraph Graph, Vertex V, Vertex W)
 {
 	return Graph->G[V][W] < INFINITY ? true : false;
 }
 
-// ·µ»ØÎ´±»ÊÕÂ¼¶¥µãÖĞµÄ×îĞ¡distÕß
+// è¿”å›æœªè¢«æ”¶å½•é¡¶ç‚¹ä¸­çš„æœ€å°distè€…
 Vertex FindMinDist(MGraph Graph) 
 {
 	Vertex MinV, V;
@@ -97,23 +97,23 @@ Vertex FindMinDist(MGraph Graph)
 
 	for (V = 1; V <= Graph->Nv; V++) 
 	{
-		if (Visited[V] == false && dist[V] < MinDist)  // ÈôVÎ´±»ÊÕÂ¼£¬ÇÒdist[V]¸üĞ¡ 
+		if (Visited[V] == false && dist[V] < MinDist)  // è‹¥Væœªè¢«æ”¶å½•ï¼Œä¸”dist[V]æ›´å° 
 		{
-			MinDist = dist[V];  // ¸üĞÂ×îĞ¡¾àÀë
-			MinV = V;  // ¸üĞÂ×îĞ¡¶¥µã
+			MinDist = dist[V];  // æ›´æ–°æœ€å°è·ç¦»
+			MinV = V;  // æ›´æ–°æœ€å°é¡¶ç‚¹
 		}
 	}
-	if (MinDist < INFINITY)  // ÈôÕÒµ½×îĞ¡dist
-		return MinV;  // ·µ»Ø¶ÔÓ¦µÄ¶¥µãÏÂ±ê
-	else return ERROR;  // ÈôÕâÑùµÄ¶¥µã²»´æÔÚ£¬·µ»Ø´íÎó±ê¼Ç
+	if (MinDist < INFINITY)  // è‹¥æ‰¾åˆ°æœ€å°dist
+		return MinV;  // è¿”å›å¯¹åº”çš„é¡¶ç‚¹ä¸‹æ ‡
+	else return ERROR;  // è‹¥è¿™æ ·çš„é¡¶ç‚¹ä¸å­˜åœ¨ï¼Œè¿”å›é”™è¯¯æ ‡è®°
 }
 
-// ÒÔSÎª³ö·¢µã¶ÔÁÚ½Ó¾ØÕó´æ´¢µÄÍ¼Graph½øĞĞBFSËÑË÷
+// ä»¥Sä¸ºå‡ºå‘ç‚¹å¯¹é‚»æ¥çŸ©é˜µå­˜å‚¨çš„å›¾Graphè¿›è¡ŒBFSæœç´¢
 bool Dijkstra(MGraph Graph, Vertex S)
 {
 	Vertex V, W;
 
-	// ³õÊ¼»¯£º´Ë´¦Ä¬ÈÏÁÚ½Ó¾ØÕóÖĞ²»´æÔÚµÄ±ßÓÃINFINITY±íÊ¾
+	// åˆå§‹åŒ–ï¼šæ­¤å¤„é»˜è®¤é‚»æ¥çŸ©é˜µä¸­ä¸å­˜åœ¨çš„è¾¹ç”¨INFINITYè¡¨ç¤º
 	for (V = 1; V <= Graph->Nv; V++) 
 	{
 		dist[V] = Graph->G[S][V];
@@ -123,31 +123,31 @@ bool Dijkstra(MGraph Graph, Vertex S)
 			path[V] = -1;
 		Visited[V] = false;
 	}
-	// ÏÈ½«ÆğµãÊÕÈë¼¯ºÏ
+	// å…ˆå°†èµ·ç‚¹æ”¶å…¥é›†åˆ
 	dist[S] = 0;
 	Visited[S] = true;
 
 	while (1)
 	{
-		// ÕÒµ½Î´±»ÊÕÈë¶¥µãÖĞdist×îĞ¡Õß
+		// æ‰¾åˆ°æœªè¢«æ”¶å…¥é¡¶ç‚¹ä¸­distæœ€å°è€…
 		V = FindMinDist(Graph);
-		if (V == ERROR)  // ÈôÕâÑùµÄV²»´æÔÚ
-			break;  //Ëã·¨½áÊø  
-		Visited[V] = true;  //ÊÕÂ¼V  
+		if (V == ERROR)  // è‹¥è¿™æ ·çš„Vä¸å­˜åœ¨
+			break;  //ç®—æ³•ç»“æŸ  
+		Visited[V] = true;  //æ”¶å½•V  
 
-		for (W = 1; W <= Graph->Nv; W++)  //¶ÔÍ¼ÖĞÃ¿¸ö¶¥µãW  
-			if (Visited[W] == false && Graph->G[V][W] < INFINITY)  //ÈôWÎ´±»ÊÕÂ¼²¢ÇÒÊÇVµÄÁÚ½Óµã
+		for (W = 1; W <= Graph->Nv; W++)  //å¯¹å›¾ä¸­æ¯ä¸ªé¡¶ç‚¹W  
+			if (Visited[W] == false && Graph->G[V][W] < INFINITY)  //è‹¥Wæœªè¢«æ”¶å½•å¹¶ä¸”æ˜¯Vçš„é‚»æ¥ç‚¹
 			{  
-				if (Graph->G[V][W] < 0)  //ÈôÓĞ¸º±ß  
-					return false;  //²»ÄÜÕıÈ·½â¾ö£¬·µ»Ø´íÎó±ê¼Ç  
-				if (dist[V] + Graph->G[V][W] < dist[W])  //ÈôÊÕÂ¼VÊ¹µÃdist[W]±äĞ¡  
+				if (Graph->G[V][W] < 0)  //è‹¥æœ‰è´Ÿè¾¹  
+					return false;  //ä¸èƒ½æ­£ç¡®è§£å†³ï¼Œè¿”å›é”™è¯¯æ ‡è®°  
+				if (dist[V] + Graph->G[V][W] < dist[W])  //è‹¥æ”¶å½•Vä½¿å¾—dist[W]å˜å°  
 				{
-					dist[W] = dist[V] + Graph->G[V][W];  //¸üĞÂdist[W]  
-					path[W] = V;  //¸üĞÂSµ½WµÄÂ·¾¶  
+					dist[W] = dist[V] + Graph->G[V][W];  //æ›´æ–°dist[W]  
+					path[W] = V;  //æ›´æ–°Såˆ°Wçš„è·¯å¾„  
 				}
 			}
-	}/*while½áÊø*/
-	return true;  //Ëã·¨Ö´ĞĞÍê±Ï£¬·µ»ØÕıÈ·±ê¼Ç
+	}/*whileç»“æŸ*/
+	return true;  //ç®—æ³•æ‰§è¡Œå®Œæ¯•ï¼Œè¿”å›æ­£ç¡®æ ‡è®°
 }
 
 int main() 
@@ -163,7 +163,7 @@ int main()
 	Dijkstra(Graph, 1);
 	for (int i = 1; i <= Graph->Nv; i++) 
 	{
-		cout << "µã " << i << " µ½Ô´µã 1 µÄ×î¶Ì¾àÀëÊÇ£º" << dist[i] << "  ÉÏÒ»²½½áµãÊÇ£º" << path[i] << endl;
+		cout << "ç‚¹ " << i << " åˆ°æºç‚¹ 1 çš„æœ€çŸ­è·ç¦»æ˜¯ï¼š" << dist[i] << "  ä¸Šä¸€æ­¥ç»“ç‚¹æ˜¯ï¼š" << path[i] << endl;
 	}
 	system("pause");
 	return 0;

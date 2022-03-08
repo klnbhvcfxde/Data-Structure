@@ -5,19 +5,19 @@ using namespace std;
 #define ElementType char
 #define Tree int
 struct TreeNode {
-	ElementType data;    // ´æÖµ 
-	Tree left;   // ×ó×ÓÊ÷µÄÏÂ±ê 
-	Tree right;  // ÓÒ×ÓÊ÷µÄÏÂ±ê 
+	ElementType data;    // å­˜å€¼ 
+	Tree left;   // å·¦å­æ ‘çš„ä¸‹æ ‡ 
+	Tree right;  // å³å­æ ‘çš„ä¸‹æ ‡ 
 }T1[MaxTree], T2[MaxTree];
 
-// ½¨¶ş²æÊ÷£¬·µ»Ø¸ù½áµã £¨¸ù½Úµã±àºÅÎ´³öÏÖÔÚÆäËû½áµã±àºÅµÄºóÃæ£¬´´½¨Ò»¸öcheckÊı×éÀ´È·¶¨£©
+// å»ºäºŒå‰æ ‘ï¼Œè¿”å›æ ¹ç»“ç‚¹ ï¼ˆæ ¹èŠ‚ç‚¹ç¼–å·æœªå‡ºç°åœ¨å…¶ä»–ç»“ç‚¹ç¼–å·çš„åé¢ï¼Œåˆ›å»ºä¸€ä¸ªcheckæ•°ç»„æ¥ç¡®å®šï¼‰
 Tree BuildTree(struct TreeNode T[])
 {
 	int i;
 	int n;
-	int check[MaxTree];  //´´½¨Ò»¸öcheckÊı×éÀ´È·¶¨¸ù½Úµã£¬ÈôÔÚ¾²Ì¬Á´±íÖĞÎ´³öÏÖµÄÏÂ±êÔòÎª¸ù½Úµã
+	int check[MaxTree];  //åˆ›å»ºä¸€ä¸ªcheckæ•°ç»„æ¥ç¡®å®šæ ¹èŠ‚ç‚¹ï¼Œè‹¥åœ¨é™æ€é“¾è¡¨ä¸­æœªå‡ºç°çš„ä¸‹æ ‡åˆ™ä¸ºæ ¹èŠ‚ç‚¹
 	char left, right;
-	Tree root = Null;   //ÈônÎª0£¬·µ»ØNull
+	Tree root = Null;   //è‹¥nä¸º0ï¼Œè¿”å›Null
 
 	cin >> n;
 	if (n)
@@ -31,8 +31,8 @@ Tree BuildTree(struct TreeNode T[])
 			cin >> T[i].data >> left >> right;
 			if (left != '-')
 			{
-				T[i].left = left - '0';   //ÈôÊäÈë²»Îª'-',ÄÇ×Ö·û¼õÈ¥×Ö·û0×ª»»ÎªÕûĞÍÊıÖµ
-				check[T[i].left] = 1; //°ÑÔÚ¾²Ì¬Á´±íÖĞ³öÏÖ¹ıµÄÊıÖµ±ê¼ÇÎª1
+				T[i].left = left - '0';   //è‹¥è¾“å…¥ä¸ä¸º'-',é‚£å­—ç¬¦å‡å»å­—ç¬¦0è½¬æ¢ä¸ºæ•´å‹æ•°å€¼
+				check[T[i].left] = 1; //æŠŠåœ¨é™æ€é“¾è¡¨ä¸­å‡ºç°è¿‡çš„æ•°å€¼æ ‡è®°ä¸º1
 			}
 			else if (left == '-')
 				T[i].left = Null;
@@ -56,22 +56,22 @@ Tree BuildTree(struct TreeNode T[])
 	return root;
 }
 
-// ÅĞ¶ÏÊÇ·ñÍ¬¹¹
+// åˆ¤æ–­æ˜¯å¦åŒæ„
 bool Isomorphic(int R1, int R2)
 {
-	if (R1 == Null && R2 == Null)   // ¶¼Îª¿Õ 
+	if (R1 == Null && R2 == Null)   // éƒ½ä¸ºç©º 
 		return true;
-	if (R1 == Null && R2 != Null || R1 != Null && R2 == Null)    // Ò»¸öÎª¿Õ£¬Ò»¸ö²»Îª¿Õ
+	if (R1 == Null && R2 != Null || R1 != Null && R2 == Null)    // ä¸€ä¸ªä¸ºç©ºï¼Œä¸€ä¸ªä¸ä¸ºç©º
 		return false;
-	if (T1[R1].data != T2[R2].data)   // Öµ²»Í¬
+	if (T1[R1].data != T2[R2].data)   // å€¼ä¸åŒ
 		return false;
-	if ((T1[R1].left == Null) && (T2[R2].left == Null))  //×ó¶ù×Ó¾ùÎª¿Õ
+	if ((T1[R1].left == Null) && (T2[R2].left == Null))  //å·¦å„¿å­å‡ä¸ºç©º
 	{
 		return Isomorphic(T1[R1].right, T2[R2].right);
 	}
-	if ((T1[R1].left != Null && T2[R2].left != Null) && (T1[T1[R1].left].data == T2[T2[R2].left].data))  // ×ó¶ù×Ó²»Îª¿ÕÇÒÖµÏàµÈ
+	if ((T1[R1].left != Null && T2[R2].left != Null) && (T1[T1[R1].left].data == T2[T2[R2].left].data))  // å·¦å„¿å­ä¸ä¸ºç©ºä¸”å€¼ç›¸ç­‰
 		return Isomorphic(T1[R1].left, T2[R2].left) && Isomorphic(T1[R1].right, T2[R2].right);
-	else   // ×ó¶ù×Ó²»Îª¿ÕÇÒÖµ²»µÈ  »òÕß Ä³Ò»¸ö×ó¶ù×ÓÎª¿Õ£¨ÓĞ¿ÉÄÜ×ó±ßºÍÓÒ±ßÍ¬¹¹£¬ÓÒ±ßºÍ×ó±ßÍ¬¹¹£©
+	else   // å·¦å„¿å­ä¸ä¸ºç©ºä¸”å€¼ä¸ç­‰  æˆ–è€… æŸä¸€ä¸ªå·¦å„¿å­ä¸ºç©ºï¼ˆæœ‰å¯èƒ½å·¦è¾¹å’Œå³è¾¹åŒæ„ï¼Œå³è¾¹å’Œå·¦è¾¹åŒæ„ï¼‰
 		return Isomorphic(T1[R1].right, T2[R2].left) && Isomorphic(T1[R1].left, T2[R2].right);
 }
 

@@ -6,26 +6,26 @@ using namespace std;
 typedef int Vertex;
 typedef int WeightType;
 
-// ±ßµÄ¶¨Òå
+// è¾¹çš„å®šä¹‰
 typedef struct ENode *PtrToENode;
 struct ENode
 {
-	Vertex V1, V2;  //ÓĞÏò±ß<v1,v2>
-	WeightType Weight;  //È¨ÖØ
+	Vertex V1, V2;  //æœ‰å‘è¾¹<v1,v2>
+	WeightType Weight;  //æƒé‡
 };
 typedef PtrToENode Edge;
 
-// Í¼½áµãµÄ¶¨Òå
+// å›¾ç»“ç‚¹çš„å®šä¹‰
 typedef struct GNode *PtrToGNode;
 struct GNode
 {
-	int Nv;  //¶¥µãÊı
-	int Ne;  //±ßÊı
-	WeightType G[MaxVertexNum][MaxVertexNum];  //ÁÚ½Ó¾ØÕó
+	int Nv;  //é¡¶ç‚¹æ•°
+	int Ne;  //è¾¹æ•°
+	WeightType G[MaxVertexNum][MaxVertexNum];  //é‚»æ¥çŸ©é˜µ
 };
-typedef PtrToGNode MGraph;  //ÒÔÁÚ½Ó¾ØÕó´æ´¢µÄÍ¼ÀàĞÍ
+typedef PtrToGNode MGraph;  //ä»¥é‚»æ¥çŸ©é˜µå­˜å‚¨çš„å›¾ç±»å‹
 
-// ³õÊ¼»¯Ò»¸öÓĞVertexNum¸ö¶¥µãµ«Ã»ÓĞ±ßµÄÍ¼
+// åˆå§‹åŒ–ä¸€ä¸ªæœ‰VertexNumä¸ªé¡¶ç‚¹ä½†æ²¡æœ‰è¾¹çš„å›¾
 MGraph CreateGraph(int VertexNum)
 {
 	Vertex V, W;
@@ -42,14 +42,14 @@ MGraph CreateGraph(int VertexNum)
 	return Graph;
 }
 
-//²åÈë±ß
+//æ’å…¥è¾¹
 void InsertEdge(MGraph Graph, Edge E)
 {
 	Graph->G[E->V1][E->V2] = E->Weight;
 	Graph->G[E->V2][E->V1] = E->Weight;
 }
 
-//½¨Í¼
+//å»ºå›¾
 MGraph BuildGraph()
 {
 	MGraph Graph;
@@ -65,7 +65,7 @@ MGraph BuildGraph()
 		for (i = 0; i < Graph->Ne; i++)
 		{
 			cin >> E->V1 >> E->V2 >> E->Weight;
-			E->V1--;  //ÆğÊ¼±àºÅ´Ó0¿ªÊ¼
+			E->V1--;  //èµ·å§‹ç¼–å·ä»0å¼€å§‹
 			E->V2--;
 			InsertEdge(Graph, E);
 		}
@@ -105,7 +105,7 @@ WeightType FindMaxDist(WeightType D[][MaxVertexNum], Vertex i, int N)
 	Vertex j;
 
 	MaxDist = 0;
-	for (j = 0; j < N; j++)  //ÕÒ³öiµ½ÆäËû¶¯ÎïjµÄ×î³¤¾àÀë
+	for (j = 0; j < N; j++)  //æ‰¾å‡ºiåˆ°å…¶ä»–åŠ¨ç‰©jçš„æœ€é•¿è·ç¦»
 	{
 		if (i != j && D[i][j] > MaxDist)
 			MaxDist = D[i][j];
@@ -124,14 +124,14 @@ void FindAnimal(MGraph Graph)
 	for (i = 0; i < Graph->Nv; i++)
 	{
 		MaxDist = FindMaxDist(D, i, Graph->Nv);
-		if (MaxDist == 65535)  //ËµÃ÷´ÓiÎŞ·¨±ä³öµÄ¶¯Îï
+		if (MaxDist == 65535)  //è¯´æ˜ä»iæ— æ³•å˜å‡ºçš„åŠ¨ç‰©
 		{
 			cout << "0" << endl;
 			return;
 		}
-		if (MinDist > MaxDist)  //ÕÒµ½×î³¤¾àÀë¸üĞ¡µÄ¶¯Îï
+		if (MinDist > MaxDist)  //æ‰¾åˆ°æœ€é•¿è·ç¦»æ›´å°çš„åŠ¨ç‰©
 		{
-			MinDist = MaxDist;  //¸üĞÂ¾àÀë£¬¼ÇÂ¼±àºÅ
+			MinDist = MaxDist;  //æ›´æ–°è·ç¦»ï¼Œè®°å½•ç¼–å·
 			Animal = i + 1;
 		}
 

@@ -6,28 +6,28 @@ using namespace std;
 #define MaxVertex 105
 typedef int Vertex;
 int G[MaxVertex][MaxVertex];
-int parent[MaxVertex];   // ²¢²é¼¯ 
-int dist[MaxVertex]; // ¾àÀë 
-int Nv;    // ½áµã 
-int Ne;    // ±ß 
-int sum;  // È¨ÖØºÍ 
-queue<Vertex> MST;  // ×îĞ¡Éú³ÉÊ÷
+int parent[MaxVertex];   // å¹¶æŸ¥é›†
+int dist[MaxVertex]; // è·ç¦»
+int Nv;    // ç»“ç‚¹
+int Ne;    // è¾¹
+int sum;  // æƒé‡å’Œ
+queue<Vertex> MST;  // æœ€å°ç”Ÿæˆæ ‘
 
-// ³õÊ¼»¯Í¼ĞÅÏ¢ 
-void BuildGraph() 
+// åˆå§‹åŒ–å›¾ä¿¡æ¯
+void BuildGraph()
 {
 	Vertex v1, v2;
 	int w;
 	cin >> Nv >> Ne;
-	for (int i = 1; i <= Nv; i++) 
+	for (int i = 1; i <= Nv; i++)
 	{
 		for (int j = 1; j <= Nv; j++)
-			G[i][j] = 0;  // ³õÊ¼»¯Í¼ 
-		dist[i] = INF;   // ³õÊ¼»¯¾àÀë
-		parent[i] = -1;  // ³õÊ¼»¯²¢²é¼¯ 
+			G[i][j] = 0;  // åˆå§‹åŒ–å›¾
+		dist[i] = INF;   // åˆå§‹åŒ–è·ç¦»
+		parent[i] = -1;  // åˆå§‹åŒ–å¹¶æŸ¥é›†
 	}
-	// ³õÊ¼»¯µã
-	for (int i = 0; i < Ne; i++) 
+	// åˆå§‹åŒ–ç‚¹
+	for (int i = 0; i < Ne; i++)
 	{
 		cin >> v1 >> v2 >> w;
 		G[v1][v2] = w;
@@ -35,8 +35,8 @@ void BuildGraph()
 	}
 }
 
-// PrimËã·¨Ç°µÄ³õÊ¼»¯ 
-void IniPrim(Vertex s) 
+// Primç®—æ³•å‰çš„åˆå§‹åŒ–
+void IniPrim(Vertex s)
 {
 	dist[s] = 0;
 	MST.push(s);
@@ -47,7 +47,7 @@ void IniPrim(Vertex s)
 		}
 }
 
-// ²éÕÒÎ´ÊÕÂ¼ÖĞdist×îĞ¡µÄµã 
+// æŸ¥æ‰¾æœªæ”¶å½•ä¸­distæœ€å°çš„ç‚¹
 Vertex FindMin()
 {
 	int min = INF;
@@ -61,10 +61,10 @@ Vertex FindMin()
 	return xb;
 }
 
-void Prim(Vertex s) 
+void Prim(Vertex s)
 {
 	IniPrim(s);
-	while (1) 
+	while (1)
 	{
 		Vertex v = FindMin();
 		if (v == -1)
@@ -74,7 +74,7 @@ void Prim(Vertex s)
 		MST.push(v);
 		for (Vertex w = 1; w <= Nv; w++)
 			if (G[v][w] && dist[w])
-				if (G[v][w] < dist[w]) 
+				if (G[v][w] < dist[w])
 				{
 					dist[w] = G[v][w];
 					parent[w] = v;
@@ -84,18 +84,18 @@ void Prim(Vertex s)
 
 void Print()
 {
-	cout << "±»ÊÕÂ¼Ë³Ğò£º" << endl;
+	cout << "è¢«æ”¶å½•é¡ºåºï¼š" << endl;
 	while (!MST.empty())
 	{
 		cout << MST.front() << " ";
 		MST.pop();
 	}
 	cout << endl;
-	cout << "È¨ÖØºÍÎª£º" << endl;
+	cout << "æƒé‡å’Œä¸ºï¼š" << endl;
 	cout << sum << endl;
 }
 
-int main() 
+int main()
 {
 	BuildGraph();
 	Prim(1);

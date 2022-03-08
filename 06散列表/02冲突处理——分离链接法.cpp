@@ -1,43 +1,43 @@
 #include<iostream>
 using namespace std;
 
-#define MAXTABLESIZE 100000   // ÔÊĞí¿ª±ÙµÄ×î´óÉ¢ÁĞ±í³¤¶È
-typedef int Index;  // É¢ÁĞµØÖ·ÀàĞÍ
-typedef int ElementType;  // ¹Ø¼ü´ÊÀàĞÍÓÃÕûĞÍ
+#define MAXTABLESIZE 100000   // å…è®¸å¼€è¾Ÿçš„æœ€å¤§æ•£åˆ—è¡¨é•¿åº¦
+typedef int Index;  // æ•£åˆ—åœ°å€ç±»å‹
+typedef int ElementType;  // å…³é”®è¯ç±»å‹ç”¨æ•´å‹
 
-// µ¥Á´±íµÄ¶¨Òå
+// å•é“¾è¡¨çš„å®šä¹‰
 typedef struct LNode *PtrToLNode;
-struct LNode {   // µ¥Á´±í 
+struct LNode {   // å•é“¾è¡¨ 
 	ElementType Data;
 	PtrToLNode Next;
 };
 typedef PtrToLNode Position;
 typedef PtrToLNode List;
 
-typedef struct TblNode *HashTable;  // É¢ÁĞ±í
-struct TblNode {  // É¢ÁĞ±í½áµã¶¨Òå
-	int TableSize;   // ±íµÄ×î´ó³¤¶È 
-	List Heads;  // Ö¸ÏòÁ´±íÍ·½áµãµÄÊı×é 
+typedef struct TblNode *HashTable;  // æ•£åˆ—è¡¨
+struct TblNode {  // æ•£åˆ—è¡¨ç»“ç‚¹å®šä¹‰
+	int TableSize;   // è¡¨çš„æœ€å¤§é•¿åº¦ 
+	List Heads;  // æŒ‡å‘é“¾è¡¨å¤´ç»“ç‚¹çš„æ•°ç»„ 
 };
 
-// ²éÕÒËØÊı 
+// æŸ¥æ‰¾ç´ æ•° 
 int NextPrime(int N) 
 {
-	int p = (N % 2) ? (N + 2) : (N + 1);   // ±È tablesize ´óµÄÆæÊı 
+	int p = (N % 2) ? (N + 2) : (N + 1);   // æ¯” tablesize å¤§çš„å¥‡æ•° 
 	int i;
 	while (p <= MAXTABLESIZE) 
 	{
 		for (i = (int)sqrt(p); i > 2; i--)
 			if (!(p%i))
 				break;
-		if (i == 2)  // ÕÒµ½ËØÊıÁË 
+		if (i == 2)  // æ‰¾åˆ°ç´ æ•°äº† 
 			break;
-		p += 2; // ÏÂÒ»¸öÆæÊı
+		p += 2; // ä¸‹ä¸€ä¸ªå¥‡æ•°
 	}
 	return p;
 }
 
-// ´´½¨¹şÏ£±í 
+// åˆ›å»ºå“ˆå¸Œè¡¨ 
 HashTable CreateTable(int TableSize) 
 {
 	HashTable H;
@@ -45,45 +45,45 @@ HashTable CreateTable(int TableSize)
 	H->TableSize = NextPrime(TableSize);
 	H->Heads = (List)malloc(sizeof(struct TblNode) * H->TableSize);
 	for (int i = 0; i < H->TableSize; i++)
-		H->Heads[i].Next = NULL;  // Á´±íÍ·£ºH->Heads[i] ÊÇ²»´æ¶«Î÷µÄ 
+		H->Heads[i].Next = NULL;  // é“¾è¡¨å¤´ï¼šH->Heads[i] æ˜¯ä¸å­˜ä¸œè¥¿çš„ 
 	return H;
 }
 
-// ³ıÁôÓàÊı·¨¹şÏ£º¯Êı 
+// é™¤ç•™ä½™æ•°æ³•å“ˆå¸Œå‡½æ•° 
 Index Hash(int TableSize, ElementType Key) 
 {
 	return  Key % TableSize;
 }
 
-// ²éÕÒ
+// æŸ¥æ‰¾
 Position Find(HashTable H, ElementType Key) 
 {
-	Index pos = Hash(H->TableSize, Key);  // ³õÊ¼É¢ÁĞÎ»ÖÃ
-	Position P = H->Heads[pos].Next;  // ´Ó¸ÃÁ´±íµÄµÚ1¸ö½áµã¿ªÊ¼ 
-	while (P && P->Data != Key)  // µ±Î´µ½±íÎ²£¬²¢ÇÒKeyÎ´ÕÒµ½Ê±
+	Index pos = Hash(H->TableSize, Key);  // åˆå§‹æ•£åˆ—ä½ç½®
+	Position P = H->Heads[pos].Next;  // ä»è¯¥é“¾è¡¨çš„ç¬¬1ä¸ªç»“ç‚¹å¼€å§‹ 
+	while (P && P->Data != Key)  // å½“æœªåˆ°è¡¨å°¾ï¼Œå¹¶ä¸”Keyæœªæ‰¾åˆ°æ—¶
 		P = P->Next;
-	return P;  // ´ËÊ±P»òÕßÖ¸ÏòÕÒµ½µÄ½áµã£¬»òÕßÎªNULL
+	return P;  // æ­¤æ—¶Pæˆ–è€…æŒ‡å‘æ‰¾åˆ°çš„ç»“ç‚¹ï¼Œæˆ–è€…ä¸ºNULL
 }
 
-// ²åÈë
+// æ’å…¥
 bool Insert(HashTable H, ElementType Key) 
 {
 	Position P, NewCell;
 	Index pos;
 
 	P = Find(H, Key);
-	if (!P)  // ¹Ø¼ü´ÊÎ´ÕÒµ½£¬¿ÉÒÔ²åÈë 
+	if (!P)  // å…³é”®è¯æœªæ‰¾åˆ°ï¼Œå¯ä»¥æ’å…¥ 
 	{
 		NewCell = (Position)malloc(sizeof(struct LNode));
 		NewCell->Data = Key;
-		pos = Hash(H->TableSize, Key);   // ³õÊ¼É¢ÁĞ±íµØÖ·
-		NewCell->Next = H->Heads[pos].Next;  // ½«NewCell²åÈëÎªH->Heads[Pos]Á´±íµÄµÚ1¸ö½áµã
+		pos = Hash(H->TableSize, Key);   // åˆå§‹æ•£åˆ—è¡¨åœ°å€
+		NewCell->Next = H->Heads[pos].Next;  // å°†NewCellæ’å…¥ä¸ºH->Heads[Pos]é“¾è¡¨çš„ç¬¬1ä¸ªç»“ç‚¹
 		H->Heads[pos].Next = NewCell;
 		return true;
 	}
-	else  // ¹Ø¼ü´ÊÒÑ´æÔÚ
+	else  // å…³é”®è¯å·²å­˜åœ¨
 	{
-		cout << "¼üÖµÒÑ´æÔÚ" << endl;
+		cout << "é”®å€¼å·²å­˜åœ¨" << endl;
 		return false;
 	}
 }
@@ -106,7 +106,7 @@ void Print(HashTable H)
 void DestroyTable(HashTable H) 
 {
 	Position P, tmp;
-	for (int i = 0; i < H->TableSize; i++)  // ÊÍ·ÅÃ¿¸öÁ´±íµÄ½áµã
+	for (int i = 0; i < H->TableSize; i++)  // é‡Šæ”¾æ¯ä¸ªé“¾è¡¨çš„ç»“ç‚¹
 	{
 		P = H->Heads[i].Next;
 		while (P)
@@ -116,8 +116,8 @@ void DestroyTable(HashTable H)
 			P = tmp;
 		}
 	}
-	free(H->Heads);  // ÊÍ·ÅÍ·½áµãÊı×é
-	free(H);  // ÊÍ·ÅÉ¢ÁĞ±í½áµã
+	free(H->Heads);  // é‡Šæ”¾å¤´ç»“ç‚¹æ•°ç»„
+	free(H);  // é‡Šæ”¾æ•£åˆ—è¡¨ç»“ç‚¹
 }
 
 int main() 

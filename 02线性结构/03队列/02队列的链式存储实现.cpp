@@ -7,17 +7,17 @@ struct Node {
 	struct Node *Next;
 };
 struct QNode {
-	struct Node *rear;    // Ö¸Ïò¶ÓÎ²½áµã 
-	struct Node *front;   // Ö¸Ïò¶ÓÍ·½áµã 
+	struct Node *rear;    // æŒ‡å‘é˜Ÿå°¾ç»“ç‚¹ 
+	struct Node *front;   // æŒ‡å‘é˜Ÿå¤´ç»“ç‚¹ 
 };
 Queue Q;
 
-Queue CreateQueue();  // ³õÊ¼»¯¶ÓÁĞ 
-void AddQ(Queue Q, ElementType item);  //  Èë¶Ó
-ElementType DeleteQ(Queue Q);  // ³ö¶Ó 
-int IsEmpty(Queue Q); // ÅĞ¶Ï¶ÓÁĞÊÇ·ñÎª¿Õ 
+Queue CreateQueue();  // åˆå§‹åŒ–é˜Ÿåˆ— 
+void AddQ(Queue Q, ElementType item);  //  å…¥é˜Ÿ
+ElementType DeleteQ(Queue Q);  // å‡ºé˜Ÿ 
+int IsEmpty(Queue Q); // åˆ¤æ–­é˜Ÿåˆ—æ˜¯å¦ä¸ºç©º 
 
-// ³õÊ¼»¯ 
+// åˆå§‹åŒ– 
 Queue CreateQueue() {
 	Q = (Queue)malloc(sizeof(struct QNode));
 	Q->front = NULL;
@@ -25,37 +25,37 @@ Queue CreateQueue() {
 	return Q;
 }
 
-// ÊÇ·ñÎª¿Õ 
+// æ˜¯å¦ä¸ºç©º 
 int IsEmpty(Queue Q) {
 	return (Q->front == NULL);
 }
 
-// Èë¶Ó
+// å…¥é˜Ÿ
 void AddQ(Queue Q, ElementType item) {
 	struct Node *node;
 	node = (struct Node *)malloc(sizeof(struct Node));
 	node->Data = item;
 	node->Next = NULL;
-	if (Q->rear == NULL) {  //´ËÊ±¶ÓÁĞ¿Õ 
+	if (Q->rear == NULL) {  //æ­¤æ—¶é˜Ÿåˆ—ç©º 
 		Q->rear = node;
 		Q->front = node;
 	}
-	else { //²»Îª¿Õ 
-		Q->rear->Next = node;  // ½«½áµãÈë¶Ó 
-		Q->rear = node;   // rear ÈÔÈ»±£³Ö×îºó 
+	else { //ä¸ä¸ºç©º 
+		Q->rear->Next = node;  // å°†ç»“ç‚¹å…¥é˜Ÿ 
+		Q->rear = node;   // rear ä»ç„¶ä¿æŒæœ€å 
 	}
 }
 
-// ³ö¶Ó
+// å‡ºé˜Ÿ
 ElementType DeleteQ(Queue Q) {
 	struct Node *FrontCell;
 	ElementType FrontElem;
 	if (IsEmpty(Q)) {
-		cout << "¶ÓÁĞ¿Õ" << endl;
+		cout << "é˜Ÿåˆ—ç©º" << endl;
 		return 0;
 	}
 	FrontCell = Q->front;
-	if (Q->front == Q->rear) { // ¶ÓÁĞÖĞÖ»ÓĞÒ»¸öÔªËØ 
+	if (Q->front == Q->rear) { // é˜Ÿåˆ—ä¸­åªæœ‰ä¸€ä¸ªå…ƒç´  
 		Q->front = Q->rear = NULL;
 	}
 	else {
@@ -69,18 +69,18 @@ ElementType DeleteQ(Queue Q) {
 int main() {
 	Q = CreateQueue();
 
-	cout << "Èë¶Ó1" << endl;
+	cout << "å…¥é˜Ÿ1" << endl;
 	AddQ(Q, 1);
 
-	cout << "Èë¶Ó2" << endl;
+	cout << "å…¥é˜Ÿ2" << endl;
 	AddQ(Q, 2);
 
-	cout << "Èë¶Ó3" << endl;
+	cout << "å…¥é˜Ÿ3" << endl;
 	AddQ(Q, 3);
 
-	cout << "³ö¶Ó" << DeleteQ(Q) << endl;
-	cout << "³ö¶Ó" << DeleteQ(Q) << endl;
-	cout << "³ö¶Ó" << DeleteQ(Q) << endl;
+	cout << "å‡ºé˜Ÿ" << DeleteQ(Q) << endl;
+	cout << "å‡ºé˜Ÿ" << DeleteQ(Q) << endl;
+	cout << "å‡ºé˜Ÿ" << DeleteQ(Q) << endl;
 	cout << DeleteQ(Q) << endl;
 
 	system("pause");

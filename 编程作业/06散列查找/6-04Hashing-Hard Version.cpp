@@ -7,21 +7,21 @@ using namespace std;
 #define INF -100000
 #define MaxVertex 1005
 int G[MaxVertex][MaxVertex];
-int Indegree[MaxVertex];  // Èë¶È 
-int value[MaxVertex];  // ´æÖµ 
-int N;  // ×ÜÖµ
-priority_queue<int, vector<int>, greater<int> > q;   // ¶¨Òå×îĞ¡¶Ñ 
+int Indegree[MaxVertex];  // å…¥åº¦ 
+int value[MaxVertex];  // å­˜å€¼ 
+int N;  // æ€»å€¼
+priority_queue<int, vector<int>, greater<int> > q;   // å®šä¹‰æœ€å°å † 
 map<int, int> m;
 
-// ²åÈë±ß 
+// æ’å…¥è¾¹ 
 void InsertEdge() 
 {
 	for (int i = 0; i < N; i++) 
 	{
 		if (value[i] >= 0) 
 		{
-			m.insert(pair<int, int>(value[i], i));   // ´æÏÂ±êÓëÖµµÄÓ³Éä¹ØÏµ 
-			int remainder = value[i] % N;  // ÓàÊı 
+			m.insert(pair<int, int>(value[i], i));   // å­˜ä¸‹æ ‡ä¸å€¼çš„æ˜ å°„å…³ç³» 
+			int remainder = value[i] % N;  // ä½™æ•° 
 			if (remainder == i)
 				Indegree[i] = 0;
 			else if (remainder != i) 
@@ -34,7 +34,7 @@ void InsertEdge()
 	}
 }
 
-// ½¨Í¼ 
+// å»ºå›¾ 
 void BuildGraph() 
 {
 	for (int i = 0; i < N; i++)
@@ -43,7 +43,7 @@ void BuildGraph()
 	InsertEdge();
 }
 
-// ÍØÆËÅÅĞò 
+// æ‹“æ‰‘æ’åº 
 void TopSort() 
 {
 	for (int i = 0; i < N; i++)
@@ -53,7 +53,7 @@ void TopSort()
 	while (!q.empty()) 
 	{
 		int tmpValue = q.top();
-		int v = m[tmpValue];  // ÕÒ»ØÏÂ±ê 
+		int v = m[tmpValue];  // æ‰¾å›ä¸‹æ ‡ 
 		q.pop();
 		if (flag)
 			flag = false;
@@ -61,7 +61,7 @@ void TopSort()
 			cout << " ";
 		cout << tmpValue;
 		for (int w = 0; w < N; w++)
-			if (G[v][w] != INF)  // Èç¹ûÁ¬Í¨
+			if (G[v][w] != INF)  // å¦‚æœè¿é€š
 			{ 
 				if (--Indegree[w] == 0)
 					q.push(value[w]);
