@@ -26,7 +26,7 @@ struct AdjVNode {
 };
 
 // 顶点表头结点的定义
-typedef struct Vnode { 
+typedef struct Vnode {
 	PtrToAdjVNode FirstEdge;  // 边表头指针
 	DataType Data;  // 存顶点的数据（注意：很多情况下，顶点无数据，此时Data可以不用出现）
 } AdjList[MaxVertexNum];  // AdjList是邻接表类型
@@ -58,7 +58,7 @@ LGraph CreateGraph(int VertexNum)
 }
 
 // 插入一条边到邻接表的顶点指针之后
-void InsertEdge(LGraph Graph, Edge E) 
+void InsertEdge(LGraph Graph, Edge E)
 {
 	PtrToAdjVNode NewNode;
 
@@ -112,13 +112,13 @@ LGraph BuildGraph()
 
 // 以V为出发点对邻接表存储的图Graph进行DFS搜索
 void DFS(LGraph Graph, Vertex V, void(*Visit)(Vertex))
-{ 
+{
 	PtrToAdjVNode W;
 
 	Visit(V);  // 访问第V个顶点
 	Visited[V] = true;  // 标记V已访问，Visited[]为全局变量，已经初始化为false
 
-	for (W = Graph->G[V].FirstEdge; W; W = W->Next) // 对V的每个邻接点W->AdjV 
+	for (W = Graph->G[V].FirstEdge; W; W = W->Next) // 对V的每个邻接点W->AdjV
 		if (!Visited[W->AdjV])    // 若W->AdjV未被访问
 			DFS(Graph, W->AdjV, Visit);    // 则递归访问之
 }
@@ -128,7 +128,7 @@ void Visit(Vertex V)
 	cout << "正在访问顶点" << V << endl;
 }
 
-int main() 
+int main()
 {
 	LGraph Graph = BuildGraph();
 	for (int i = 0; i < MaxVertexNum; i++)
