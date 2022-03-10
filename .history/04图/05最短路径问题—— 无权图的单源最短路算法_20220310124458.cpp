@@ -1,0 +1,211 @@
+#include<iostream>
+using namespace std;
+
+/* 邻接矩阵储存——无权图的单源最短路算法 */
+
+#define INFINITY 65535   // ∞设为双字节无符号整数的最大值65535      
+#define MaxVertexNum 100   //最大顶点数设为100     
+typedef int Vertex;   //用顶点下标表示顶点,为整型
+typedef int WeightType;   //边的权值设为整型
+#define ERROR 0  
+
+int Visited[MaxVertexNum];
+int dist[MaxVertexNum];
+int path[MaxVertexNum];
+
+// 边的定义
+typedef struct ENode* PtrToENode;
+struct ENode {
+	Vertex V1, V2;      // 有向边<V1, V2>
+};
+typedef PtrToENode Edge;
+
+// 图结点的定义
+typedef struct GNode* PtrToGNode;
+struct GNode {
+	int Nv;  // 顶点数
+	int Ne;  // 边数
+	WeightType G[MaxVertexNum][MaxVertexNum];  // 邻接矩阵
+};
+typedef PtrToGNode MGraph; // 以邻接矩阵存储的图类型    
+
+// 链表, 队列的普通节点
+struct Node {
+	int Data;
+	struct Node* Next;
+};
+
+// 双向链表, 队列的头节点. 一端指向队列头, 一端指向队列尾
+struct QNode {
+	struct Node* rear;
+	struct Node* front;
+};
+typedef struct QNode* Queue;
+
+// 初始化一个有VertexNum个顶点但没有边的图
+MGraph CreateGraph(int VertexNum)
+{
+	Vertex V, W;
+	MGraph Graph;
+
+	Graph = (MGraph)malloc(sizeof(struct GNode));  // 建立图
+	Graph->Nv = VertexNum;
+	Graph->Ne = 0;
+	/* 初始化邻接矩阵 */
+	/* 注意：这里默认顶点编号从0开始，到(Graph->Nv - 1) */
+	for (V = 0; V <= Graph->Nv; V++)
+		for (W = 0; W <= Graph->Nv; W++)
+			Graph->G[V][W] = INFINITY;
+
+	return Graph;
+}
+
+void InsertEdge(MGraph Graph, Edge E)
+{
+	/* 插入边 <V1, V2> */
+	Graph->G[E->V1][E->V2] = 1;
+	/* 若是无向图，还要插入边<V2, V1> */
+	//Graph->G[E->V2][E->V1] = 1;  
+}
+
+MGraph BuildGraph()
+{
+	MGraph Graph;
+	Edge E;
+	Vertex V;
+	int Nv, i;
+
+	cin >> Nv;   // 读入顶点数 
+	Graph = CreateGraph(Nv);  // 初始化有Nv个顶点但没有边的图
+
+	cin >> (Graph->Ne);  // 读入边数 
+	if (Graph->Ne != 0)  // 如果有边
+	{
+		E = (Edge)malloc(sizeof(struct ENode));  // 建立边结点
+		for (i = 0; i < Graph->Ne; i++)
+		{
+			cin >> E->V1 >> E->V2;// 读入边，格式为"起点 终点"，插入邻接矩阵 
+			InsertEdge(Graph, E);
+		}
+	}
+
+	return Graph;
+}
+
+// 下面是队列的实现
+int IsEmpty(Queue Q)
+{
+	return(Q->front == NULL);
+};
+
+Queue CreateQueue()
+{
+	// 双向链表PtrQ是队列的头节点. 一端指向队列头, 一端指向队列尾
+	Queue PtrQ;
+	PtrQ = (Queue)malloc(sizeof(struct QNode));
+	struct Node* rear;
+	struct Node* front;
+	
+	rear = (Node*)malloc(sizeof(struct Node));
+	rear = NULL;
+	front = (Node*)malloc(sizeof(struct Node));
+	front = NULL;
+	// 上面那四行, 分配了内存又指向NULL???
+	// 直接PtrQ->front = PtrQ->rear = NULL不好吗
+	PtrQ->front = front;
+	PtrQ->rear = rear;
+	return PtrQ;
+};
+
+// 原来的顺序是deleteQ函数放在前面. 先看怎么加(insertQ)比较好理解他在做什么
+void InsertQ(int item, Queue PtrQ)
+{
+	struct Node* FrontCell;
+	FrontCell = (Node*)malloc(sizeof(struct Node));
+	FrontCell->Data = item;
+	FrontCell->Next = NULL;
+
+	if (IsEmpty(PtrQ))
+	{
+		PtrQ->front = FrontCell;
+		PtrQ->rear = FrontCell;
+	}
+	else {
+		PtrQ->rear->Next = FrontCell;
+		PtrQ->rear = FrontCell;
+	}
+};
+
+int DeleteQ(Queue PtrQ)
+{
+	struct Node* FrontCell;
+	int FrontElem;
+
+	if (IsEmpty(PtrQ))
+	{
+		cout << "队列空" << endl;
+		return ERROR;
+	}
+	FrontCell = PtrQ->front;
+	if (PtrQ->front == PtrQ->rear)
+		PtrQ->front = PtrQ->rear = NULL;
+	else {
+		PtrQ->front = PtrQ->front->Next;
+	}
+	FrontElem = FrontCell->Data;
+	free(FrontCell);
+	return FrontElem;
+}
+
+/* IsEdge(Graph, V, W)检查<V, W>是否图Graph中的一条边，即W是否V的邻接点。  */
+/* 此函数根据图的不同类型要做不同的实现，关键取决于对不存在的边的表示方法。*/
+/* 例如对有权图, 如果不存在的边被初始化为INFINITY, 则函数实现如下:         */
+bool IsEdge(MGraph Graph, Vertex V, Vertex W)
+{
+    // 不存在的边G[V][W]不是0吗...
+	return Graph->G[V][W] < INFINITY ? true : false;
+}
+
+// 就是这里, 无权图单源最短路径
+// 多说一句, 无权图就是每两个点之间距离相等, 别当成无向图了
+// 以S为出发点对邻接矩阵存储的图Graph进行BFS搜索
+void Unweighted(MGraph Graph, Vertex S)
+{
+	Queue Q = CreateQueue(); // 创建空队列, MaxSize为外部定义的常数
+	Vertex V, W; // 这种叫一声以后不知道哪里才用到的, 这行先别管就是了
+
+	// 访问顶点S
+	// dist[]和path[]为全局变量，已经初始化为-1
+    // dist既是距离又可以判断去过没. 最早去的路肯定是最短的, 所以不需要比较, 只需要判断去过没
+    // path是 到这个点的最短路径, **上一步**经过哪里. 几个上一步拼在一起就好了
+	dist[S] = 0;  // 标记S已访问
+	InsertQ(S, Q); // S入队列
+
+	while (!IsEmpty(Q))
+	{
+		V = DeleteQ(Q);  // 弹出V
+		for (W = 1; W <= Graph->Nv; W++) // 对V的每个邻接点W->AdjV
+			if ((dist[W] == -1) && (IsEdge(Graph, V, W)))    // 若W->AdjV未被访问
+			{
+				dist[W] = dist[V] + 1;
+				cout << "点 " << W << " 到源点 " << S << " 的最短距离是：" << dist[W];
+				// 访问顶点W
+				path[W] = V;
+				cout << "  其上一个节点是：" << path[W] << endl;
+				InsertQ(W, Q); // W入队列
+			}
+	} /* while结束*/
+}
+
+int main()
+{
+	MGraph Graph = BuildGraph();
+
+	for (int i = 1; i <= MaxVertexNum; i++)
+	{
+		Visited[i] = false;
+		dist[i] = path[i] = -1;
+	}
+	Unweighted(Graph, 3);
+	return 0;
+}

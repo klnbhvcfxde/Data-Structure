@@ -1,10 +1,13 @@
 #include<iostream>
 using namespace std;
+// 时间复杂度:
+// 直接将单源最短路算法调用|V|遍:  T = O(|V|^3 + |E|×|V|) ——对于稀疏图效果好
+// Floyd 算法: T = O(|V|^3 ——对于稠密图效果好
 
 /* 邻接矩阵储存——多源最短路算法 */
 
-#define INFINITY 65535   // ∞设为双字节无符号整数的最大值65535      
-#define MaxVertexNum 100   //最大顶点数设为100     
+#define INFINITY 65535   // ∞设为双字节无符号整数的最大值65535
+#define MaxVertexNum 100   //最大顶点数设为100
 typedef int Vertex;   //用顶点下标表示顶点,为整型
 typedef int WeightType;   //边的权值设为整型
 
@@ -43,8 +46,8 @@ MGraph CreateGraph(int VertexNum)
 	return Graph;
 }
 
-// 插入边 
-void InsertEdge(MGraph Graph, Edge E) 
+// 插入边
+void InsertEdge(MGraph Graph, Edge E)
 {
 	// 插入边 <V1,V2>
 	Graph->G[E->V1][E->V2] = E->Weight;
@@ -53,24 +56,24 @@ void InsertEdge(MGraph Graph, Edge E)
 	Graph->G[E->V2][E->V1] = E->Weight;
 }
 
-// 建图 
-MGraph BuildGraph() 
+// 建图
+MGraph BuildGraph()
 {
 	MGraph Graph;
 	Edge E;
 	Vertex V;
 	int Nv, i;
 
-	cin >> Nv;   // 读入顶点数 
+	cin >> Nv;   // 读入顶点数
 	Graph = CreateGraph(Nv);  // 初始化有Nv个顶点但没有边的图
 
-	cin >>(Graph->Ne);  // 读入边数 
+	cin >>(Graph->Ne);  // 读入边数
 	if (Graph->Ne != 0)  // 如果有边
 	{
 		E = (Edge)malloc(sizeof(struct ENode));  // 建立边结点
-		for (i = 0; i < Graph->Ne; i++) 
+		for (i = 0; i < Graph->Ne; i++)
 		{
-			cin >> E->V1 >> E->V2 >> E->Weight;// 读入边，格式为"起点 终点 权重"，插入邻接矩阵 
+			cin >> E->V1 >> E->V2 >> E->Weight;// 读入边，格式为"起点 终点 权重"，插入邻接矩阵
 			InsertEdge(Graph, E);
 		}
 	}
@@ -85,16 +88,17 @@ bool Floyd(MGraph Graph, WeightType D[][MaxVertexNum], Vertex path[][MaxVertexNu
 
 	// 初始化
 	for (i = 1; i <= Graph->Nv; i++)
-		for (j = 1; j <= Graph->Nv; j++) 
+		for (j = 1; j <= Graph->Nv; j++)
 		{
 			D[i][j] = Graph->G[i][j];
 			path[i][j] = -1;
 		}
 
+    // 有时候看不懂解释直接看代码就好了, 虽然有点tricky
 	for (k = 1; k <= Graph->Nv; k++)
 		for (i = 1; i <= Graph->Nv; i++)
 			for (j = 1; j <= Graph->Nv; j++)
-				if (D[i][k] + D[k][j] < D[i][j]) 
+				if (D[i][k] + D[k][j] < D[i][j])
 				{
 					D[i][j] = D[i][k] + D[k][j];
 					if (i == j && D[i][j] < 0)  // 若发现负值圈
@@ -108,7 +112,7 @@ bool Floyd(MGraph Graph, WeightType D[][MaxVertexNum], Vertex path[][MaxVertexNu
 void PrintPath(Vertex path[][MaxVertexNum], Vertex v1, Vertex v2)
 {
 	cout << v2 << " ";
-	while (1) 
+	while (1)
 	{
 		if (path[v1][v2] != -1)
 			cout << path[v1][v2] << " ";
@@ -119,7 +123,7 @@ void PrintPath(Vertex path[][MaxVertexNum], Vertex v1, Vertex v2)
 	cout << v1 << endl;
 }
 
-int main() 
+int main()
 {
 	MGraph Graph = BuildGraph();
 
@@ -134,5 +138,6 @@ int main()
 	PrintPath(path, v1, v2);
 	cout << "最短路径对应的权值为：" << Weight[v1][v2] << endl;
 
+	system("pause");
 	return 0;
 }

@@ -2,6 +2,8 @@
 using namespace std;
 #include<queue>
 
+// 这个最小生成树不就是单源最短路径再连连起来吗
+
 #define INF 100000
 #define MaxVertex 105
 typedef int Vertex;
@@ -61,6 +63,7 @@ Vertex FindMin()
 	return xb;
 }
 
+// MST当成已经加到最小树的集合
 void Prim(Vertex s)
 {
 	IniPrim(s);

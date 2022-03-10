@@ -50,6 +50,7 @@ void BuildGraph()
 }
 
 //  路径压缩查找
+//找祖先
 int Find(int x)
 {
 	if (parent[x] < 0)
@@ -75,6 +76,22 @@ void Union(int x1, int x2)
 	}
 }
 
+/*伪代码
+这个算法是把各个最小边找出来, 零散的也没关系, 只要不形成环. 慢慢就拼合到一起了
+void Kruskal ( Graph G ){
+    MST = { };
+    while ( MST 中不到|V|-1条边 &&  E中还有边 ) {
+        从 E 中取一条权重最小的边 E<V,W>;    // 最小堆
+        将 E<V,W> 从 E 中删除;
+        if ( E<V,W> 不在 MST 中构成回路 )  // 并查集
+            将 E<V,W> 加入MST;
+        else
+            彻底无视 E<V,W>;
+    }
+    if ( MST 中不到|V|-1条边 )
+        Error("图不连通");
+}
+*/
 void Kruskal()
 {
 	// 最小生成树的边不到 Nv-1 条且还有边
@@ -84,6 +101,7 @@ void Kruskal()
 		q.pop(); // 出队这条边
 		if (Find(E.v1) != Find(E.v2))
 		{  // 检测两条边是否在同一集合
+            //sum权重和, 最小生成树最小的是所有边的权重和
 			sum += E.weight;
 			Union(E.v1, E.v2);     // 并起来
 			MST.push(E);

@@ -167,7 +167,7 @@ bool IsEdge(MGraph Graph, Vertex V, Vertex W)
 void BFS(MGraph Graph, Vertex S, void(*Visit)(Vertex))
 {
 	Queue Q;
-	Vertex V, W;
+	Vertex V, W; // 临时变量
 
 	Q = CreateQueue();  // 创建空队列
 	Visit(S);

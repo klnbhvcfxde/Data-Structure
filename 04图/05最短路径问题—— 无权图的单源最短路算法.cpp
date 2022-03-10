@@ -14,14 +14,14 @@ int dist[MaxVertexNum];
 int path[MaxVertexNum];
 
 // 边的定义
-typedef struct ENode *PtrToENode;
+typedef struct ENode* PtrToENode;
 struct ENode {
 	Vertex V1, V2;      // 有向边<V1, V2>
 };
 typedef PtrToENode Edge;
 
 // 图结点的定义
-typedef struct GNode *PtrToGNode;
+typedef struct GNode* PtrToGNode;
 struct GNode {
 	int Nv;  // 顶点数
 	int Ne;  // 边数
@@ -29,16 +29,18 @@ struct GNode {
 };
 typedef PtrToGNode MGraph; // 以邻接矩阵存储的图类型    
 
+// 链表, 队列的普通节点
 struct Node {
 	int Data;
-	struct Node *Next;
+	struct Node* Next;
 };
 
+// 双向链表, 队列的头节点. 一端指向队列头, 一端指向队列尾
 struct QNode {
-	struct Node *rear;
-	struct Node *front;
+	struct Node* rear;
+	struct Node* front;
 };
-typedef struct QNode *Queue;
+typedef struct QNode* Queue;
 
 // 初始化一个有VertexNum个顶点但没有边的图
 MGraph CreateGraph(int VertexNum)
@@ -90,50 +92,35 @@ MGraph BuildGraph()
 	return Graph;
 }
 
-int IsEmpty(Queue Q) 
+// 下面是队列的实现
+int IsEmpty(Queue Q)
 {
 	return(Q->front == NULL);
 };
 
-Queue CreateQueue() 
+Queue CreateQueue()
 {
+	// 双向链表PtrQ是队列的头节点. 一端指向队列头, 一端指向队列尾
 	Queue PtrQ;
 	PtrQ = (Queue)malloc(sizeof(struct QNode));
-	struct Node *rear;
-	struct Node *front;
+	struct Node* rear;
+	struct Node* front;
+	
 	rear = (Node*)malloc(sizeof(struct Node));
 	rear = NULL;
 	front = (Node*)malloc(sizeof(struct Node));
 	front = NULL;
+	// 上面那四行, 分配了内存又指向NULL???
+	// 直接PtrQ->front = PtrQ->rear = NULL不好吗
 	PtrQ->front = front;
 	PtrQ->rear = rear;
 	return PtrQ;
 };
 
-int DeleteQ(Queue PtrQ) 
-{
-	struct Node *FrontCell;
-	int FrontElem;
-
-	if (IsEmpty(PtrQ)) 
-	{
-		cout << "队列空" << endl;
-		return ERROR;
-	}
-	FrontCell = PtrQ->front;
-	if (PtrQ->front == PtrQ->rear)
-		PtrQ->front = PtrQ->rear = NULL;
-	else {
-		PtrQ->front = PtrQ->front->Next;
-	}
-	FrontElem = FrontCell->Data;
-	free(FrontCell);
-	return FrontElem;
-}
-
+// 原来的顺序是deleteQ函数放在前面. 先看怎么加(insertQ)比较好理解他在做什么
 void InsertQ(int item, Queue PtrQ)
 {
-	struct Node *FrontCell;
+	struct Node* FrontCell;
 	FrontCell = (Node*)malloc(sizeof(struct Node));
 	FrontCell->Data = item;
 	FrontCell->Next = NULL;
@@ -149,22 +136,48 @@ void InsertQ(int item, Queue PtrQ)
 	}
 };
 
+int DeleteQ(Queue PtrQ)
+{
+	struct Node* FrontCell;
+	int FrontElem;
+
+	if (IsEmpty(PtrQ))
+	{
+		cout << "队列空" << endl;
+		return ERROR;
+	}
+	FrontCell = PtrQ->front;
+	if (PtrQ->front == PtrQ->rear)
+		PtrQ->front = PtrQ->rear = NULL;
+	else {
+		PtrQ->front = PtrQ->front->Next;
+	}
+	FrontElem = FrontCell->Data;
+	free(FrontCell);
+	return FrontElem;
+}
+
 /* IsEdge(Graph, V, W)检查<V, W>是否图Graph中的一条边，即W是否V的邻接点。  */
 /* 此函数根据图的不同类型要做不同的实现，关键取决于对不存在的边的表示方法。*/
 /* 例如对有权图, 如果不存在的边被初始化为INFINITY, 则函数实现如下:         */
 bool IsEdge(MGraph Graph, Vertex V, Vertex W)
 {
+    // 不存在的边G[V][W]不是0吗...
 	return Graph->G[V][W] < INFINITY ? true : false;
 }
 
+// 就是这里, 无权图单源最短路径
+// 多说一句, 无权图就是每两个点之间距离相等, 别当成无向图了
 // 以S为出发点对邻接矩阵存储的图Graph进行BFS搜索
 void Unweighted(MGraph Graph, Vertex S)
 {
-	// dist[]和path[]为全局变量，已经初始化为-1
 	Queue Q = CreateQueue(); // 创建空队列, MaxSize为外部定义的常数
-	Vertex V, W;
+	Vertex V, W; // 这种叫一声以后不知道哪里才用到的, 这行先别管就是了
 
 	// 访问顶点S
+	// dist[]和path[]为全局变量，已经初始化为-1
+    // dist既是距离又可以判断去过没. 最早去的路肯定是最短的, 所以不需要比较, 只需要判断去过没
+    // path是 到这个点的最短路径, **上一步**经过哪里. 几个上一步拼在一起就好了
 	dist[S] = 0;  // 标记S已访问
 	InsertQ(S, Q); // S入队列
 
@@ -184,7 +197,7 @@ void Unweighted(MGraph Graph, Vertex S)
 	} /* while结束*/
 }
 
-int main() 
+int main()
 {
 	MGraph Graph = BuildGraph();
 

@@ -92,10 +92,10 @@ bool IsEdge(MGraph Graph, Vertex V, Vertex W)
 // 返回未被收录顶点中的最小dist者
 Vertex FindMinDist(MGraph Graph) 
 {
-	Vertex MinV, V;
+	Vertex MinV;
 	int MinDist = INFINITY;
 
-	for (V = 1; V <= Graph->Nv; V++) 
+	for (Vertex V = 1; V <= Graph->Nv; V++) 
 	{
 		if (Visited[V] == false && dist[V] < MinDist)  // 若V未被收录，且dist[V]更小 
 		{
@@ -110,11 +110,10 @@ Vertex FindMinDist(MGraph Graph)
 
 // 以S为出发点对邻接矩阵存储的图Graph进行BFS搜索
 bool Dijkstra(MGraph Graph, Vertex S)
+// 三步走. 找(没去过的)最小, 加进去, 更新dist[未访问]
 {
-	Vertex V, W;
-
 	// 初始化：此处默认邻接矩阵中不存在的边用INFINITY表示
-	for (V = 1; V <= Graph->Nv; V++) 
+	for (Vertex V = 1; V <= Graph->Nv; V++) 
 	{
 		dist[V] = Graph->G[S][V];
 		if (dist[V] < INFINITY)
@@ -127,6 +126,10 @@ bool Dijkstra(MGraph Graph, Vertex S)
 	dist[S] = 0;
 	Visited[S] = true;
 
+    // 关于dij算法的时间复杂度, 顺便说一下图的时间复杂度
+    // 以前一个点对所有点做一遍, 每个点都要做. 所以n^2
+    // 现在一个点对所有边做一遍, 每个点都要. 每个点对上面所有边做一次, Σ[ie(i)]=E, i=(1~n)(ps. 可能会误认为n*e(n))
+    // 大while做n次, 乘以(findMinDist做n次+for做e(i)次), n*n+n*e(i), 就是O(n^2+E)
 	while (1)
 	{
 		// 找到未被收入顶点中dist最小者
@@ -135,7 +138,7 @@ bool Dijkstra(MGraph Graph, Vertex S)
 			break;  //算法结束  
 		Visited[V] = true;  //收录V  
 
-		for (W = 1; W <= Graph->Nv; W++)  //对图中每个顶点W  
+		for (Vertex W = 1; W <= Graph->Nv; W++)  //对图中每个顶点W  
 			if (Visited[W] == false && Graph->G[V][W] < INFINITY)  //若W未被收录并且是V的邻接点
 			{  
 				if (Graph->G[V][W] < 0)  //若有负边  
