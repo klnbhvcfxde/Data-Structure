@@ -80,6 +80,7 @@ void Prim(Vertex s)
 				if (G[v][w] < dist[w])
 				{
 					dist[w] = G[v][w];
+                    //init时候也一样, 还没加进去就已经分配爸爸了, 反正说不定说什么时候还要变, 如果不给将来就找不到爸爸了
 					parent[w] = v;
 				}
 	}

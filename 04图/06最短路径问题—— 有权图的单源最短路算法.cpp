@@ -146,6 +146,7 @@ bool Dijkstra(MGraph Graph, Vertex S)
 				if (dist[V] + Graph->G[V][W] < dist[W])  //若收录V使得dist[W]变小  
 				{
 					dist[W] = dist[V] + Graph->G[V][W];  //更新dist[W]  
+                    //初始化的时候也一样, 还没加进去就已经分配路径了, 反正说不定说什么时候还要变, 如果不给将来就找不到了
 					path[W] = V;  //更新S到W的路径  
 				}
 			}

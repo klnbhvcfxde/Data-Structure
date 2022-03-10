@@ -23,6 +23,7 @@ struct Node {
 	}
 };
 queue<Node> MST;  // 最小生成树
+// MST放的是边不是顶点!!!
 priority_queue<Node> q;  // 最小堆
 
 // 初始化图信息
@@ -49,24 +50,27 @@ void BuildGraph()
 	}
 }
 
-//  路径压缩查找
 //找祖先
+//路径压缩查找(这是个名词, 查一下!!!)
 int Find(int x)
 {
 	if (parent[x] < 0)
 		return x;
 	else
-		return parent[x] = Find(parent[x]);
+		return parent[x] = Find(parent[x]); //并且改变了parent[x]的值!! parent是为了找到祖先而不是建树, 所以这样就路径压缩了
 }
 
-//  按秩归并
-void Union(int x1, int x2)
+//  按秩归并(这是个名词, 查一下!!!)
+//https://zhuanlan.zhihu.com/p/93647900 找到了个有图的, 但不是下面那种写法
+// https://blog.csdn.net/Invokar/article/details/80149787
+// 根节点的parent数值是( 负的 树上所有节点个数), 所以刚开始才设成-1!
+void Union(Vertex x1, Vertex x2)
 {
 	x1 = Find(x1);
 	x2 = Find(x2);
-	if (parent[x1] < parent[x2])
+	if (parent[x1] < parent[x2])  //复数, 数值越小绝对值越大
 	{
-		parent[x1] += parent[x2];
+		parent[x1] += parent[x2]; //x2不是root了, x2的个数送给x1之后, 认x1做爸爸
 		parent[x2] = x1;
 	}
 	else
@@ -81,6 +85,7 @@ void Union(int x1, int x2)
 void Kruskal ( Graph G ){
     MST = { };
     while ( MST 中不到|V|-1条边 &&  E中还有边 ) {
+        不到|V|-1条边 这条件很多余?
         从 E 中取一条权重最小的边 E<V,W>;    // 最小堆
         将 E<V,W> 从 E 中删除;
         if ( E<V,W> 不在 MST 中构成回路 )  // 并查集
@@ -95,6 +100,7 @@ void Kruskal ( Graph G ){
 void Kruskal()
 {
 	// 最小生成树的边不到 Nv-1 条且还有边
+    // q和MST都是全局变量. q是最小堆!
 	while (MST.size() != Nv - 1 && !q.empty())
 	{
 		Node E = q.top();  // 从最小堆取出一条权重最小的边
